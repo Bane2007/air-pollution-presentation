@@ -47,9 +47,7 @@
   </style>
 </head>
 <body>
-
   <div id="3d-graph"></div>
-
   <div class="sidebar">
     <h2>INTERVENTIONS</h2>
     <div class="card" data-target="idling">
@@ -71,7 +69,6 @@
       <div class="card-title">Electric buses</div><div class="card-adv">Zero tailpipe</div><div class="card-fail">Resuspension</div>
     </div>
   </div>
-
   <div class="top-nav">
     <button class="nav-btn" id="btn-river">River View</button>
     <button class="nav-btn active" id="btn-rotary">Rotary View</button>
@@ -81,6 +78,7 @@
     const nodes = [];
     const links = [];
     
+    // Core Target Spine (Group 2)
     const coreSpine = [
       { id: 'SchoolSchedule', label: 'School Schedule', group: 2 },
       { id: 'Arrivals', label: 'Simultaneous Arrivals', group: 2 },
@@ -97,25 +95,49 @@
       links.push({ source: coreSpine[i].id, target: coreSpine[i+1].id });
     }
     
-    for(let i=0; i<70; i++) {
-      nodes.push({ id: `bg_${i}`, label: `Factor ${i}`, group: 1 });
-      if (i > 0) links.push({ source: `bg_${i}`, target: `bg_${Math.floor(Math.random() * i)}` });
-    }
+    // 30 Specific Air Pollution Implication Nodes (Group 1)
+    const realFactors = [
+      "Urban Sprawl", "Public Transit Deficit", "Industrial Zoning", "Last-Mile Delivery",
+      "Brake & Tire Wear", "Road Dust Resuspension", "Temperature Inversions", "Wind Stagnation",
+      "Street Canyon Effect", "Secondary PM2.5 Formation", "Ozone Formation", "Agriculture (NH3)",
+      "Fossil Power Generation", "Adult Asthma Rates", "Cardiovascular Disease", "Missed School Days",
+      "Parental Work Absence", "Healthcare Burden", "Environmental Inequity", "Emission Standards",
+      "Diesel Subsidies", "EV Adoption Rate", "Grid Carbon Intensity", "Residential Heating",
+      "Construction Dust", "Active Travel Infrastructure", "Urban Canopy / Trees", "Noise Pollution",
+      "Road Geometry", "Vehicle Fleet Age"
+    ];
+
+    realFactors.forEach((name, i) => {
+      nodes.push({ id: `f_${i}`, label: name, group: 1 });
+      
+      // Create a heavily interconnected sphere web
+      if (i > 0) {
+        links.push({ source: `f_${i}`, target: `f_${Math.floor(Math.random() * i)}` });
+        links.push({ source: `f_${i}`, target: `f_${Math.floor(Math.random() * i)}` });
+      }
+    });
+
+    // Anchor specific background nodes into our core spine to show real implications
+    links.push({ source: 'f_4', target: 'Emissions' }); // Brake Wear -> Local NOx/PM
+    links.push({ source: 'f_6', target: 'Hotspot' }); // Inversions -> Concentration
+    links.push({ source: 'f_8', target: 'Hotspot' }); // Street Canyon -> Concentration
+    links.push({ source: 'Health', target: 'f_15' }); // Health Effects -> Missed School Days
+    links.push({ source: 'f_29', target: 'Emissions' }); // Fleet Age -> Local NOx/PM
     
-    links.push({ source: 'bg_10', target: 'Emissions' });
-    links.push({ source: 'bg_20', target: 'Health' });
+    // Boundary Nodes (Group 3)
     nodes.push({ id: 'AdjacentStreets', label: 'Adjacent Street Traffic', group: 3 });
     links.push({ source: 'TrafficDemand', target: 'AdjacentStreets' });
 
     let activeSolution = null;
     let isRotary = true;
+    let angle = 0;
 
     function getRenderState(node) {
       if (!activeSolution) {
         return { 
-          color: node.group === 2 ? '#FFD700' : '#444444', 
-          bg: node.group === 2 ? 'rgba(30,30,30,0.9)' : 'rgba(15,15,15,0.4)',
-          opacity: node.group === 2 ? 1 : 0.2 
+          color: node.group === 2 ? '#FFD700' : '#888888', 
+          bg: node.group === 2 ? 'rgba(30,30,30,0.95)' : 'rgba(15,15,15,0.6)',
+          opacity: node.group === 2 ? 1 : 0.4 
         };
       }
       
@@ -142,8 +164,8 @@
         if (['QueueIdling', 'TrafficDemand'].includes(node.id)) isFailure = true;
       }
 
-      if (isTarget) return { color: '#10b981', bg: 'rgba(16, 185, 129, 0.2)', opacity: 1 };
-      if (isFailure) return { color: '#f43f5e', bg: 'rgba(244, 63, 94, 0.2)', opacity: 1 };
+      if (isTarget) return { color: '#10b981', bg: 'rgba(16, 185, 129, 0.25)', opacity: 1 };
+      if (isFailure) return { color: '#f43f5e', bg: 'rgba(244, 63, 94, 0.25)', opacity: 1 };
       
       return { color: '#222222', bg: 'rgba(10,10,10,0.1)', opacity: 0.05 }; 
     }
@@ -156,31 +178,28 @@
           const state = getRenderState(node);
           const sprite = new SpriteText(node.label);
           sprite.color = state.color;
-          sprite.textHeight = node.group === 2 || state.opacity === 1 ? 6 : 3;
+          sprite.textHeight = node.group === 2 || state.opacity === 1 ? 8 : 4;
           sprite.backgroundColor = state.bg;
-          sprite.padding = 3;
-          sprite.borderRadius = 4;
+          sprite.padding = 4;
+          sprite.borderRadius = 6;
           sprite.material.transparent = true;
           sprite.material.opacity = state.opacity;
           sprite.material.depthWrite = false; 
           return sprite;
         })
-        .linkColor(link => (!activeSolution && link.source.group === 2 && link.target.group === 2) ? 'rgba(255,215,0,0.3)' : 'rgba(255,255,255,0.05)')
-        .linkWidth(link => (!activeSolution && link.source.group === 2 && link.target.group === 2) ? 1.5 : 0.5);
+        .linkColor(link => (!activeSolution && link.source.group === 2 && link.target.group === 2) ? 'rgba(255,215,0,0.5)' : 'rgba(255,255,255,0.15)')
+        .linkWidth(link => (!activeSolution && link.source.group === 2 && link.target.group === 2) ? 2 : 0.5);
 
-      // Default Rotary View Physics
-      Graph.d3Force('radial', d3.forceRadial(d => d.group === 1 ? 400 : 0))
-           .d3Force('charge', d3.forceManyBody().strength(-80));
+      Graph.d3Force('charge').strength(-150);
+      Graph.d3Force('link').distance(60);
 
-      let angle = 0;
       setInterval(() => {
         if (!activeSolution && isRotary) {
-          Graph.cameraPosition({ x: 600 * Math.sin(angle), z: 600 * Math.cos(angle) });
-          angle += Math.PI / 4000;
+          Graph.cameraPosition({ x: 800 * Math.sin(angle), z: 800 * Math.cos(angle), y: 200 });
+          angle += Math.PI / 3000;
         }
       }, 20);
 
-      // UI View Toggles
       const btnRiver = document.getElementById('btn-river');
       const btnRotary = document.getElementById('btn-rotary');
 
@@ -189,18 +208,16 @@
         btnRiver.classList.add('active');
         btnRotary.classList.remove('active');
         
-        Graph.d3Force('radial', null)
-             .d3Force('x', d3.forceX(d => {
-                if (d.group === 2) {
-                  const idx = coreSpine.findIndex(n => n.id === d.id);
-                  return (idx - 3.5) * 160; 
-                }
-                return (Math.random() - 0.5) * 1000;
-             }).strength(d => d.group === 2 ? 1 : 0.03))
-             .d3Force('y', d3.forceY(0).strength(0.05))
-             .d3Force('z', d3.forceZ(0).strength(0.05))
-             .d3Force('charge', d3.forceManyBody().strength(-150));
-             
+        nodes.forEach(n => {
+          if (n.group === 2) {
+            const idx = coreSpine.findIndex(core => core.id === n.id);
+            n.fx = (idx - 3.5) * 200;
+            n.fy = 0;
+            n.fz = 0;
+          }
+        });
+        
+        Graph.d3Force('charge').strength(-50);
         Graph.cameraPosition({ x: 0, y: 0, z: 1200 }, { x: 0, y: 0, z: 0 }, 1500);
       });
 
@@ -209,12 +226,15 @@
         btnRotary.classList.add('active');
         btnRiver.classList.remove('active');
         
-        Graph.d3Force('x', null).d3Force('y', null).d3Force('z', null)
-             .d3Force('radial', d3.forceRadial(d => d.group === 1 ? 400 : 0))
-             .d3Force('charge', d3.forceManyBody().strength(-80));
+        nodes.forEach(n => {
+          n.fx = undefined;
+          n.fy = undefined;
+          n.fz = undefined;
+        });
+        
+        Graph.d3Force('charge').strength(-150);
       });
 
-      // Hover Isolation Triggers
       document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('mouseenter', (e) => {
           activeSolution = e.currentTarget.getAttribute('data-target');
