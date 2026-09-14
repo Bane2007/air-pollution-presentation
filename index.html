@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="theme-color" content="#071018" />
   <title>Air Pollution Implication Graph</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
-  <script src="https://unpkg.com/three-spritetext@1.6.5/dist/three-spritetext.min.js"></script>
-  <script src="https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
-  <script src="https://unpkg.com/d3@7"></script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23071018'/%3E%3Cpath d='M24 62c14-4 17-27 32-27 9 0 12 10 20 10' fill='none' stroke='%23f4c95d' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <script defer src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+  <script defer src="https://unpkg.com/three-spritetext@1.6.5/dist/three-spritetext.min.js"></script>
+  <script defer src="https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
   <style>
     :root {
+      --sidebar-width: 340px;
+      --mobile-panel-height: clamp(260px, 42dvh, 380px);
       --bg: #071018;
       --panel: rgba(11, 17, 24, 0.82);
       --panel-border: rgba(255,255,255,0.08);
@@ -37,10 +38,12 @@
       margin: 0;
       width: 100%;
       height: 100%;
+      min-height: 100dvh;
       overflow: hidden;
+      overscroll-behavior: none;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
@@ -50,11 +53,14 @@
         var(--bg);
     }
 
-    #3d-graph {
+    [id="3d-graph"] {
       position: absolute;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: var(--sidebar-width);
+      width: calc(100vw - var(--sidebar-width));
+      height: 100dvh;
       z-index: 1;
     }
 
@@ -62,9 +68,9 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 340px;
-      height: 100vh;
-      padding: 24px 18px 18px 18px;
+      width: var(--sidebar-width);
+      height: 100dvh;
+      padding: max(24px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
       background: linear-gradient(180deg, rgba(11,17,24,0.88), rgba(11,17,24,0.7));
       border-right: 1px solid var(--panel-border);
       backdrop-filter: blur(14px);
@@ -72,6 +78,8 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
 
     .eyebrow {
@@ -141,50 +149,6 @@
     .card-meta .good { color: #7fe0b0; }
     .card-meta .warn { color: #f1a5a5; }
 
-    .info-panel {
-      margin-top: 8px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.05);
-      min-height: 110px;
-    }
-
-    .info-panel h3 {
-      margin: 0 0 6px 0;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    .node-name {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .node-category {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .node-detail {
-      color: var(--text);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .node-neighbours {
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
     .top-nav {
       position: absolute;
       right: 28px;
@@ -218,8 +182,129 @@
     }
 
     @media (max-width: 900px) {
+      :root {
+        --sidebar-width: 290px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      :root {
+        --sidebar-width: 0px;
+      }
+
       .sidebar {
-        width: 290px;
+        top: 0;
+        width: 100vw;
+        height: var(--mobile-panel-height);
+        padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 14px max(14px, env(safe-area-inset-left));
+        border-right: 0;
+        border-bottom: 1px solid var(--panel-border);
+        backdrop-filter: none;
+        gap: 8px;
+      }
+
+      [id="3d-graph"] {
+        top: var(--mobile-panel-height);
+        left: 0;
+        width: 100vw;
+        height: calc(100dvh - var(--mobile-panel-height));
+      }
+
+      .title {
+        font-size: 25px;
+      }
+
+      .subtitle {
+        margin-bottom: 2px;
+        font-size: 12px;
+      }
+
+      .card-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 2px;
+      }
+
+      .card {
+        min-width: 0;
+        padding: 9px 10px;
+      }
+
+      .card-title {
+        font-size: 13px;
+      }
+
+      .card-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        font-size: 10px;
+      }
+
+      .top-nav {
+        top: calc(var(--mobile-panel-height) + 10px);
+        right: max(10px, env(safe-area-inset-right));
+      }
+
+      .nav-btn {
+        min-height: 44px;
+        padding: 9px 13px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-height: 600px) and (orientation: landscape) {
+      :root {
+        --sidebar-width: 250px;
+      }
+
+      .sidebar {
+        top: 0;
+        width: var(--sidebar-width);
+        height: 100dvh;
+        padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+        border-right: 1px solid var(--panel-border);
+        border-bottom: 0;
+        gap: 6px;
+      }
+
+      [id="3d-graph"] {
+        top: 0;
+        left: var(--sidebar-width);
+        width: calc(100vw - var(--sidebar-width));
+        height: 100dvh;
+      }
+
+      .title {
+        font-size: 23px;
+      }
+
+      .subtitle {
+        display: none;
+      }
+
+      .card-list {
+        display: flex;
+        gap: 5px;
+        margin-top: 2px;
+      }
+
+      .card {
+        padding: 7px 9px;
+      }
+
+      .card-title {
+        margin-bottom: 2px;
+        font-size: 12px;
+      }
+
+      .card-meta {
+        display: none;
+      }
+
+      .top-nav {
+        top: max(10px, env(safe-area-inset-top));
+        right: max(10px, env(safe-area-inset-right));
       }
     }
   </style>
@@ -236,7 +321,7 @@
 
     <div class="card-list">
       <div class="card" data-module="school_traffic">
-        <div class="card-title">School traffic problem</div>
+        <div class="card-title">Vehicle idling</div>
         <div class="card-meta"><span class="good">Pathway visible</span><span>Local exposure</span></div>
       </div>
       <div class="card" data-module="staggered_pickup">
@@ -244,7 +329,7 @@
         <div class="card-meta"><span class="good">Reduces congestion</span><span>Exposure</span></div>
       </div>
       <div class="card" data-module="school_street">
-        <div class="card-title">School Street</div>
+        <div class="card-title">Temporary school zones</div>
         <div class="card-meta"><span class="good">Access control</span><span>Displacement</span></div>
       </div>
       <div class="card" data-module="electric_bus">
@@ -253,13 +338,6 @@
       </div>
     </div>
 
-    <div class="info-panel">
-      <h3>Selected node</h3>
-      <div id="info-name" class="node-name">No node selected</div>
-      <div id="info-category" class="node-category">Click a node</div>
-      <div id="info-detail" class="node-detail">Select any node to inspect its direct causal context.</div>
-      <div id="info-neighbours" class="node-neighbours"></div>
-    </div>
   </aside>
 
   <div class="top-nav">
@@ -268,6 +346,7 @@
   </div>
 
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
     const categoryColors = {
       driver: '#7db7ff',
       source: '#ef8a7a',
@@ -537,6 +616,30 @@
       return base;
     }
 
+    function configureStaticForces(linkDistance) {
+      const chargeForce = Graph.d3Force('charge');
+      const linkForce = Graph.d3Force('link');
+      if (chargeForce?.strength) chargeForce.strength(0);
+      if (linkForce?.distance) linkForce.distance(linkDistance).strength(0);
+    }
+
+    function getGraphAspect() {
+      return graphElement.clientWidth / Math.max(graphElement.clientHeight, 1);
+    }
+
+    function getRotaryCameraPosition() {
+      const mobileScale = Math.max(1, 1.15 / Math.max(getGraphAspect(), 0.5));
+      return {
+        x: 420 * mobileScale,
+        y: 260 * mobileScale,
+        z: 700 * mobileScale
+      };
+    }
+
+    function getRiverCameraDistance() {
+      return getGraphAspect() < 0.9 ? 850 : 800;
+    }
+
     function applySphereLayout() {
       const radius = 330;
       nodes.forEach((node, index) => {
@@ -553,16 +656,34 @@
         node.fy = y;
         node.fz = z;
       });
-      Graph.d3Force('charge', d3.forceManyBody().strength(0));
-      Graph.d3Force('link', d3.forceLink().distance(80).strength(0));
+      configureStaticForces(80);
     }
 
     function applyRiverLayout() {
       const ordered = Array.from(riverSubset);
       ordered.forEach((id, index) => {
         const node = nodeMap[id];
-        const x = (index - (ordered.length - 1) / 2) * 180;
-        const y = (index % 2 === 0 ? 1 : -1) * 80;
+        const useVerticalZigZag = getGraphAspect() < 0.9;
+        let x;
+        let y;
+
+        if (useVerticalZigZag) {
+          // Phones get an alternating top-to-bottom path that keeps every
+          // label inside the narrow canvas at a readable scale.
+          x = (index % 2 === 0 ? -1 : 1) * 115;
+          y = ((ordered.length - 1) / 2 - index) * 105;
+        } else {
+          const columns = 4;
+          const row = Math.floor(index / columns);
+          const positionInRow = index % columns;
+          // Wider screens snake across two rows while alternating vertical
+          // positions so every causal step follows a clear zig-zag.
+          const column = row % 2 === 0 ? positionInRow : columns - 1 - positionInRow;
+          x = (column - (columns - 1) / 2) * 230;
+          const rowCenter = row === 0 ? 130 : -130;
+          const zigZagOffset = positionInRow % 2 === 0 ? 70 : -70;
+          y = rowCenter + zigZagOffset;
+        }
         node.x = x;
         node.y = y;
         node.z = 0;
@@ -581,8 +702,7 @@
           node.fz = -2000;
         }
       });
-      Graph.d3Force('charge', d3.forceManyBody().strength(0));
-      Graph.d3Force('link', d3.forceLink().distance(40).strength(0));
+      configureStaticForces(40);
     }
 
     function setViewMode(mode) {
@@ -590,40 +710,30 @@
       if (mode === 'river') {
         riverBtn.classList.add('active');
         rotaryBtn.classList.remove('active');
+        Graph.enableNavigationControls(false);
         Graph.controls().enableRotate = false;
         Graph.controls().enablePan = false;
-        Graph.controls().enableZoom = true;
+        Graph.controls().enableZoom = false;
         applyRiverLayout();
-        Graph.cameraPosition({ x: 0, y: 0, z: 1100 }, { x: 0, y: 0, z: 0 }, 250);
+        Graph.camera().up.set(0, 1, 0);
+        Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
       } else {
         rotaryBtn.classList.add('active');
         riverBtn.classList.remove('active');
+        Graph.enableNavigationControls(true);
         Graph.controls().enableRotate = true;
         Graph.controls().enablePan = false;
         Graph.controls().enableZoom = true;
         applySphereLayout();
-        Graph.cameraPosition({ x: 420, y: 260, z: 700 }, { x: 0, y: 0, z: 0 }, 250);
+        Graph.cameraPosition(getRotaryCameraPosition(), { x: 0, y: 0, z: 0 }, 250);
       }
       Graph.refresh();
     }
 
-    function refreshInfoPanel(node) {
-      if (!node) {
-        document.getElementById('info-name').textContent = 'No node selected';
-        document.getElementById('info-category').textContent = 'Click a node';
-        document.getElementById('info-detail').textContent = 'Select any node to inspect its direct causal context.';
-        document.getElementById('info-neighbours').innerHTML = '';
-        return;
-      }
-
-      const neighbours = Array.from(adjacency.get(node.id) || []).map(id => nodeMap[id].label);
-      document.getElementById('info-name').textContent = node.label;
-      document.getElementById('info-category').textContent = node.category.toUpperCase();
-      document.getElementById('info-detail').textContent = node.detail;
-      document.getElementById('info-neighbours').innerHTML = '<strong>Neighbouring causal links:</strong><br>' + neighbours.slice(0, 6).join(', ');
-    }
-
-    const Graph = ForceGraph3D()(document.getElementById('3d-graph'))
+    const graphElement = document.getElementById('3d-graph');
+    const Graph = ForceGraph3D()(graphElement)
+      .width(graphElement.clientWidth)
+      .height(graphElement.clientHeight)
       .graphData({ nodes, links })
       .backgroundColor('#071018')
       .showNavInfo(false)
@@ -632,9 +742,11 @@
       .warmupTicks(30)
       .enableNodeDrag(false)
       .enableNavigationControls(true)
-      .d3Force('charge', d3.forceManyBody().strength(-260))
-      .d3Force('link', d3.forceLink().distance(80).strength(0.4))
-      .d3Force('center', d3.forceCenter(0, 0, 0))
+      .nodeVisibility(node => viewMode !== 'river' || riverSubset.has(node.id))
+      .linkVisibility(link => viewMode !== 'river' || (
+        riverSubset.has(getLinkEndpointId(link.source)) &&
+        riverSubset.has(getLinkEndpointId(link.target))
+      ))
       .linkDirectionalArrowLength(6)
       .linkDirectionalArrowRelPos(0.55)
       .linkColor(link => {
@@ -653,13 +765,13 @@
         const color = getNodeColor(node);
         const opacity = getNodeOpacity(node.id);
         const sprite = new SpriteText(node.label);
-        sprite.textHeight = node.category === 'school' || node.category === 'health' ? 9 : 7;
+        sprite.textHeight = node.category === 'school' || node.category === 'health' ? 24 : 20;
         sprite.color = color;
         sprite.backgroundColor = 'rgba(10, 14, 18, 0.80)';
         sprite.borderColor = opacity > 0.8 ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.08)';
         sprite.borderWidth = 1;
         sprite.borderRadius = 12;
-        sprite.padding = 6;
+        sprite.padding = 8;
         sprite.material.transparent = true;
         sprite.material.opacity = opacity;
         sprite.material.depthWrite = false;
@@ -668,14 +780,12 @@
       .onNodeClick(node => {
         selectedNodeId = node.id;
         selectionMode = 'node';
-        refreshInfoPanel(node);
         Graph.refresh();
       })
       .onBackgroundClick(() => {
         if (selectionMode === 'none') return;
         selectionMode = 'none';
         selectedNodeId = null;
-        refreshInfoPanel(null);
         Graph.refresh();
       });
 
@@ -685,9 +795,8 @@
     Graph.controls().zoomSpeed = 0.7;
     Graph.controls().enablePan = false;
     Graph.controls().enableRotate = true;
-    Graph.cameraPosition({ x: 420, y: 260, z: 700 });
-    Graph.d3Force('charge', d3.forceManyBody().strength(0));
-    Graph.d3Force('link', d3.forceLink().distance(80).strength(0));
+    Graph.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    Graph.cameraPosition(getRotaryCameraPosition());
     applySphereLayout();
 
     const riverBtn = document.getElementById('btn-river');
@@ -696,12 +805,40 @@
     riverBtn.addEventListener('click', () => setViewMode('river'));
     rotaryBtn.addEventListener('click', () => setViewMode('rotary'));
 
+    let resizeFrame = null;
+    function syncGraphSize() {
+      if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = null;
+        const width = Math.max(1, graphElement.clientWidth);
+        const height = Math.max(1, graphElement.clientHeight);
+        if (Graph.width() !== width) Graph.width(width);
+        if (Graph.height() !== height) Graph.height(height);
+        if (viewMode === 'river') {
+          applyRiverLayout();
+          Graph.refresh();
+          Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
+        }
+      });
+    }
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(syncGraphSize).observe(graphElement);
+    } else {
+      window.addEventListener('resize', syncGraphSize);
+    }
+    window.visualViewport?.addEventListener('resize', syncGraphSize);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) Graph.pauseAnimation();
+      else Graph.resumeAnimation();
+    });
+
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', () => {
         const module = card.dataset.module;
-        selectionMode = module;
+        selectionMode = selectionMode === module ? 'none' : module;
         selectedNodeId = null;
-        refreshInfoPanel(null);
         Graph.refresh();
       });
     });
@@ -709,12 +846,11 @@
     document.addEventListener('dblclick', () => {
       selectionMode = 'none';
       selectedNodeId = null;
-      refreshInfoPanel(null);
       Graph.refresh();
     });
 
-    refreshInfoPanel(null);
     setViewMode('rotary');
+    });
   </script>
 </body>
 </html>
