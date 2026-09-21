@@ -1,6 +1,6 @@
 # Air pollution, Abu Dhabi: from a cited implication graph to Clean Cabin
 
-AGRL130 Innovation, Entrepreneurship and Sustainability, IIT Delhi Abu Dhabi. Karthik Nambiar, Sumedh Nitin Jamsandekar, Paul Tiju.
+AGRL130 Innovation, Entrepreneurship and Sustainability, IIT Delhi Abu Dhabi. Karthik Nambiar, Sumedh Nitin Jamsandekar, Tiju.
 
 - `index.html`, `data/site.json`: the week 3 site, five animated slides (the need, the mind map, the filters, applied, Clean Cabin). Static, no build step, libraries from unpkg.
 - `report.pdf`: the week 3 paper, 16 pages.
