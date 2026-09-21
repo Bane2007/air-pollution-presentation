@@ -199,12 +199,12 @@
         <div id="g3d"></div>
         <div class="side">
           <div class="panel reveal" id="blocks">
-            <p class="subhead">The four candidate blocks, each with a lever and an outcome inside and a leakage below 1</p>
+            <p class="subhead">The four candidate blocks, a lever and an outcome inside, ε<sub>sym</sub> &lt; 1</p>
             <div id="blk-list"></div>
             <div class="legend" style="margin-top:8px"><span><i style="background:#40556a"></i> other blocks and isolated nodes</span></div>
           </div>
           <div class="panel reveal" id="loads">
-            <p class="subhead">Exposure load, people times hours times the added PM2.5, in million person microgram hours per day</p>
+            <p class="subhead">Exposure load L = N × h × ΔC, million person·µg/m³·h per day</p>
             <div id="loads-chart"></div>
             <p class="line" id="s1-line" style="margin:8px 0 0; font-size:15px"></p>
           </div>
@@ -226,7 +226,7 @@
         <div class="tiles">
           <div class="tile"><div class="v num" id="t-sol">0</div><div class="k">interventions</div></div>
           <div class="tile"><div class="v num" id="t-edg">0</div><div class="k">cited edges cut</div></div>
-          <div class="tile"><div class="v">5 by 4</div><div class="k">problems by mechanisms</div></div>
+          <div class="tile"><div class="v">5 × 4</div><div class="k">problems × mechanisms</div></div>
         </div>
       </div>
       <div class="stage">
@@ -269,7 +269,7 @@
         <div>
           <p class="subhead">The rubric and its weights</p>
           <div id="rubric"></div>
-          <p class="subhead" style="margin-top:10px">Criteria ablation, the three source-side weights scaled from zero to double</p>
+          <p class="subhead" style="margin-top:10px">Criteria ablation: scale λ on the three source-side weights</p>
           <div id="lam"></div>
         </div>
       </div>
@@ -301,9 +301,9 @@
           <div class="schemes">
             <div class="tile"><div class="v num">86.0 %</div><div class="k">uniform, no preference</div></div>
             <div class="tile"><div class="v num">90.3 %</div><div class="k">centred on our weights</div></div>
-            <div class="tile"><div class="v num">100 %</div><div class="k">each weight within 50 % of its value</div></div>
+            <div class="tile"><div class="v num">100 %</div><div class="k">each weight ±50 %</div></div>
           </div>
-          <p style="margin:8px 0 0; font-size:12px; color:var(--muted)">With every score also moved up or down by one level, Clean Cabin is first in <b style="color:var(--text)">48 %</b> of draws and in the top three in 72 %.</p>
+          <p style="margin:8px 0 0; font-size:12px; color:var(--muted)">With every score also moved by ±1, Clean Cabin is first in <b style="color:var(--text)">48 %</b> of draws and in the top three in 72 %.</p>
         </div>
         <div id="fmea" class="panel">
           <p class="subhead">29 failure modes of a gate-side design by layer and severity, the five fatal ones became the design rules</p>
@@ -326,7 +326,7 @@
           <p class="lede">Clean Cabin finds the school buses that pollute their own cabin, identifies why, applies the smallest compatible repair, and verifies on the same bus.</p>
         </div>
         <div class="tiles">
-          <div class="tile"><div class="v num">4.11</div><div class="k">million person microgram hours per day in the bus cabin, six times the gate</div></div>
+          <div class="tile"><div class="v num">4.11</div><div class="k">M person·µg/m³·h/day in the bus cabin, six times the gate</div></div>
         </div>
       </div>
       <div class="stage">
@@ -446,7 +446,7 @@
     function setSplit(v) { split = v; Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor()); Graph.d3ReheatSimulation(); if (v) setTimeout(() => Graph.zoomToFit(900, 20, n => n.block > 0), 1500 * T); }
 
     const blkList = d3.select('#blk-list');
-    D.graph.blocks.forEach(b => { const r = blkList.append('div').attr('class', 'blk'); r.append('i').style('background', BLK[b.k]); r.append('div').html(`<div>${b.k}, ${b.name}</div><div class="n">${b.n} nodes, W<sub>in</sub> ${b.W_in}</div>`); r.append('div').attr('class', 'e').text('leakage ' + b.eps_sym.toFixed(3)); bindTip(r, () => `<b>block ${b.k}</b> ${b.name}<div class="m">leakage out ${b.eps_out}, in ${b.eps_in}, total ${b.eps_sym}. Leaks least in ${Math.round(D.perturb.rank1[b.k] * 100)} % of 200 weight perturbations, mean Jaccard ${D.perturb.jaccard_mean[b.k].toFixed(2)}.</div>`); });
+    D.graph.blocks.forEach(b => { const r = blkList.append('div').attr('class', 'blk'); r.append('i').style('background', BLK[b.k]); r.append('div').html(`<div>${b.k}, ${b.name}</div><div class="n">${b.n} nodes, W<sub>in</sub> ${b.W_in}</div>`); r.append('div').attr('class', 'e').text('ε ' + b.eps_sym.toFixed(3)); bindTip(r, () => `<b>block ${b.k}</b> ${b.name}<div class="m">ε<sub>out</sub> ${b.eps_out}, ε<sub>in</sub> ${b.eps_in}, ε<sub>sym</sub> ${b.eps_sym}. Leaks least in ${Math.round(D.perturb.rank1[b.k] * 100)} % of 200 weight perturbations, mean Jaccard ${D.perturb.jaccard_mean[b.k].toFixed(2)}.</div>`); });
 
     function drawLoads(animate) {
       const box = d3.select('#loads-chart').html(''); const W = 300, H = 150, m = { l: 108, r: 70, t: 4, b: 18 };
@@ -458,7 +458,7 @@
       const bar = row.append('rect').attr('x', x(0)).attr('y', d => y(d.name)).attr('height', y.bandwidth()).attr('rx', 3).attr('fill', d => BLK[d.block]).attr('width', 0);
       const rng = row.append('line').attr('y1', d => y(d.name) + y.bandwidth() / 2).attr('y2', d => y(d.name) + y.bandwidth() / 2).attr('x1', d => x(d.lo)).attr('x2', d => x(d.lo)).attr('stroke', TEXT).attr('stroke-opacity', 0.55).attr('stroke-width', 1.2);
       const lab = row.append('text').attr('x', d => x(d.hi) + 5).attr('y', d => y(d.name) + y.bandwidth() / 2).attr('dy', '0.35em').attr('fill', TEXT).style('font-size', '10.5px').style('font-weight', 700).text(d => d.L).attr('opacity', 0);
-      bindTip(row, d => `<b>${d.name}</b> L = ${d.L} (${d.lo} to ${d.hi})<div class="m">N ${typeof d.N === 'number' ? fmt(d.N) : d.N}, ${d.h} hours a day, added PM2.5 ${d.dC} micrograms per cubic metre</div><div class="m">${d.src}</div>`);
+      bindTip(row, d => `<b>${d.name}</b> L = ${d.L} (${d.lo} to ${d.hi})<div class="m">N ${typeof d.N === 'number' ? fmt(d.N) : d.N}, h ${d.h} h/day, ΔC ${d.dC} µg/m³</div><div class="m">${d.src}</div>`);
       const dur = animate ? 1000 : 0;
       bar.transition().duration(dur).delay((d, i) => i * 120 * T).ease(d3.easeCubicOut).attr('width', d => x(d.L) - x(0));
       rng.transition().duration(dur).delay((d, i) => 500 * T + i * 120 * T).attr('x2', d => x(d.hi));
@@ -505,7 +505,7 @@
       bindTip(sec, d => `<b>${d.p.id}</b> ${d.p.name}<div class="m">${d.p.generated} interventions on ${d.p.edges} cited edges, ${d.p.through} through the gates, load ${d.p.L}</div>`);
       const spokes = svg.append('g').selectAll('line').data(L.edges).join('line').attr('x1', d => cx + r0 * Math.cos(d.ang)).attr('y1', d => cy + r0 * Math.sin(d.ang)).attr('x2', d => cx + r0 * Math.cos(d.ang)).attr('y2', d => cy + r0 * Math.sin(d.ang)).attr('stroke', d => PCOL[d.p.id]).attr('stroke-opacity', 0.55).attr('stroke-width', 1);
       const ticks = svg.append('g').selectAll('circle').data(L.edges).join('circle').attr('cx', d => cx + (r1 + 8) * Math.cos(d.ang)).attr('cy', d => cy + (r1 + 8) * Math.sin(d.ang)).attr('r', 0).attr('fill', '#071018').attr('stroke', d => PCOL[d.p.id]).attr('stroke-width', 1.4);
-      bindTip(ticks, d => { const [u, v] = d.edge.split('->'); return `<b>${d.edge}</b> ${nodeLabel[u] || u} to ${nodeLabel[v] || v}<div class="m">${d.n} interventions on this edge, ${d.p.id}</div>`; });
+      bindTip(ticks, d => { const [u, v] = d.edge.split('->'); return `<b>${d.edge}</b> ${nodeLabel[u] || u} → ${nodeLabel[v] || v}<div class="m">${d.n} interventions on this edge, ${d.p.id}</div>`; });
       const dots = svg.append('g').selectAll('circle').data(L.dots).join('circle').attr('cx', d => d.x).attr('cy', d => d.y).attr('r', 0).attr('fill', d => CLS[d.s.cls]).attr('stroke', '#071018').attr('stroke-width', 0.8).style('cursor', 'default');
       bindTip(dots, d => `<b>${d.s.id}</b> ${d.s.text}<div class="m">${d.s.cls}, edge ${d.edge}, ${d.s.fail ? 'out at gate G' + d.s.fail : 'through the gates, score ' + d.s.ws + ' of 90'}</div>`);
       const centre = svg.append('g').attr('transform', `translate(${cx},${cy})`);
@@ -569,14 +569,14 @@
       const x = d3.scaleLinear().domain([0, 2]).range([m.l, W - m.r]); const y = d3.scaleLinear().domain([50, 102]).range([H - m.b, m.t]);
       svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(4).tickSize(0)).call(g => g.select('.domain').attr('stroke', GRID)).selectAll('text').attr('fill', DIM).style('font-size', '9px');
       svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r))).call(g => g.select('.domain').remove()).selectAll('text').attr('fill', DIM).style('font-size', '9px');
-      svg.append('text').attr('x', x(0)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').text('scale 0, eight criteria');
-      svg.append('text').attr('x', x(1)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').attr('text-anchor', 'middle').text('scale 1, stated weights');
+      svg.append('text').attr('x', x(0)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').text('λ = 0, eight criteria');
+      svg.append('text').attr('x', x(1)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').attr('text-anchor', 'middle').text('λ = 1, stated weights');
       svg.append('line').attr('x1', x(1)).attr('x2', x(1)).attr('y1', y(50)).attr('y2', y(100)).attr('stroke', GRID);
       const line = d3.line().x((v, i) => x(L[i])).y(v => y(v));
       const rows = Object.entries(D.lambda.rows); const ends = rows.map(([id, v]) => ({ id, y: y(v[v.length - 1]) })).sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 11) ends[i].y = ends[i - 1].y + 11; const endY = Object.fromEntries(ends.map(e => [e.id, e.y]));
       rows.forEach(([id, v]) => { const pick = id === 'P4-71', pur = id === 'P5-33'; const p = svg.append('path').attr('d', line(v)).attr('fill', 'none').attr('stroke', pur ? MUTED : PCOL[id.slice(0, 2)]).attr('stroke-width', pick ? 2.4 : 1.4).attr('stroke-dasharray', pur ? '4 3' : null).attr('opacity', pick ? 1 : 0.85); const len = p.node().getTotalLength(); if (!pur) p.attr('stroke-dasharray', len).attr('stroke-dashoffset', animate ? len : 0).transition().duration(1400 * T).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); else p.attr('opacity', animate ? 0 : 0.85).transition().duration(600 * T).delay(400 * T).attr('opacity', 0.85);
-        svg.append('text').attr('x', x(2) + 5).attr('y', endY[id]).attr('dy', '0.35em').attr('fill', pick ? GOLD : MUTED).style('font-size', '9px').style('font-weight', pick ? 700 : 500).text(pur ? 'HEPA purifiers, tie at scale 0' : (SHORT[id] || id).split(',')[0]).attr('opacity', animate ? 0 : 1).transition().delay(1300 * T).duration(300 * T).attr('opacity', 1);
-        bindTip(p, () => `<b>${id}</b> ${SHORT[id] || ''}<div class="m">score at scale 0 is ${v[0]}, at 1 is ${v[20]}, at 2 is ${v[40]}</div>`); });
+        svg.append('text').attr('x', x(2) + 5).attr('y', endY[id]).attr('dy', '0.35em').attr('fill', pick ? GOLD : MUTED).style('font-size', '9px').style('font-weight', pick ? 700 : 500).text(pur ? 'HEPA purifiers, ties at λ = 0' : (SHORT[id] || id).split(',')[0]).attr('opacity', animate ? 0 : 1).transition().delay(1300 * T).duration(300 * T).attr('opacity', 1);
+        bindTip(p, () => `<b>${id}</b> ${SHORT[id] || ''}<div class="m">score at λ = 0: ${v[0]}, at λ = 1: ${v[20]}, at λ = 2: ${v[40]}</div>`); });
       return 1600;
     }
     register('s3', {
@@ -687,8 +687,8 @@
       // engine bay at the front left
       const bay = g.append('g').attr('opacity', 0); bay.append('rect').attr('x', 6).attr('y', 96).attr('width', 44).attr('height', 44).attr('rx', 4).attr('fill', 'none').attr('stroke', DIM).attr('stroke-dasharray', '3 2'); bay.append('text').attr('x', 28).attr('y', 118).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '8px').text('engine'); bay.append('text').attr('x', 28).attr('y', 128).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '8px').text('bay');
       // sensors
-      const roofS = g.append('g').attr('transform', 'translate(215,-4)').attr('opacity', 0); roofS.append('rect').attr('x', -7).attr('y', -12).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); roofS.append('circle').attr('class', 'pulse').attr('r', 6).attr('cy', -6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); roofS.append('text').attr('y', -20).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('roof sensor');
-      const cabS = g.append('g').attr('transform', 'translate(215,108)').attr('opacity', 0); cabS.append('rect').attr('x', -7).attr('y', -6).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); cabS.append('circle').attr('class', 'pulse').attr('r', 6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); cabS.append('text').attr('y', 24).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('cabin sensor');
+      const roofS = g.append('g').attr('transform', 'translate(215,-4)').attr('opacity', 0); roofS.append('rect').attr('x', -7).attr('y', -12).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); roofS.append('circle').attr('class', 'pulse').attr('r', 6).attr('cy', -6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); roofS.append('text').attr('y', -20).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('roof sensor  C_roof');
+      const cabS = g.append('g').attr('transform', 'translate(215,108)').attr('opacity', 0); cabS.append('rect').attr('x', -7).attr('y', -6).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); cabS.append('circle').attr('class', 'pulse').attr('r', 6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); cabS.append('text').attr('y', 24).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('cabin sensor  C_cabin');
       // tailpipes: old (low, by the door) and new (up, off side)
       const oldPipe = g.append('path').attr('d', 'M425,140 h22 q8,0 12,6').attr('fill', 'none').attr('stroke', BLK[2]).attr('stroke-width', 3).attr('stroke-linecap', 'round').attr('opacity', 0);
       const oldPlume = g.append('g').attr('opacity', 0); [0, 1, 2].forEach(i => oldPlume.append('circle').attr('cx', 466 + i * 9).attr('cy', 148 - i * 7).attr('r', 3 + i * 2).attr('fill', BLK[2]).attr('opacity', 0.45 - i * 0.1));
@@ -700,10 +700,10 @@
       g.append('text').attr('class', 'kit2').attr('x', -157).attr('y', 124).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('leak, crankcase, intake, tailpipe');
       // ratio readout
       const ro = svg.append('g').attr('transform', 'translate(165,296)').attr('opacity', 0);
-      ro.append('text').attr('fill', MUTED).style('font-size', '11px').text('the ratio cabin over roof and the excess cabin minus roof, at idle with doors closed and the AC recirculating, are the screening signal');
-      const rv = ro.append('text').attr('y', 40).attr('class', 'serif').attr('fill', TEXT).style('font-size', '34px').style('font-family', 'Instrument Serif, Georgia, serif').text('ratio 2.9');
-      const rs = ro.append('text').attr('y', 60).attr('fill', DIM).style('font-size', '9.5px').text('expected signal of cabin 20 against ambient 7 micrograms per cubic metre (Adar 2015), read together with the state of the bus');
-      bindTip(ro, () => `<b>expected signal</b> in-cabin PM2.5 of 20 (standard deviation 18) against ambient 7 (5) and roadway 13 (12) micrograms per cubic metre over 597 trips on 188 buses (Adar 2015). 20 over 7 gives a ratio of 2.9. On two Seattle buses with windows closed, 13.4 of 26 micrograms per cubic metre in the cabin was the bus's own, 12 of that from the crankcase (Ireson 2011). An indoor-to-outdoor ratio also moves with the HVAC mode, speed, filter and passengers, so the excess, the absolute cabin level and the state log are read with it, and a reference black-carbon or particle-number instrument validates 2 to 4 buses.`);
+      ro.append('text').attr('fill', MUTED).style('font-size', '11px').text('R = C_cabin / C_roof and Δ = C_cabin − C_roof at idle, doors closed, HVAC recirculating, the screening signal');
+      const rv = ro.append('text').attr('y', 40).attr('class', 'serif').attr('fill', TEXT).style('font-size', '34px').style('font-family', 'Instrument Serif, Georgia, serif').text('R = 2.9');
+      const rs = ro.append('text').attr('y', 60).attr('fill', DIM).style('font-size', '9.5px').text('expected signal of cabin 20 against ambient 7 µg/m³ (Adar 2015), read together with the state of the bus');
+      bindTip(ro, () => `<b>expected signal</b> in-cabin PM₂.₅ 20 ± 18 against ambient 7 ± 5 and roadway 13 ± 12 µg/m³ over 597 trips on 188 buses (Adar 2015). R = 20 / 7 = 2.9. On two Seattle buses with windows closed, 13.4 of 26 µg/m³ in the cabin was the bus's own, 12 of that from the crankcase (Ireson 2011). An indoor-to-outdoor ratio also moves with the HVAC mode, speed, filter and passengers, so the excess Δ, the absolute cabin level and the state log are read with it, and a reference black-carbon or particle-number instrument validates 2 to 4 buses.`);
       // timer and grade badges
       const timer = svg.append('g').attr('transform', 'translate(536,6)').attr('opacity', 0); timer.append('rect').attr('width', 158).attr('height', 46).attr('rx', 8).attr('fill', 'rgba(162,118,234,0.10)').attr('stroke', BLK[4]); timer.append('text').attr('x', 79).attr('y', 18).attr('text-anchor', 'middle').attr('fill', BLK[4]).style('font-size', '10px').style('font-weight', 700).text('state log per reading'); timer.append('text').attr('x', 79).attr('y', 32).attr('text-anchor', 'middle').attr('fill', MUTED).style('font-size', '8px').text('idle or moving, HVAC, doors, load, T, RH, CO₂');
       bindTip(timer, () => `<b>the state log</b> is what makes a ratio readable: a sealed bus on a dusty day reads R below 1 with its own exhaust inside, a clean bus on a clean day reads R above 1 on a few micrograms. Flagging happens at idle, doors closed, HVAC recirculating, against the fleet's spread. No engine-off in the heat (rule from failure mode F1), and the idle timer is deferred until its benefit is measured.`);
@@ -723,14 +723,14 @@
       await sleep(1700 * d);
       B.roofS.transition().duration(400 * d).attr('opacity', 1); B.cabS.transition().duration(400 * d).delay(150 * d).attr('opacity', 1); pulse(B.roofS.select('.pulse')); pulse(B.cabS.select('.pulse'));
       B.ro.transition().delay(400 * d).duration(500 * d).attr('opacity', 1);
-      if (d) { const t0 = performance.now(); await new Promise(res => (function tick(now) { const p = Math.min(1, (now - t0 - 500) / 1200); if (p >= 0) B.rv.text('ratio ' + (0.5 + 2.4 * Math.max(0, p)).toFixed(1)); if (p < 1) requestAnimationFrame(tick); else res(); })(t0)); } else B.rv.text('ratio 2.9');
+      if (d) { const t0 = performance.now(); await new Promise(res => (function tick(now) { const p = Math.min(1, (now - t0 - 500) / 1200); if (p >= 0) B.rv.text('R = ' + (0.5 + 2.4 * Math.max(0, p)).toFixed(1)); if (p < 1) requestAnimationFrame(tick); else res(); })(t0)); } else B.rv.text('R = 2.9');
       await sleep(900 * d);
       // the fix: seal, kit, reroute
       B.bay.transition().duration(400 * d).attr('opacity', 1); B.kit.transition().duration(400 * d).attr('opacity', 1); B.svg.select('.kit2').transition().duration(400 * d).attr('opacity', 1);
       B.oldPipe.transition().duration(500 * d).attr('opacity', 0); B.oldPlume.transition().duration(500 * d).attr('opacity', 0);
       B.newPipe.transition().duration(900 * d).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); B.newLab.transition().delay(700 * d).duration(300 * d).attr('opacity', 1); B.newLab2.transition().delay(700 * d).duration(300 * d).attr('opacity', 1);
       B.rs.text('after the repair the excess falls, paired and within-bus, into the range of the unflagged buses');
-      B.rv.transition().duration(400 * d).attr('opacity', 0).on('end', () => B.rv.text('the same three numbers re-read').attr('opacity', 1)); await sleep(900 * d);
+      B.rv.transition().duration(400 * d).attr('opacity', 0).on('end', () => B.rv.text('Δ, R and C_cabin re-read').attr('opacity', 1)); await sleep(900 * d);
       B.rv.transition().duration(300 * d).attr('fill', BLK[3]);
       await sleep(500 * d);
       B.timer.transition().duration(500 * d).attr('opacity', 1); await sleep(700 * d);
