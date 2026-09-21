@@ -186,8 +186,8 @@
       <div class="head">
         <div>
           <p class="eyebrow">1 · The need</p>
-          <h2>One system, <em>four separable problems</em></h2>
-          <p class="lede">A cited graph of Abu Dhabi's air pollution, the blocks that hold together on their own, and the breathing each one meets.</p>
+          <h2>Four problem blocks in one cited graph</h2>
+          <p class="lede">A cited graph of Abu Dhabi's air pollution, the four blocks that hold together on their own, and the exposure each one carries.</p>
         </div>
         <div class="tiles">
           <div class="tile"><div class="v num" id="t-nodes">0</div><div class="k">nodes</div></div>
@@ -220,7 +220,7 @@
       <div class="head">
         <div>
           <p class="eyebrow">2 · Every solution explored</p>
-          <h2>The mind map <em>is the graph itself</em></h2>
+          <h2>332 interventions on the edges of the graph</h2>
           <p class="lede">Every cited edge inside a block is a place to intervene, and each was asked four questions. Hover any dot.</p>
         </div>
         <div class="tiles">
@@ -252,7 +252,7 @@
       <div class="head">
         <div>
           <p class="eyebrow">3 · The filters</p>
-          <h2>Four gates, <em>eleven criteria</em></h2>
+          <h2>Four gates and eleven criteria take 332 to one</h2>
           <p class="lede">Four all-or-nothing gates, then eleven weighted criteria, five of them the instructor's and six our own.</p>
         </div>
         <div class="tiles">
@@ -283,7 +283,7 @@
       <div class="head">
         <div>
           <p class="eyebrow">4 · Applied</p>
-          <h2>Rank, <em>stress the weights</em>, fix the specification</h2>
+          <h2>The ranking, the stress tests and the failure modes</h2>
           <p class="lede">232 survivors ranked, the weights and the scores shaken 10,000 times, and a premortem that turned fatal modes into design rules.</p>
         </div>
         <div class="tiles">
@@ -303,10 +303,10 @@
             <div class="tile"><div class="v num">90.3 %</div><div class="k">centred on our weights</div></div>
             <div class="tile"><div class="v num">100 %</div><div class="k">each weight ±50 %</div></div>
           </div>
-          <p style="margin:8px 0 0; font-size:12px; color:var(--muted)">Shake every score by ±1 as well: rank 1 in <b style="color:var(--text)">48 %</b>, top 3 in 72 %. The pick still leads.</p>
+          <p style="margin:8px 0 0; font-size:12px; color:var(--muted)">With every score also moved by ±1, Clean Cabin is first in <b style="color:var(--text)">48 %</b> of draws and in the top three in 72 %.</p>
         </div>
         <div id="fmea" class="panel">
-          <p class="subhead">29 failure modes of a gate-side design, by layer and severity. The fatal ones set the rules</p>
+          <p class="subhead">29 failure modes of a gate-side design by layer and severity, the five fatal ones became the design rules</p>
           <div id="fmea-chart"></div>
           <div class="rules" id="rules"></div>
           <div class="legend" id="fmea-legend" style="margin-top:8px"></div>
@@ -322,8 +322,8 @@
       <div class="head">
         <div>
           <p class="eyebrow">5 · The pick</p>
-          <h2>Clean Cabin, <em>find, fix why, verify</em></h2>
-          <p class="lede">Find which school buses pollute their own cabin, identify why, apply the smallest compatible repair, verify on the same bus.</p>
+          <h2>Clean Cabin, a per-bus diagnosis and repair service</h2>
+          <p class="lede">Clean Cabin finds the school buses that pollute their own cabin, identifies why, applies the smallest compatible repair, and verifies on the same bus.</p>
         </div>
         <div class="tiles">
           <div class="tile"><div class="v num">4.11</div><div class="k">M person·µg/m³·h/day in the bus cabin, six times the gate</div></div>
@@ -340,8 +340,8 @@
         </div>
         <div>
           <div class="panel"><p class="subhead">Prior art, measured in-cabin reductions from the source-side kit</p><div id="art"></div></div>
-          <div class="panel" style="margin-top:10px"><p class="subhead">The pilot, one term, success fixed in advance</p><div id="pilot"></div>
-            <p style="margin:6px 0 0; font-size:12px; color:var(--muted)">Success, fixed in advance: every flagged bus's idle excess falls into the unflagged range after its repair, on the same bus. 10 to 20 buses, one term.</p>
+          <div class="panel" style="margin-top:10px"><p class="subhead">The pilot over one term</p><div id="pilot"></div>
+            <p style="margin:6px 0 0; font-size:12px; color:var(--muted)">Success is fixed in advance: every flagged bus's idle excess falls into the unflagged range after its repair, measured on the same bus. The pilot runs on 10 to 20 buses over one term.</p>
           </div>
         </div>
       </div>
@@ -470,7 +470,7 @@
       steps: [
         async () => { countTo(document.getElementById('t-nodes'), D.graph.counts.nodes); countTo(document.getElementById('t-edges'), D.graph.counts.edges); countTo(document.getElementById('t-rows'), D.graph.counts.rows); await sleep(1500); },
         async () => { setSplit(1); d3.select('#blocks').classed('in', true); await sleep(1800); },
-        async () => { d3.select('#loads').classed('in', true); drawLoads(!slides.s1.instant); await sleep(1300); d3.select('#s1-line').html('The school gate is the smallest term, <b>0.68</b>. The bus cabin alone is <b>4.11</b>, six times it.'); },
+        async () => { d3.select('#loads').classed('in', true); drawLoads(!slides.s1.instant); await sleep(1300); d3.select('#s1-line').html('The school gate is the smallest term at <b>0.68</b>, and the bus cabin alone is <b>4.11</b>, six times the gate.'); },
       ],
     });
 
@@ -583,7 +583,7 @@
       gap: 800,
       reset() { G3 = drawGates(); GCHIP.classed('closed', false); const e = document.getElementById('t-alive'); e.textContent = '332'; e.dataset.cur = 332; d3.select('#s3-line').html(''); d3.select('#rubric').html(''); d3.select('#lam').html(''); },
       steps: [
-        async () => { const inst = slides.s3.instant; await sleep(300); for (let k = 1; k <= 4; k++) await closeGate(k, inst); d3.select('#s3-line').html('<b>232</b> pass, 38 · 42 · 62 · 62 · 28. Near-road loses most, its levers need a regulator.'); },
+        async () => { const inst = slides.s3.instant; await sleep(300); for (let k = 1; k <= 4; k++) await closeGate(k, inst); d3.select('#s3-line').html('<b>232</b> pass, 38, 42, 62, 62 and 28 per problem. Near-road loses the most because its levers need a regulator.'); },
         async () => { const ms = drawRubric(!slides.s3.instant); await sleep(ms); },
         async () => { const ms = drawLambda(!slides.s3.instant); await sleep(ms); },
       ],
@@ -696,13 +696,13 @@
       const npLen = newPipe.node().getTotalLength(); newPipe.attr('stroke-dasharray', npLen).attr('stroke-dashoffset', npLen);
       const newLab = g.append('text').attr('x', -157).attr('y', -66).attr('fill', BLK[2]).style('font-size', '9.5px').attr('opacity', 0).text('tailpipe up and off side,');
       const newLab2 = g.append('text').attr('x', -157).attr('y', -54).attr('fill', BLK[2]).style('font-size', '9.5px').attr('opacity', 0).text('away from the door and the intake');
-      const kit = g.append('text').attr('x', -157).attr('y', 112).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('the source found:');
+      const kit = g.append('text').attr('x', -157).attr('y', 112).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('source classes,');
       g.append('text').attr('class', 'kit2').attr('x', -157).attr('y', 124).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('leak, crankcase, intake, tailpipe');
       // ratio readout
       const ro = svg.append('g').attr('transform', 'translate(165,296)').attr('opacity', 0);
-      ro.append('text').attr('fill', MUTED).style('font-size', '11px').text('R = C_cabin / C_roof and Δ = C_cabin − C_roof at idle, doors closed, HVAC recirculating: the screen');
+      ro.append('text').attr('fill', MUTED).style('font-size', '11px').text('R = C_cabin / C_roof and Δ = C_cabin − C_roof at idle, doors closed, HVAC recirculating, the screening signal');
       const rv = ro.append('text').attr('y', 40).attr('class', 'serif').attr('fill', TEXT).style('font-size', '34px').style('font-family', 'Instrument Serif, Georgia, serif').text('R = 2.9');
-      const rs = ro.append('text').attr('y', 60).attr('fill', DIM).style('font-size', '9.5px').text('expected signal: cabin 20 against ambient 7 µg/m³ (Adar 2015). A screen, not a proof: the state of the bus is logged with it');
+      const rs = ro.append('text').attr('y', 60).attr('fill', DIM).style('font-size', '9.5px').text('expected signal of cabin 20 against ambient 7 µg/m³ (Adar 2015), read together with the state of the bus');
       bindTip(ro, () => `<b>expected signal</b> in-cabin PM₂.₅ 20 ± 18 against ambient 7 ± 5 and roadway 13 ± 12 µg/m³ over 597 trips on 188 buses (Adar 2015). R = 20 / 7 = 2.9. On two Seattle buses with windows closed, 13.4 of 26 µg/m³ in the cabin was the bus's own, 12 of that from the crankcase (Ireson 2011). An indoor-to-outdoor ratio also moves with the HVAC mode, speed, filter and passengers, so the excess Δ, the absolute cabin level and the state log are read with it, and a reference black-carbon or particle-number instrument validates 2 to 4 buses.`);
       // timer and grade badges
       const timer = svg.append('g').attr('transform', 'translate(536,6)').attr('opacity', 0); timer.append('rect').attr('width', 158).attr('height', 46).attr('rx', 8).attr('fill', 'rgba(162,118,234,0.10)').attr('stroke', BLK[4]); timer.append('text').attr('x', 79).attr('y', 18).attr('text-anchor', 'middle').attr('fill', BLK[4]).style('font-size', '10px').style('font-weight', 700).text('state log per reading'); timer.append('text').attr('x', 79).attr('y', 32).attr('text-anchor', 'middle').attr('fill', MUTED).style('font-size', '8px').text('idle or moving, HVAC, doors, load, T, RH, CO₂');
@@ -729,8 +729,8 @@
       B.bay.transition().duration(400 * d).attr('opacity', 1); B.kit.transition().duration(400 * d).attr('opacity', 1); B.svg.select('.kit2').transition().duration(400 * d).attr('opacity', 1);
       B.oldPipe.transition().duration(500 * d).attr('opacity', 0); B.oldPlume.transition().duration(500 * d).attr('opacity', 0);
       B.newPipe.transition().duration(900 * d).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); B.newLab.transition().delay(700 * d).duration(300 * d).attr('opacity', 1); B.newLab2.transition().delay(700 * d).duration(300 * d).attr('opacity', 1);
-      B.rs.text('after the repair: the excess Δ falls, paired and within-bus, into the range of the unflagged buses');
-      B.rv.transition().duration(400 * d).attr('opacity', 0).on('end', () => B.rv.text('verify: Δ, R, C_cabin re-read').attr('opacity', 1)); await sleep(900 * d);
+      B.rs.text('after the repair the excess falls, paired and within-bus, into the range of the unflagged buses');
+      B.rv.transition().duration(400 * d).attr('opacity', 0).on('end', () => B.rv.text('Δ, R and C_cabin re-read').attr('opacity', 1)); await sleep(900 * d);
       B.rv.transition().duration(300 * d).attr('fill', BLK[3]);
       await sleep(500 * d);
       B.timer.transition().duration(500 * d).attr('opacity', 1); await sleep(700 * d);
