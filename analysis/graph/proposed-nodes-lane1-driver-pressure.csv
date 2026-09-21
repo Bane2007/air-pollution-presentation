@@ -1,0 +1,5 @@
+id,layer,label,definition,unit,scope,citation
+D19,driver,Economic output,Emirate GDP at constant prices as a driver of energy water and emissions,AED,abu_dhabi,"EAD 2021, Greenhouse Gas Inventory and Projections for Abu Dhabi Emirate (GHG correlation 0.87 with GDP, oil and gas 35 % of GDP in 2015)"
+D20,driver,Livestock population,Head of camels sheep goats and cattle on farms,head,abu_dhabi,"EAD 2018, Abu Dhabi Air Emissions Inventory (livestock 2,255 t NMVOC and 727 t PM10 in 2015, a relatively important source of PM and NMVOC)"
+D21,driver,Coastal land reclamation,Area of sea and intertidal zone converted to built land,ha,abu_dhabi,"Dahy 2025, Tracing the Heat (reclamation areas warming +2.93 degC per year summer and +4.20 degC per year winter, loss of water bodies from 600 to 300 km2 per Ramadan 2025)"
+P27,pressure,Fugitive service station VOC,Evaporative NMVOC from fuel storage and refuelling at service stations,t/yr,abu_dhabi,"EAD 2018, Abu Dhabi Air Emissions Inventory (193 t NMVOC in 2015 as a separate sector)"

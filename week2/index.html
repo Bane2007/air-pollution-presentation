@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="theme-color" content="#071018" />
+  <title>Air Pollution Implication Graph</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23071018'/%3E%3Cpath d='M24 62c14-4 17-27 32-27 9 0 12 10 20 10' fill='none' stroke='%23f4c95d' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <script defer src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+  <script defer src="https://unpkg.com/three-spritetext@1.6.5/dist/three-spritetext.min.js"></script>
+  <script defer src="https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
+  <style>
+    :root {
+      --sidebar-width: 340px;
+      --mobile-panel-height: clamp(260px, 42dvh, 380px);
+      --bg: #071018;
+      --panel: rgba(11, 17, 24, 0.82);
+      --panel-border: rgba(255,255,255,0.08);
+      --text: #e8edf1;
+      --muted: #a9b5bf;
+      --gold: #f4c95d;
+      --driver: #7db7ff;
+      --source: #ef8a7a;
+      --pollutant: #8bd9a3;
+      --interaction: #f4c873;
+      --environment: #b99cf7;
+      --health: #f4a7cb;
+      --school: #ffb454;
+      --accent: #6fe3d1;
+      --grey: rgba(160, 170, 180, 0.38);
+      --shadow: rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 100dvh;
+      overflow: hidden;
+      overscroll-behavior: none;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 20% 15%, rgba(75, 112, 148, 0.15), transparent 28%),
+        radial-gradient(circle at 80% 70%, rgba(108, 95, 140, 0.12), transparent 30%),
+        var(--bg);
+    }
+
+    [id="3d-graph"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: var(--sidebar-width);
+      width: calc(100vw - var(--sidebar-width));
+      height: 100dvh;
+      z-index: 1;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100dvh;
+      padding: max(24px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+      background: linear-gradient(180deg, rgba(11,17,24,0.88), rgba(11,17,24,0.7));
+      border-right: 1px solid var(--panel-border);
+      backdrop-filter: blur(14px);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .title {
+      margin: 0 0 2px 0;
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .subtitle {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .card {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+    }
+
+    .card:hover {
+      transform: translateX(2px);
+      border-color: rgba(244, 201, 93, 0.45);
+      background: rgba(244, 201, 93, 0.04);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-meta strong { font-weight: 600; }
+
+    .card-meta .good { color: #7fe0b0; }
+    .card-meta .warn { color: #f1a5a5; }
+
+    .top-nav {
+      position: absolute;
+      right: 28px;
+      top: 28px;
+      z-index: 11;
+      display: flex;
+      align-items: center;
+      background: rgba(10, 16, 22, 0.66);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      overflow: hidden;
+    }
+
+    .nav-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font: inherit;
+      font-weight: 600;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-btn.active {
+      background: rgba(244, 201, 93, 0.12);
+      color: var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --sidebar-width: 290px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      :root {
+        --sidebar-width: 0px;
+      }
+
+      .sidebar {
+        top: 0;
+        width: 100vw;
+        height: var(--mobile-panel-height);
+        padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 14px max(14px, env(safe-area-inset-left));
+        border-right: 0;
+        border-bottom: 1px solid var(--panel-border);
+        backdrop-filter: none;
+        gap: 8px;
+      }
+
+      [id="3d-graph"] {
+        top: var(--mobile-panel-height);
+        left: 0;
+        width: 100vw;
+        height: calc(100dvh - var(--mobile-panel-height));
+      }
+
+      .title {
+        font-size: 25px;
+      }
+
+      .subtitle {
+        margin-bottom: 2px;
+        font-size: 12px;
+      }
+
+      .card-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 2px;
+      }
+
+      .card {
+        min-width: 0;
+        padding: 9px 10px;
+      }
+
+      .card-title {
+        font-size: 13px;
+      }
+
+      .card-meta {
+        align-items: flex-start;
+        flex-direction: column;
+        font-size: 10px;
+      }
+
+      .top-nav {
+        top: calc(var(--mobile-panel-height) + 10px);
+        right: max(10px, env(safe-area-inset-right));
+      }
+
+      .nav-btn {
+        min-height: 44px;
+        padding: 9px 13px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-height: 600px) and (orientation: landscape) {
+      :root {
+        --sidebar-width: 250px;
+      }
+
+      .sidebar {
+        top: 0;
+        width: var(--sidebar-width);
+        height: 100dvh;
+        padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+        border-right: 1px solid var(--panel-border);
+        border-bottom: 0;
+        gap: 6px;
+      }
+
+      [id="3d-graph"] {
+        top: 0;
+        left: var(--sidebar-width);
+        width: calc(100vw - var(--sidebar-width));
+        height: 100dvh;
+      }
+
+      .title {
+        font-size: 23px;
+      }
+
+      .subtitle {
+        display: none;
+      }
+
+      .card-list {
+        display: flex;
+        gap: 5px;
+        margin-top: 2px;
+      }
+
+      .card {
+        padding: 7px 9px;
+      }
+
+      .card-title {
+        margin-bottom: 2px;
+        font-size: 12px;
+      }
+
+      .card-meta {
+        display: none;
+      }
+
+      .top-nav {
+        top: max(10px, env(safe-area-inset-top));
+        right: max(10px, env(safe-area-inset-right));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="3d-graph"></div>
+
+  <aside class="sidebar">
+    <div>
+      <p class="eyebrow">Systems map</p>
+      <h1 class="title">Air pollution</h1>
+      <p class="subtitle">Causal implication graph of drivers, sources, exposures and health effects.</p>
+    </div>
+
+    <div class="card-list">
+      <div class="card" data-module="school_traffic">
+        <div class="card-title">Vehicle idling</div>
+        <div class="card-meta"><span class="good">Pathway visible</span><span>Local exposure</span></div>
+      </div>
+      <div class="card" data-module="staggered_pickup">
+        <div class="card-title">Staggered pickup times</div>
+        <div class="card-meta"><span class="good">Reduces congestion</span><span>Exposure</span></div>
+      </div>
+      <div class="card" data-module="school_street">
+        <div class="card-title">Temporary school zones</div>
+        <div class="card-meta"><span class="good">Access control</span><span>Displacement</span></div>
+      </div>
+      <div class="card" data-module="electric_bus">
+        <div class="card-title">Electric bus policy</div>
+        <div class="card-meta"><span class="good">Low tailpipe</span><span>System-wide</span></div>
+      </div>
+    </div>
+
+  </aside>
+
+  <div class="top-nav">
+    <button class="nav-btn" id="btn-river">River View</button>
+    <button class="nav-btn active" id="btn-rotary">Rotary View</button>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+    const categoryColors = {
+      driver: '#7db7ff',
+      source: '#ef8a7a',
+      pollutant: '#8bd9a3',
+      interaction: '#f4c873',
+      environment: '#b99cf7',
+      health: '#f4a7cb',
+      school: '#ffb454',
+      other: '#c7ced7'
+    };
+
+    const nodes = [
+      { id: 'mobility_demand', label: 'Mobility demand', category: 'driver', detail: 'Travel and movement demand shapes vehicle activity and exposure.' },
+      { id: 'household_energy_demand', label: 'Household energy demand', category: 'driver', detail: 'Domestic heating and cooking create combustion emissions.' },
+      { id: 'electricity_demand', label: 'Electricity demand', category: 'driver', detail: 'Power needs drive fossil generation and upstream emissions.' },
+      { id: 'industrial_production', label: 'Industrial production', category: 'driver', detail: 'Output and scale increase combustion, dust and process emissions.' },
+      { id: 'agriculture', label: 'Agriculture', category: 'driver', detail: 'Animal and crop systems create ammonia and related precursor emissions.' },
+      { id: 'construction', label: 'Construction', category: 'driver', detail: 'Building activity generates dust and local disturbance.' },
+
+      { id: 'school_schedule', label: 'School schedule', category: 'school', detail: 'Timetables concentrate pickups and drop-offs into brief windows.' },
+      { id: 'simultaneous_arrivals', label: 'Simultaneous arrivals', category: 'school', detail: 'Compressed pickup windows create surges in vehicle movement.' },
+      { id: 'queueing_congestion', label: 'Queueing / congestion', category: 'school', detail: 'Cars stack near the gate and circulate repeatedly.' },
+      { id: 'idling_cruising_manoeuvring', label: 'Idling / cruising', category: 'school', detail: 'Short stop-and-go cycles raise local emissions per trip.' },
+      { id: 'road_traffic', label: 'Road traffic', category: 'source', detail: 'Vehicle activity is a major source of NOx, PM and ultrafine particles.' },
+      { id: 'tailpipe_combustion', label: 'Tailpipe combustion', category: 'source', detail: 'Engine exhaust emits NOx, VOCs, carbon species and heat.' },
+      { id: 'brake_tyre_wear', label: 'Brake / tyre wear', category: 'source', detail: 'Non-exhaust particles add primary PM and ultrafine material.' },
+      { id: 'power_generation', label: 'Power generation', category: 'source', detail: 'Thermal generation adds SO2, NOx and secondary particle precursors.' },
+      { id: 'factories', label: 'Factories', category: 'source', detail: 'Industrial stacks, boilers and processes emit fine particles and gases.' },
+      { id: 'fuel_burning', label: 'Fuel burning', category: 'source', detail: 'Residential and commercial combustion releases soot and pollutants.' },
+      { id: 'fertiliser_manure', label: 'Fertiliser / manure', category: 'source', detail: 'Ammonia emissions react with acidic gases to form secondary PM.' },
+      { id: 'construction_dust', label: 'Construction dust', category: 'source', detail: 'Dust emissions increase coarse particles and local visibility loss.' },
+
+      { id: 'nox_no2', label: 'NOx / NO₂', category: 'pollutant', detail: 'Nitrogen oxides drive ozone and NO₂-related local pollution.' },
+      { id: 'pm25', label: 'Primary PM₂.₅', category: 'pollutant', detail: 'Fine particulates are inhaled deeply and worsen cardiopulmonary risk.' },
+      { id: 'pm10', label: 'PM₁₀', category: 'pollutant', detail: 'Coarse particles carry dust, soot and other local aerosol material.' },
+      { id: 'vocs', label: 'VOCs', category: 'pollutant', detail: 'Volatile organics react to form ozone and secondary products.' },
+      { id: 'so2', label: 'SO₂', category: 'pollutant', detail: 'Sulphur dioxide contributes to acidification and secondary PM.' },
+      { id: 'nh3', label: 'NH₃', category: 'pollutant', detail: 'Ammonia readily reacts with NOx and SO₂ to form ammonium particles.' },
+      { id: 'black_carbon', label: 'Black carbon', category: 'pollutant', detail: 'Soot warms and damages airways while contributing to exposure.' },
+      { id: 'ultrafine_particles', label: 'Ultrafine particles', category: 'pollutant', detail: 'Tiny particles penetrate deeply and are elevated near traffic.' },
+      { id: 'ozone_precursors', label: 'Ozone precursors', category: 'pollutant', detail: 'NOx and VOCs form ground-level ozone under sunlight.' },
+
+      { id: 'secondary_pm25', label: 'Secondary PM₂.₅ formation', category: 'interaction', detail: 'Reacting gases and aerosol chemistry produce fine particles.' },
+      { id: 'photochemical_ozone', label: 'Photochemical ozone formation', category: 'interaction', detail: 'Sunlight turns precursors into ozone and secondary oxidants.' },
+
+      { id: 'urban_background', label: 'Urban background concentration', category: 'environment', detail: 'Regional pollution builds a background layer across the city.' },
+      { id: 'near_school_concentration', label: 'Near-school NO₂ / PM / BC / UFP', category: 'environment', detail: 'School-gate concentrations rise sharply during school travel peaks.' },
+      { id: 'indoor_infiltration', label: 'Indoor infiltration', category: 'environment', detail: 'Outdoor pollution enters classrooms and homes through windows and leaks.' },
+      { id: 'school_commute_microenvironments', label: 'School / commute microenvironments', category: 'environment', detail: 'Exposure is concentrated in travel corridors and waiting areas.' },
+      { id: 'inhaled_dose', label: 'Child inhaled dose', category: 'environment', detail: 'Dose reflects pollution concentration, time, breathing rate and activity.' },
+
+      { id: 'respiratory_disease', label: 'Respiratory disease', category: 'health', detail: 'Asthma, inflammation and reduced lung function worsen with exposure.' },
+      { id: 'cardiovascular_effects', label: 'Cardiovascular effects', category: 'health', detail: 'Pollution contributes to blood pressure stress and vascular strain.' },
+      { id: 'mortality', label: 'Mortality', category: 'health', detail: 'Long-term and acute exposure raise mortality risk.' },
+      { id: 'cognitive_developmental_effects', label: 'Cognitive / developmental effects', category: 'health', detail: 'Exposure can affect attention, learning and child development.' },
+
+      { id: 'local_traffic_emissions', label: 'Local traffic emissions', category: 'school', detail: 'Traffic near schools raises hot spots of NO₂, PM and black carbon.' },
+      { id: 'child_inhaled_exposure', label: 'Child inhaled exposure', category: 'school', detail: 'Children experience higher doses during queues, walking and waiting.' },
+      { id: 'school_health_outcomes', label: 'Respiratory / cognitive effects', category: 'school', detail: 'Schoolgate exposure links to asthma, attention and developmental impacts.' }
+    ];
+
+    const links = [
+      ['mobility_demand', 'road_traffic'],
+      ['household_energy_demand', 'fuel_burning'],
+      ['electricity_demand', 'power_generation'],
+      ['industrial_production', 'factories'],
+      ['agriculture', 'fertiliser_manure'],
+      ['construction', 'construction_dust'],
+
+      ['school_schedule', 'simultaneous_arrivals'],
+      ['simultaneous_arrivals', 'queueing_congestion'],
+      ['queueing_congestion', 'idling_cruising_manoeuvring'],
+      ['idling_cruising_manoeuvring', 'local_traffic_emissions'],
+      ['local_traffic_emissions', 'near_school_concentration'],
+      ['near_school_concentration', 'child_inhaled_exposure'],
+      ['child_inhaled_exposure', 'school_health_outcomes'],
+      ['school_health_outcomes', 'respiratory_disease'],
+      ['school_health_outcomes', 'cognitive_developmental_effects'],
+
+      ['road_traffic', 'tailpipe_combustion'],
+      ['road_traffic', 'brake_tyre_wear'],
+      ['road_traffic', 'local_traffic_emissions'],
+      ['road_traffic', 'nox_no2'],
+      ['tailpipe_combustion', 'nox_no2'],
+      ['tailpipe_combustion', 'vocs'],
+      ['tailpipe_combustion', 'black_carbon'],
+      ['tailpipe_combustion', 'ultrafine_particles'],
+      ['brake_tyre_wear', 'pm25'],
+      ['brake_tyre_wear', 'pm10'],
+      ['brake_tyre_wear', 'ultrafine_particles'],
+
+      ['power_generation', 'so2'],
+      ['power_generation', 'nox_no2'],
+      ['fuel_burning', 'pm25'],
+      ['factories', 'pm25'],
+      ['factories', 'so2'],
+      ['factories', 'nox_no2'],
+      ['fertiliser_manure', 'nh3'],
+      ['construction_dust', 'pm10'],
+
+      ['nox_no2', 'ozone_precursors'],
+      ['vocs', 'ozone_precursors'],
+      ['ozone_precursors', 'photochemical_ozone'],
+      ['so2', 'secondary_pm25'],
+      ['nh3', 'secondary_pm25'],
+      ['nox_no2', 'secondary_pm25'],
+      ['pm25', 'secondary_pm25'],
+      ['secondary_pm25', 'urban_background'],
+      ['photochemical_ozone', 'urban_background'],
+      ['urban_background', 'near_school_concentration'],
+      ['near_school_concentration', 'school_commute_microenvironments'],
+      ['school_commute_microenvironments', 'inhaled_dose'],
+      ['inhaled_dose', 'respiratory_disease'],
+      ['inhaled_dose', 'cardiovascular_effects'],
+      ['inhaled_dose', 'mortality'],
+      ['inhaled_dose', 'cognitive_developmental_effects'],
+      ['near_school_concentration', 'inhaled_dose'],
+      ['urban_background', 'indoor_infiltration'],
+      ['indoor_infiltration', 'inhaled_dose'],
+      ['pm25', 'respiratory_disease'],
+      ['black_carbon', 'respiratory_disease'],
+      ['ultrafine_particles', 'cognitive_developmental_effects'],
+      ['nox_no2', 'respiratory_disease'],
+      ['pm10', 'cardiovascular_effects'],
+      ['mortality', 'respiratory_disease'],
+      ['school_health_outcomes', 'mortality'],
+      ['school_schedule', 'road_traffic'],
+      ['simultaneous_arrivals', 'road_traffic'],
+      ['local_traffic_emissions', 'road_traffic']
+    ].map(([source, target]) => ({ source, target }));
+
+    const nodeMap = Object.fromEntries(nodes.map(node => [node.id, node]));
+    const adjacency = new Map();
+    nodes.forEach(node => adjacency.set(node.id, new Set()));
+    links.forEach(link => {
+      adjacency.get(link.source).add(link.target);
+      adjacency.get(link.target).add(link.source);
+    });
+
+    const riverSubset = new Set([
+      'school_schedule',
+      'simultaneous_arrivals',
+      'queueing_congestion',
+      'idling_cruising_manoeuvring',
+      'local_traffic_emissions',
+      'near_school_concentration',
+      'child_inhaled_exposure',
+      'school_health_outcomes'
+    ]);
+
+    const moduleSets = {
+      school_traffic: new Set([
+        'school_schedule',
+        'simultaneous_arrivals',
+        'queueing_congestion',
+        'idling_cruising_manoeuvring',
+        'road_traffic',
+        'local_traffic_emissions',
+        'near_school_concentration',
+        'school_commute_microenvironments',
+        'inhaled_dose',
+        'child_inhaled_exposure',
+        'school_health_outcomes',
+        'respiratory_disease',
+        'cognitive_developmental_effects'
+      ]),
+      staggered_pickup: new Set([
+        'school_schedule',
+        'simultaneous_arrivals',
+        'queueing_congestion',
+        'idling_cruising_manoeuvring',
+        'local_traffic_emissions',
+        'near_school_concentration',
+        'child_inhaled_exposure',
+        'school_health_outcomes'
+      ]),
+      school_street: new Set([
+        'road_traffic',
+        'local_traffic_emissions',
+        'near_school_concentration',
+        'school_commute_microenvironments',
+        'child_inhaled_exposure',
+        'school_health_outcomes',
+        'respiratory_disease',
+        'cognitive_developmental_effects'
+      ]),
+      electric_bus: new Set([
+        'road_traffic',
+        'tailpipe_combustion',
+        'nox_no2',
+        'pm25',
+        'black_carbon',
+        'ultrafine_particles',
+        'local_traffic_emissions',
+        'near_school_concentration',
+        'child_inhaled_exposure',
+        'school_health_outcomes'
+      ])
+    };
+
+    let selectionMode = 'none';
+    let selectedNodeId = null;
+    let viewMode = 'rotary';
+
+    // 3d-force-graph replaces link endpoint IDs with their node objects once the
+    // simulation starts. Always normalize them before doing map/set lookups so
+    // later refreshes (including those triggered after rotating) stay valid.
+    function getLinkEndpointId(endpoint) {
+      return typeof endpoint === 'object' && endpoint !== null ? endpoint.id : endpoint;
+    }
+
+    function getRelevantNodeIds() {
+      if (selectionMode === 'none') return null;
+      if (selectionMode === 'node') {
+        const refs = new Set([selectedNodeId]);
+        for (const n of adjacency.get(selectedNodeId) || []) refs.add(n);
+        return refs;
+      }
+      return moduleSets[selectionMode] || null;
+    }
+
+    function getLinkOpacity(link) {
+      const sourceId = getLinkEndpointId(link.source);
+      const targetId = getLinkEndpointId(link.target);
+
+      if (viewMode === 'river') {
+        const inRiver = riverSubset.has(sourceId) && riverSubset.has(targetId);
+        return inRiver ? 0.95 : 0.08;
+      }
+
+      if (selectionMode === 'none') {
+        const src = nodeMap[sourceId];
+        const tgt = nodeMap[targetId];
+        const isSchool = src.category === 'school' || tgt.category === 'school';
+        return isSchool ? 0.85 : 0.28;
+      }
+
+      const refs = getRelevantNodeIds();
+      if (!refs) return 0.25;
+      const isRelevant = refs.has(sourceId) && refs.has(targetId);
+      return isRelevant ? 1 : 0.12;
+    }
+
+    function getNodeOpacity(nodeId) {
+      if (viewMode === 'river') {
+        return riverSubset.has(nodeId) ? 1 : 0.05;
+      }
+
+      if (selectionMode === 'none') {
+        return 1;
+      }
+
+      const refs = getRelevantNodeIds();
+      if (!refs) return 1;
+      if (selectionMode === 'node') {
+        return refs.has(nodeId) ? 1 : 0.16;
+      }
+      return refs.has(nodeId) ? 1 : 0.14;
+    }
+
+    function getNodeColor(node) {
+      const base = categoryColors[node.category] || categoryColors.other;
+      const selected = selectionMode === 'node' && selectedNodeId === node.id;
+      const relevant = selectionMode !== 'none' && getRelevantNodeIds() && getRelevantNodeIds().has(node.id);
+      if (selected) return '#ffffff';
+      if (selectionMode !== 'none' && !relevant) return '#727c86';
+      return base;
+    }
+
+    function configureStaticForces(linkDistance) {
+      const chargeForce = Graph.d3Force('charge');
+      const linkForce = Graph.d3Force('link');
+      if (chargeForce?.strength) chargeForce.strength(0);
+      if (linkForce?.distance) linkForce.distance(linkDistance).strength(0);
+    }
+
+    function getGraphAspect() {
+      return graphElement.clientWidth / Math.max(graphElement.clientHeight, 1);
+    }
+
+    function getRotaryCameraPosition() {
+      const mobileScale = Math.max(1, 1.15 / Math.max(getGraphAspect(), 0.5));
+      return {
+        x: 420 * mobileScale,
+        y: 260 * mobileScale,
+        z: 700 * mobileScale
+      };
+    }
+
+    function getRiverCameraDistance() {
+      return getGraphAspect() < 0.9 ? 850 : 800;
+    }
+
+    function applySphereLayout() {
+      const radius = 330;
+      nodes.forEach((node, index) => {
+        const i = index + 1;
+        const theta = Math.PI * (3 - Math.sqrt(5)) * index;
+        const phi = Math.acos(1 - (2 * i) / (nodes.length + 1));
+        const x = radius * Math.cos(theta) * Math.sin(phi);
+        const y = radius * Math.sin(theta) * Math.sin(phi);
+        const z = radius * Math.cos(phi);
+        node.x = x;
+        node.y = y;
+        node.z = z;
+        node.fx = x;
+        node.fy = y;
+        node.fz = z;
+      });
+      configureStaticForces(80);
+    }
+
+    function applyRiverLayout() {
+      const ordered = Array.from(riverSubset);
+      ordered.forEach((id, index) => {
+        const node = nodeMap[id];
+        const useVerticalZigZag = getGraphAspect() < 0.9;
+        let x;
+        let y;
+
+        if (useVerticalZigZag) {
+          // Phones get an alternating top-to-bottom path that keeps every
+          // label inside the narrow canvas at a readable scale.
+          x = (index % 2 === 0 ? -1 : 1) * 115;
+          y = ((ordered.length - 1) / 2 - index) * 105;
+        } else {
+          const columns = 4;
+          const row = Math.floor(index / columns);
+          const positionInRow = index % columns;
+          // Wider screens snake across two rows while alternating vertical
+          // positions so every causal step follows a clear zig-zag.
+          const column = row % 2 === 0 ? positionInRow : columns - 1 - positionInRow;
+          x = (column - (columns - 1) / 2) * 230;
+          const rowCenter = row === 0 ? 130 : -130;
+          const zigZagOffset = positionInRow % 2 === 0 ? 70 : -70;
+          y = rowCenter + zigZagOffset;
+        }
+        node.x = x;
+        node.y = y;
+        node.z = 0;
+        node.fx = x;
+        node.fy = y;
+        node.fz = 0;
+      });
+
+      nodes.forEach(node => {
+        if (!riverSubset.has(node.id)) {
+          node.x = 0;
+          node.y = 0;
+          node.z = -2000;
+          node.fx = 0;
+          node.fy = 0;
+          node.fz = -2000;
+        }
+      });
+      configureStaticForces(40);
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      if (mode === 'river') {
+        riverBtn.classList.add('active');
+        rotaryBtn.classList.remove('active');
+        Graph.enableNavigationControls(false);
+        Graph.controls().enableRotate = false;
+        Graph.controls().enablePan = false;
+        Graph.controls().enableZoom = false;
+        applyRiverLayout();
+        Graph.camera().up.set(0, 1, 0);
+        Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
+      } else {
+        rotaryBtn.classList.add('active');
+        riverBtn.classList.remove('active');
+        Graph.enableNavigationControls(true);
+        Graph.controls().enableRotate = true;
+        Graph.controls().enablePan = false;
+        Graph.controls().enableZoom = true;
+        applySphereLayout();
+        Graph.cameraPosition(getRotaryCameraPosition(), { x: 0, y: 0, z: 0 }, 250);
+      }
+      Graph.refresh();
+    }
+
+    const graphElement = document.getElementById('3d-graph');
+    const Graph = ForceGraph3D()(graphElement)
+      .width(graphElement.clientWidth)
+      .height(graphElement.clientHeight)
+      .graphData({ nodes, links })
+      .backgroundColor('#071018')
+      .showNavInfo(false)
+      .nodeRelSize(6)
+      .nodeResolution(26)
+      .warmupTicks(30)
+      .enableNodeDrag(false)
+      .enableNavigationControls(true)
+      .nodeVisibility(node => viewMode !== 'river' || riverSubset.has(node.id))
+      .linkVisibility(link => viewMode !== 'river' || (
+        riverSubset.has(getLinkEndpointId(link.source)) &&
+        riverSubset.has(getLinkEndpointId(link.target))
+      ))
+      .linkDirectionalArrowLength(6)
+      .linkDirectionalArrowRelPos(0.55)
+      .linkColor(link => {
+        const source = nodeMap[getLinkEndpointId(link.source)];
+        const target = nodeMap[getLinkEndpointId(link.target)];
+        const base = source && target ? (source.category === 'school' || target.category === 'school' ? '#ffb454' : '#b7c6d1') : '#b7c6d1';
+        return getLinkOpacity(link) > 0.15 ? base : 'rgba(160, 170, 180, 0.18)';
+      })
+      .linkWidth(link => {
+        const source = nodeMap[getLinkEndpointId(link.source)];
+        const target = nodeMap[getLinkEndpointId(link.target)];
+        const isSchoolLink = source?.category === 'school' || target?.category === 'school';
+        return getLinkOpacity(link) > 0.15 ? (isSchoolLink ? 2.2 : 1.2) : 0.5;
+      })
+      .nodeThreeObject(node => {
+        const color = getNodeColor(node);
+        const opacity = getNodeOpacity(node.id);
+        const sprite = new SpriteText(node.label);
+        sprite.textHeight = node.category === 'school' || node.category === 'health' ? 24 : 20;
+        sprite.color = color;
+        sprite.backgroundColor = 'rgba(10, 14, 18, 0.80)';
+        sprite.borderColor = opacity > 0.8 ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.08)';
+        sprite.borderWidth = 1;
+        sprite.borderRadius = 12;
+        sprite.padding = 8;
+        sprite.material.transparent = true;
+        sprite.material.opacity = opacity;
+        sprite.material.depthWrite = false;
+        return sprite;
+      })
+      .onNodeClick(node => {
+        selectedNodeId = node.id;
+        selectionMode = 'node';
+        Graph.refresh();
+      })
+      .onBackgroundClick(() => {
+        if (selectionMode === 'none') return;
+        selectionMode = 'none';
+        selectedNodeId = null;
+        Graph.refresh();
+      });
+
+    Graph.controls().enableDamping = true;
+    Graph.controls().dampingFactor = 0.08;
+    Graph.controls().rotateSpeed = 0.8;
+    Graph.controls().zoomSpeed = 0.7;
+    Graph.controls().enablePan = false;
+    Graph.controls().enableRotate = true;
+    Graph.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    Graph.cameraPosition(getRotaryCameraPosition());
+    applySphereLayout();
+
+    const riverBtn = document.getElementById('btn-river');
+    const rotaryBtn = document.getElementById('btn-rotary');
+
+    riverBtn.addEventListener('click', () => setViewMode('river'));
+    rotaryBtn.addEventListener('click', () => setViewMode('rotary'));
+
+    let resizeFrame = null;
+    function syncGraphSize() {
+      if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = null;
+        const width = Math.max(1, graphElement.clientWidth);
+        const height = Math.max(1, graphElement.clientHeight);
+        if (Graph.width() !== width) Graph.width(width);
+        if (Graph.height() !== height) Graph.height(height);
+        if (viewMode === 'river') {
+          applyRiverLayout();
+          Graph.refresh();
+          Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
+        }
+      });
+    }
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(syncGraphSize).observe(graphElement);
+    } else {
+      window.addEventListener('resize', syncGraphSize);
+    }
+    window.visualViewport?.addEventListener('resize', syncGraphSize);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) Graph.pauseAnimation();
+      else Graph.resumeAnimation();
+    });
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const module = card.dataset.module;
+        selectionMode = selectionMode === module ? 'none' : module;
+        selectedNodeId = null;
+        Graph.refresh();
+      });
+    });
+
+    document.addEventListener('dblclick', () => {
+      selectionMode = 'none';
+      selectedNodeId = null;
+      Graph.refresh();
+    });
+
+    setViewMode('rotary');
+    });
+  </script>
+</body>
+</html>

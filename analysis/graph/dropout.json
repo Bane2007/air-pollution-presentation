@@ -1,0 +1,70 @@
+{
+ "tier12_only": {
+  "rows": 312,
+  "jaccard": {
+   "1": 0.55,
+   "2": 0.5,
+   "3": 0.4,
+   "4": 0.5833333333333334
+  }
+ },
+ "drop10": {
+  "rows_dropped": 11,
+  "of_low_tier": 106,
+  "mean": {
+   "1": 0.6203434400566753,
+   "2": 0.7212512010634293,
+   "3": 0.7574449607425461,
+   "4": 0.655299279441827
+  },
+  "ge06": {
+   "1": 0.83,
+   "2": 0.97,
+   "3": 0.73,
+   "4": 0.57
+  }
+ },
+ "drop20": {
+  "rows_dropped": 21,
+  "of_low_tier": 106,
+  "mean": {
+   "1": 0.6362963382761976,
+   "2": 0.7349718393020024,
+   "3": 0.740003524774173,
+   "4": 0.6413175851266223
+  },
+  "ge06": {
+   "1": 0.745,
+   "2": 0.97,
+   "3": 0.725,
+   "4": 0.56
+  }
+ },
+ "leave_one_source_out": {
+  "sources": 207,
+  "mean": {
+   "1": 0.7821540210287014,
+   "2": 0.6712215320910973,
+   "3": 0.8541275372146314,
+   "4": 0.5625231250510903
+  },
+  "min": {
+   "1": 0.55,
+   "2": 0.4,
+   "3": 0.2631578947368421,
+   "4": 0.4375
+  },
+  "min_source": {
+   "1": "SCAD 2020, Waste Statistics 2019, Abu Dhabi Emirate",
+   "2": "Mendoza 2022, Air quality and behavioral impacts of anti-idling campaigns in school drop-off zones",
+   "3": "Jezek Brecelj 2025, On-road vehicle emissions measurements show a significant reduction in black carbon and NOx in Euro 6c and 6d diesel cars",
+   "4": "Boogaard 2022, HEI long-term TRAP and health"
+  },
+  "ge06": {
+   "1": 0.9903381642512077,
+   "2": 0.966183574879227,
+   "3": 0.9227053140096618,
+   "4": 0.08695652173913043
+  }
+ }
+}

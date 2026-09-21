@@ -1,0 +1,41 @@
+# Sources, lane6-outdoor-occupational (2026-09-20)
+
+One line per source. All fetched this session via pubmed, semanticscholar, WebFetch, WebSearch or curl plus pdftotext. Times are +04.
+
+- Patel 2016, Challenges in evaluating PM commuting exposure and mask efficacy, Makassar. 10.1016/j.scitotenv.2015.10.163. Used for S28 to X15, A22 to X15. Tier 2. fetched: yes, 2026-09-20 20:09.
+- Ramel-Delobel 2024, Air pollution exposure in active versus passive travel modes, Bayesian meta-analysis of 52 studies. 10.1016/j.envres.2024.119666. Used for S18 to S28. Tier 1. fetched: yes, 2026-09-20 20:09.
+- Zhang 2017, Comparison of PM2.5 exposure in hazy and non-hazy days in Nanjing. 10.4209/aaqr.2016.07.0301. Used for P31 to S29, S29 to X16. Tier 2. fetched: yes, 2026-09-20 20:09.
+- Schlunssen 2023, WHO/ILO Joint Estimates systematic review of silica, asbestos and coal dust exposure prevalence. 10.1016/j.envint.2023.107980. Used for X14 to E19, D09 to X14. Tier 1. fetched: yes, 2026-09-20 20:09.
+- Boadu 2023, Work-related respiratory health conditions among construction workers, systematic review. 10.1136/bmjresp-2023-001736. Used for X14 to E18. Tier 1. fetched: yes, 2026-09-20 20:09.
+- Bello 2019, Respirable silica and dust in demolition, crushing and chipping, Massachusetts. 10.1093/annweh/wxy089. Used for P16 to S30, S30 to X17, A12 to X14. Tier 2. fetched: yes, 2026-09-20 20:12.
+- Moohialdin 2022, Physiological impacts on construction workers under extremely hot and humid weather, Saudi Arabia. 10.1007/s00420-021-01785-w. Used for D16 to X14, S16 to X14. Tier 2. fetched: yes, 2026-09-20 20:12.
+- Huang 2021, Review of strategies for mitigating roadside air pollution in urban street canyons. 10.1016/j.envpol.2021.116971. Used for A25 to S18. Tier 1. fetched: yes, 2026-09-20 20:12.
+- Kang 2021, Real-time automated monitoring system for hazardous pollutants at the construction site. 10.1016/j.jhazmat.2020.123483. Used for S30 to X17. Tier 3. fetched: yes, 2026-09-20 20:12.
+- Pradhan 2019, Heat stress impacts on cardiac mortality in Nepali migrant workers in Qatar. 10.1159/000500853. Used for D16 to E18, X14 to E18. Tier 2. fetched: yes, 2026-09-20 20:12.
+- HEI 2022, Special Report 23, Systematic review and meta-analysis of selected health effects of long-term exposure to traffic-related air pollution, executive summary PDF. https://www.healtheffects.org/system/files/hei-special-report-23-executive-summary_1.pdf. Used for X18 to E01, E02, E03, E04, E07, E08, E16, E17. Tier 1. fetched: yes, 2026-09-20 20:16 (curl and pdftotext, 1398 lines).
+- Tjoe Nij 2003, Dust control measures in the construction industry, Netherlands. 10.1093/annhyg/meg023. Used for A12 to X14. Tier 2. fetched: yes, 2026-09-20 20:22.
+- Rappaport 2003, Excessive exposure to silica in the US construction industry. 10.1093/annhyg/meg025. Used for X14 to E19. Tier 2. fetched: yes, 2026-09-20 20:22.
+- Chang 2010, Fugitive dust emission source profiles and control strategies at gravel processing sites, Taiwan. 10.3155/1047-3289.60.10.1262. Used for P16 to S30, A12 to S30. Tier 2. fetched: yes, 2026-09-20 20:22.
+- Middaugh 2012, Cut-off saw exposure control methods for respirable dust and silica in roadway construction. 10.1080/15459624.2012.658265. Used for A12 to X14. Tier 2. fetched: yes, 2026-09-20 20:22.
+- Saqer 2024, Spatio-temporal characterization of PM10 across Abu Dhabi Emirate. 10.1016/j.heliyon.2024.e32812. Context only, names construction sites as a PM10 source alongside desert dust, no quantified share, no edge written. Tier 2. fetched: yes, 2026-09-20 20:22.
+- Nahar 2020, Exposure assessment of emissions from mobile food carts on New York City streets. 10.1016/j.envpol.2020.115435. Used for D24 to P31, P31 to S29, A23 to P31, S29 to X03. Tier 2. fetched: yes, 2026-09-20 20:25.
+- Zhou 2007, Factors influencing the spatial extent of mobile source air pollution impacts, meta-analysis. 10.1186/1471-2458-7-89. Used for D25 to X18, A25 to X18, S18 to X18. Tier 1. fetched: yes, 2026-09-20 20:29.
+- Alahmad 2023, Extreme heat and work injuries in Kuwait's hot summers. 10.1136/oemed-2022-108697. Used for D16 to E18, A22 to X14. Tier 2. fetched: yes, 2026-09-20 20:29.
+- Lawin 2016, Occupational air pollution exposure and respiratory health in motorcycle taxi driving, Cotonou. 10.1016/j.scitotenv.2016.01.068. Used for S28 to X15. Tier 2. fetched: yes, 2026-09-20 20:27.
+- Lawin 2018, Motorcycle taxi driver respiratory health against the CO ambient standard, Benin. 10.11604/pamj.2018.30.113.14975. Used for X15 to E18. Tier 2. fetched: yes, 2026-09-20 20:27.
+- Li 2025, Carbon monoxide exposure in food delivery workers using exhaled air, Taiwan. 10.1007/s44197-025-00468-w. Used for S28 to X15, D23 to X15. Tier 2. fetched: yes, 2026-09-20 20:27.
+- Agudelo-Londono 2024, Environmental injustice in air quality for digital platform delivery workers in Bogota. 10.7705/biomedica.7162. Used for X12 to X15. Tier 2. fetched: yes, 2026-09-20 20:27.
+- Chu 2021, Air pollution as a determinant of food delivery and related plastic waste. 10.1038/s41562-020-00961-1. Used for S01 to D23. Tier 2. fetched: yes, 2026-09-20 20:27.
+- Ham 2024, Particulate matter reduction efficiency of sprinkler system as targeted control measure for construction activity. 10.1016/j.heliyon.2024.e27765. Used for A24 to S30. Tier 2 (chamber experiment). fetched: yes, 2026-09-20 20:33 (PMC10979197).
+- Kim 2025, Automated human-centric construction dust alert system, field test. 10.1093/jcde/qwaf101. Used for S30 to X14, A14 to X14. Tier 2. fetched: yes, 2026-09-20 20:35.
+- Abhijith 2017, Air pollution abatement performances of green infrastructure in open road and street canyon environments, review. 10.1016/J.ATMOSENV.2017.05.014. Used for A25 to S18, A16 to X18. Tier 1. fetched: yes, 2026-09-20 20:37.
+- Kong 2021, Particulate matter concentrations according to cooking activity in a residential environment. 10.1007/s11356-020-10670-x. Used for A23 to S29 (mechanism transfer, residential). Tier 2. fetched: yes, 2026-09-20 20:36.
+- Abdul Wahid 2014, Respiratory symptoms of vendors in an open-air hawker centre in Brunei. 10.3389/fpubh.2014.00167. Used for X16 to E18, A23 to X16. Tier 2. fetched: yes, 2026-09-20 20:39 (PMC4183101).
+- Choi 2023, Effect of dust barriers on PM dispersion from a construction site using CFD. 10.1016/j.envpol.2023.122679. Used for S14 to X17, A12 to X17, A24 to X17. Tier 3. fetched: yes, 2026-09-20 20:41.
+- Kim 2021, IoT-based particulate matter monitoring system for construction sites. 10.3390/ijerph182111510. Used for S30 to X17. Tier 3. fetched: yes, 2026-09-20 20:41.
+- Hassan 2022, Local fugitive PM and emission inventories in dry and arid areas, Qatar. 10.1016/j.scitotenv.2022.153799. Context only, barren lands above 90 percent of local fugitive PM, hot spots up to 11 times excess mortality, no lane6 node pair stated, proposed node written. Tier 3. fetched: yes, 2026-09-20 20:41.
+- EAD 2018, Abu Dhabi Air Emissions Inventory (2015 data). https://www.ead.gov.ae/-/media/Project/EAD/EAD/Documents/Resources/Abu-Dhabi-Air-Emission-Inventory-2018.pdf. Context only, inventory sectors omit construction dust, names it qualitatively as a primary PM source, no edge written. Tier 3. fetched: yes, 2026-09-20 20:33 (curl and pdftotext, 6050 lines).
+- Gulf News 2026-07-03, UAE summer work ban, 12000 rest stations for delivery riders. https://gulfnews.com/uae/transport/midday-break-in-uae-delivery-riders-get-relief-under-safety-rules-1.500595610. Used for A22 to X15 (uae). Tier 4. fetched: yes, 2026-09-20 20:44.
+- Gulf News 2026-06-18, Abu Dhabi restricts delivery motorcycles on highways after rise in fatal accidents. https://gulfnews.com/uae/transport/abu-dhabi-restricts-delivery-motorcycles-on-highways-after-rise-in-fatal-accidents-1.500578569. Context and proposed node, 72 serious accidents 2023 to 2025, highways 22 percent of rider deaths on under 5 percent of distance, no pollution relation stated, no edge written. Tier 4. fetched: yes, 2026-09-20 20:45.
+
+Fetched but not used: Ramel-Delobel motorcycle ratios flagged uncertain by the authors, HEI page listing, MDPI Sepadi 2023 (403, not read, not cited), Springer Nguyen 2024 and Lagos 2026 vendor papers (login redirect, not read, not cited).

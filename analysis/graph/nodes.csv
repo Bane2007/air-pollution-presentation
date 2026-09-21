@@ -1,0 +1,161 @@
+id,layer,label,definition,unit,scope
+D01,driver,Population,Resident population of Abu Dhabi emirate,persons,abu_dhabi
+D02,driver,Urban expansion,Built-up land area and its growth,km2,abu_dhabi
+D03,driver,Private mobility demand,Vehicle-kilometres travelled by private cars,veh-km/yr,abu_dhabi
+D04,driver,Car ownership,Registered passenger vehicles per 1000 residents,veh/1000,abu_dhabi
+D05,driver,Electricity demand,Annual and peak electricity consumption,GWh and MW,abu_dhabi
+D06,driver,Cooling demand,Share of building electricity used for air conditioning,fraction,uae
+D07,driver,Desalinated water demand,Volume of desalinated water produced,m3/yr,abu_dhabi
+D08,driver,Industrial output,Production of oil and gas refining petrochemicals aluminium steel and cement,index,abu_dhabi
+D09,driver,Construction activity,Active construction sites and permits,count,abu_dhabi
+D10,driver,Freight demand,Truck movements and port throughput,veh-km and TEU,abu_dhabi
+D11,driver,Aviation demand,Aircraft movements at Abu Dhabi airports,movements/yr,abu_dhabi
+D12,driver,Shipping activity,Port calls and vessel time at berth,calls/yr,abu_dhabi
+D13,driver,Fuel price and subsidy,Retail fuel price relative to world price,ratio,uae
+D14,driver,School trips by car,Share of school journeys made by private car,fraction,abu_dhabi
+D15,driver,School siting and road hierarchy,Distance of school gates to arterial roads,m,abu_dhabi
+D16,driver,Climate heat and aridity,Ambient temperature and rainfall regime,degC and mm/yr,uae
+D17,driver,Landscaping and agriculture,Irrigated green area and farms,ha,abu_dhabi
+D18,driver,Waste generation,Municipal solid waste produced,t/yr,abu_dhabi
+P01,pressure,Road NOx emissions,Tailpipe nitrogen oxides from road vehicles,t/yr,abu_dhabi
+P02,pressure,Road exhaust PM2.5,Tailpipe fine particles including black carbon,t/yr,abu_dhabi
+P03,pressure,Road VOC emissions,Tailpipe and evaporative volatile organics,t/yr,abu_dhabi
+P04,pressure,Non-exhaust PM,Brake tyre road wear and resuspended road dust,t/yr,global
+P05,pressure,Idling emissions,Emissions from stationary engines in queues signals and AC idling,g/veh-h,global
+P06,pressure,Cold-start excess emissions,Extra emissions in the first minutes after engine start,g/start,global
+P07,pressure,Power NOx,Nitrogen oxides from gas-fired generation,t/yr,abu_dhabi
+P08,pressure,Power SO2,Sulphur dioxide from generation,t/yr,abu_dhabi
+P09,pressure,Power PM,Particulates from generation,t/yr,abu_dhabi
+P10,pressure,Desalination emissions,Emissions attributable to thermal desalination,t/yr,abu_dhabi
+P11,pressure,Industrial NOx,Nitrogen oxides from refineries petrochemicals metals cement,t/yr,abu_dhabi
+P12,pressure,Industrial SO2,Sulphur dioxide from industry,t/yr,abu_dhabi
+P13,pressure,Industrial PM,Particulates from industrial stacks and processes,t/yr,abu_dhabi
+P14,pressure,Oil and gas VOC,Fugitive and process volatile organics from oil and gas,t/yr,abu_dhabi
+P15,pressure,Flaring,Gas flared at production and processing sites,m3/yr,abu_dhabi
+P16,pressure,Construction dust,Fugitive PM10 from sites and haul roads,t/yr,abu_dhabi
+P17,pressure,Construction machinery exhaust,Diesel exhaust from non-road machinery,t/yr,global
+P18,pressure,Windblown desert dust,Natural mineral dust emission,t/yr,gulf
+P19,pressure,Sea salt aerosol,Marine aerosol emission,t/yr,gulf
+P20,pressure,Shipping emissions,SO2 NOx PM from vessels at sea and berth,t/yr,abu_dhabi
+P21,pressure,Aviation emissions,NOx PM from aircraft and ground operations,t/yr,abu_dhabi
+P22,pressure,Small combustion,Residential commercial cooking and generators,t/yr,abu_dhabi
+P23,pressure,Waste emissions,Landfill open burning and waste processing,t/yr,abu_dhabi
+P24,pressure,Ammonia emissions,NH3 from waste agriculture and vehicles,t/yr,global
+P25,pressure,Greenhouse gas emissions,CO2 equivalent from all combustion,t/yr,abu_dhabi
+P26,pressure,Waste heat,Anthropogenic heat release from AC and traffic,W/m2,global
+S01,state,Ambient PM2.5,Urban background fine particle concentration,ug/m3,abu_dhabi
+S02,state,Ambient PM10,Urban background coarse particle concentration,ug/m3,abu_dhabi
+S03,state,Ambient NO2,Urban background nitrogen dioxide,ug/m3,abu_dhabi
+S04,state,Ambient ozone,Ground-level ozone concentration,ug/m3,abu_dhabi
+S05,state,Ambient SO2,Sulphur dioxide concentration,ug/m3,abu_dhabi
+S06,state,Ambient CO,Carbon monoxide concentration,mg/m3,abu_dhabi
+S07,state,Black carbon,Elemental carbon concentration,ug/m3,global
+S08,state,Ultrafine particles,Particle number concentration below 100 nm,particles/cm3,global
+S09,state,Secondary inorganic aerosol,Sulphate nitrate ammonium formed in air,ug/m3,global
+S10,state,Secondary organic aerosol,Organic aerosol formed from VOC oxidation,ug/m3,global
+S11,state,Photochemical ozone formation,Ozone production from NOx and VOC under sunlight,rate,global
+S12,state,Dust storm episodes,Frequency and intensity of dust events,events/yr,gulf
+S13,state,Boundary layer and stability,Mixing height and atmospheric stability,m,gulf
+S14,state,Wind,Wind speed and direction,m/s,abu_dhabi
+S15,state,Temperature and radiation,Air temperature and solar radiation,degC and W/m2,abu_dhabi
+S16,state,Humidity,Relative humidity,fraction,abu_dhabi
+S17,state,Transboundary transport,Pollution advected from outside the emirate,ug/m3,gulf
+S18,state,Near-road increment,Excess concentration within 200 m of a road,ug/m3,global
+S19,state,Street canyon trapping,Reduced dispersion between buildings,ratio,global
+S20,state,School-gate concentration,Pollutant levels at the school gate during pickup and drop-off,ug/m3,global
+S21,state,Indoor infiltration,Outdoor pollution entering buildings,ratio,global
+S22,state,In-vehicle concentration,Pollutant levels inside cars and buses,ug/m3,global
+S23,state,Urban heat island,Urban minus rural temperature,degC,abu_dhabi
+X01,exposure,Population PM2.5 exposure,Population-weighted PM2.5,ug/m3,abu_dhabi
+X02,exposure,Population NO2 exposure,Population-weighted NO2,ug/m3,abu_dhabi
+X03,exposure,Time outdoors,Fraction of the day spent outdoors,fraction,uae
+X04,exposure,Child time at gate and commute,Minutes per day children spend at the gate and travelling,min/day,global
+X05,exposure,Child breathing rate,Ventilation rate by age and activity,m3/h,global
+X06,exposure,Child inhaled dose,Mass of pollutant inhaled per day,ug/day,global
+X07,exposure,Outdoor worker exposure,Exposure of construction delivery and gate staff,ug/m3,global
+X08,exposure,Commuter exposure,Exposure during travel in cars and buses,ug/m3,global
+X09,exposure,Home indoor exposure,Exposure inside residences,ug/m3,global
+X10,exposure,Classroom exposure,Exposure inside classrooms,ug/m3,uae
+X11,exposure,Vulnerable group exposure,Exposure of elderly asthmatic and pregnant people,ug/m3,global
+X12,exposure,Exposure disparity,Difference in exposure across income groups,ratio,global
+E01,effect,All-cause mortality,Deaths attributable to long-term PM2.5,deaths/yr,global
+E02,effect,Cardiovascular disease,Ischaemic heart disease and stroke,cases/yr,global
+E03,effect,Respiratory disease,COPD and lower respiratory infection,cases/yr,global
+E04,effect,Childhood asthma,Incidence and exacerbation of asthma in children,cases/yr,global
+E05,effect,Child lung function,Reduced lung function growth,mL FEV1,global
+E06,effect,Cognitive and neurodevelopment,Attention learning and neurodevelopmental effects in children,score,global
+E07,effect,Birth outcomes,Low birth weight and preterm birth,cases/yr,global
+E08,effect,Metabolic disease,Diabetes and related outcomes,cases/yr,global
+E09,effect,School absenteeism,Days missed attributable to air pollution,days/yr,global
+E10,effect,Hospital admissions,Emergency visits and admissions,visits/yr,global
+E11,effect,Healthcare cost,Direct medical cost of pollution-related illness,AED/yr,uae
+E12,effect,Disability and productivity loss,DALYs and lost work,DALY/yr,uae
+E13,effect,Visibility loss,Reduced visual range,km,gulf
+E14,effect,Climate forcing,Radiative forcing from BC and GHG,W/m2,global
+E15,effect,Ecosystem and material damage,Soiling corrosion and vegetation damage,index,global
+A01,action,Vehicle emission standards,Euro standard adoption and fleet renewal,standard,uae
+A02,action,Fleet electrification,EV share of new registrations,fraction,uae
+A03,action,Public transport expansion,Bus and rail capacity,seat-km,abu_dhabi
+A04,action,School transport policy,School bus provision and use,fraction of pupils,abu_dhabi
+A05,action,Anti-idling rules,Regulation and enforcement of engine idling,rule,uae
+A06,action,Traffic management,Signal timing congestion pricing routing,measure,abu_dhabi
+A07,action,School-zone design,Gate layout drop-off design staggered dismissal,measure,global
+A08,action,Low-emission zones,Restricted access for polluting vehicles,measure,global
+A09,action,Clean power share,Nuclear and solar share of generation,fraction,abu_dhabi
+A10,action,Building efficiency,Cooling standards and retrofits,standard,uae
+A11,action,Industrial controls,Scrubbers flaring reduction leak detection,measure,abu_dhabi
+A12,action,Construction dust controls,Water spray barriers covered loads,measure,global
+A13,action,Dust early warning,Forecast and advisories for dust events,measure,gulf
+A14,action,Air quality information,Monitoring network and public AQI,measure,abu_dhabi
+A15,action,School air filtration,Indoor filtration and ventilation in schools,measure,global
+A16,action,Urban greening,Vegetation barriers and tree cover,measure,global
+A17,action,Health system response,Asthma management and alerts,measure,global
+A18,action,School siting policy,Rules on school distance from arterial roads,rule,global
+D19,driver,Economic output,Emirate GDP at constant prices as a driver of energy water and emissions,AED,abu_dhabi
+D20,driver,Livestock population,Head of camels sheep goats and cattle on farms,head,abu_dhabi
+D21,driver,Coastal land reclamation,Area of sea and intertidal zone converted to built land,ha,abu_dhabi
+D22,driver,Fleet non-compliance share,Fraction of vehicles on the road below the current emission standard,fraction,abu_dhabi
+D23,driver,Delivery demand,E-commerce and food delivery orders served by riders,orders/yr,uae
+D24,driver,Street food vending activity,Number of roadside food stalls and hours of operation,stalls,global
+D25,driver,Housing near arterial roads,Share of dwellings within 300 m of an arterial road or highway,fraction,global
+D26,driver,Bus fleet idling hours,Hours per day public school and campus buses idle with engines running,h/day,uae
+P27,pressure,Service station VOC,Evaporative NMVOC from fuel storage and refuelling,t/yr,abu_dhabi
+P28,pressure,Heavy fuel oil combustion,Particulate V and Ni from heavy oil burning in generation shipping or industry,t/yr,uae
+P29,pressure,Road CO and benzene,Tailpipe carbon monoxide and benzene from road vehicles,t/yr,abu_dhabi
+P30,pressure,Indoor combustion sources,Incense burning gas stoves and household tobacco smoke,events/week,uae
+P31,pressure,Roadside cooking emissions,PM and CO from charcoal and LPG cooking at street stalls,g/h,global
+P32,pressure,Idling fuel use,Fuel burned and CO2 emitted per hour of engine idling,L/h,global
+P33,pressure,HVAC energy penalty from fouling,Extra electricity drawn by chillers with dust-fouled outdoor coils,fraction,gulf
+S24,state,Ambient VOC and OH reactivity,Concentration of reactive hydrocarbons and total OH sink in ambient air,ppb,gulf
+S25,state,Road dust resuspension,Resuspended road surface dust driven by traffic wind and humidity,ug/m3,global
+S26,state,Indoor-generated classroom particles,Resuspended dust chalk and occupant activity particles inside classrooms,ug/m3,global
+S27,state,Heat and dust co-occurrence,Days on which high temperature and elevated dust coincide,days/yr,gulf
+S28,state,On-road two-wheeler concentration,Breathing-zone pollutant levels of a motorcycle or scooter rider in traffic,ug/m3,global
+S29,state,Vendor stall concentration,Breathing-zone PM and CO at a street food stall,ug/m3,global
+S30,state,Construction fenceline PM10,PM10 at the boundary of an active construction site,ug/m3,global
+S31,state,Bus stop and depot concentration,Pollutant levels at bus stops and depots where buses idle,ug/m3,global
+S32,state,Classroom CO2,Carbon dioxide concentration in occupied classrooms,ppm,uae
+S33,state,Classroom ventilation rate,Outdoor air supplied per occupant in classrooms,L/s per person,global
+S34,state,Outdoor coil dust fouling,Dust deposition on outdoor heat exchanger coils,fraction,gulf
+X13,exposure,Peak exposure events,Short high-concentration episodes during transport and cooking,peaks/day,global
+X14,exposure,Migrant outdoor labour exposure,Exposure of labour-camp construction and service workers with long outdoor hours,h/day,uae
+X15,exposure,Delivery rider exposure,Daily exposure of two-wheeler delivery riders in traffic,ug/m3,global
+X16,exposure,Street vendor exposure,Exposure of vendors and helpers over a 10 to 12 hour stall shift,ug/m3,global
+X17,exposure,Site-neighbour resident exposure,Exposure of residents and pedestrians next to construction sites,ug/m3,global
+X18,exposure,Near-road resident exposure,Exposure of people living within 300 m of major roads,ug/m3,global
+X19,exposure,Bus passenger and driver exposure,Exposure while waiting for boarding and riding buses,ug/m3,global
+E16,effect,Lung cancer mortality,Deaths from lung cancer attributable to long-term PM2.5 and traffic pollution,deaths/yr,global
+E17,effect,Adult asthma onset,New asthma cases in adults attributable to traffic pollution,cases/yr,global
+E18,effect,Outdoor worker respiratory and cardiovascular outcomes,Occupational disease in riders vendors and site workers,cases/yr,global
+E19,effect,Silicosis and occupational lung disease,Dust-related lung disease in construction workers,cases/yr,global
+E20,effect,Cognitive performance loss from poor ventilation,Test and decision performance decrement at high indoor CO2,score,global
+A19,action,Real-driving emissions conformity,In-service and PEMS testing of real-world NOx,measure,uae
+A20,action,School bus clean technology,Fuel and aftertreatment standard of the school bus fleet,standard,abu_dhabi
+A21,action,Demand-side management programme,Electricity and water demand reduction programme with measured savings,GWh saved,abu_dhabi
+A22,action,Rider protection and scheduling,Masks route choice and shift timing for delivery riders,measure,global
+A23,action,Clean cooking fuel and stall ventilation,LPG or electric cooking and exhaust capture at street stalls,measure,global
+A24,action,Wind-targeted dust suppression,Sensor-triggered water spray aimed at the downwind receptor,measure,global
+A25,action,Road setback and buffer planning,Minimum distance and vegetated buffers between homes and arterials,rule,global
+A26,action,Idle-reduction technology,Auxiliary power units start-stop and electric HVAC on buses,measure,global
+A27,action,Classroom ventilation upgrade,Demand-controlled or energy-recovery ventilation in classrooms,measure,global
+A28,action,Coil cleaning and outdoor-unit filtration,Scheduled cleaning and filtration of outdoor HVAC coils,measure,gulf

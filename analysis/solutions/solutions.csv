@@ -1,0 +1,333 @@
+id,problem,problem_name,edge,class,solution,G1 reach,G2 semester,G3 additive,G4 no law change,gates,User,Feasibility,Implementability,Usability,Market,Impact,Measurability,Time,Novelty,Cure,Transfer,round 1 score (max 65),weighted score (max 90)
+P1-01,P1,Construction workers and site neighbours,A12->P16,cut the source,"Scheduled water misting of haul roads and active earthwork faces, frequency set by a site wind and humidity reading","pass, to verify",pass,pass,pass,through,3,4,3,3,3,4,4,4,2,4,3,47,62
+P1-02,P1,Construction workers and site neighbours,A12->P16,cut the source,Surfactant or polymer binder sprayed on unpaved site roads (Chang 2010: about 93 % control on unpaved roads),pass,pass,pass,pass,through,3,4,3,4,3,4,4,4,2,4,3,48,63
+P1-03,P1,Construction workers and site neighbours,A12->P16,cut the source,Covered stockpiles with windbreak netting on the upwind side,pass,pass,"pass, to verify",pass,through,2,5,4,4,3,3,3,5,1,3,4,47,59
+P1-04,P1,Construction workers and site neighbours,A12->P16,cut the source,Wheel-wash and rumble grid at the site exit so trucks do not carry mud onto public roads,"pass, to verify",pass,"pass, to verify",pass,through,2,4,3,4,3,2,3,4,1,3,3,39,50
+P1-05,P1,Construction workers and site neighbours,A12->P16,cut the source,"Enclosed on-site crushing with water spray at the crusher (Bello 2019: below the PEL with the crusher's own spray, not with a water cannon)",fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-06,P1,Construction workers and site neighbours,A12->P16,cut the source,"Wet cutting mandatory for concrete and block cutting, dry cutting banned on site (Middaugh 2012: 78 % cut)","pass, to verify",pass,"pass, to verify",pass,through,4,4,3,3,3,4,4,5,1,4,4,49,63
+P1-07,P1,Construction workers and site neighbours,A12->P16,cut the source,Vacuum-shrouded saws and grinders with HEPA extraction for finishing trades,"pass, to verify",pass,pass,pass,through,4,4,3,3,3,3,4,5,2,4,4,46,62
+P1-08,P1,Construction workers and site neighbours,A12->P16,cut the source,Pre-wetting of structures before demolition and during breaking,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-09,P1,Construction workers and site neighbours,A12->P16,cut the source,Paving or gravelling the main haul road in the first month of the project instead of the last,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-10,P1,Construction workers and site neighbours,A12->P16,cut the source,"15 km/h site speed limit with a speed bump at the gate, which cuts road-dust lift","pass, to verify",pass,pass,pass,through,2,5,4,4,4,2,3,5,1,3,5,45,58
+P1-11,P1,Construction workers and site neighbours,A12->S30,cut the path,Perimeter dust fence whose height is set per wind direction by CFD (Choi 2023),fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-12,P1,Construction workers and site neighbours,A12->S30,cut the path,Fenceline PM10 sensors that trigger the perimeter misting line automatically above a threshold,pass,pass,pass,pass,through,3,4,3,4,4,4,5,4,4,4,3,51,70
+P1-13,P1,Construction workers and site neighbours,A12->S30,cut the path,Fog cannon at the fenceline aimed at the downwind boundary during dusty operations,pass,pass,pass,pass,through,3,4,3,3,3,3,4,4,2,3,3,44,57
+P1-14,P1,Construction workers and site neighbours,A12->S30,cut the path,Dense hedge or vegetation screen along the fence facing homes,pass,fail,pass,pass,out,,,,,,,,,,,,,
+P1-15,P1,Construction workers and site neighbours,A12->S30,cut the path,"Site layout that puts crushing, mixing and stockpiles at the point furthest from the neighbours' fence",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-16,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,"FFP2 or N95 provision with fit testing for every worker in a dust trade, replaced on a schedule","pass, to verify",pass,"pass, to verify",pass,through,3,5,3,2,3,3,3,5,1,1,2,44,50
+P1-17,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,"Powered air-purifying respirators for cutters, chippers and grinders (Bello 2019: chipping stayed above the PEL even with N95)","pass, to verify",pass,pass,pass,through,4,4,3,2,2,3,3,5,2,1,3,42,51
+P1-18,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,Rotation cap on high-dust tasks: no worker more than 2 h a shift on cutting or breaking,"pass, to verify",pass,pass,pass,through,4,4,3,3,3,3,3,5,2,2,4,44,56
+P1-19,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,"Filtered, pressurised cabs for excavator and loader operators (Azarmi 2016: cabin dose 57x background for coarse particles)",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-20,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,Dust-task scheduling to low-wind hours from the day's forecast,"pass, to verify",pass,pass,pass,through,3,4,3,3,3,3,4,5,3,3,5,45,62
+P1-21,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,Personal real-time dust badge with a vibrating alert at a set PM2.5 level (Kim 2025: alerts within 20 m),pass,pass,pass,pass,through,4,4,3,3,3,3,5,4,4,2,4,47,63
+P1-22,P1,Construction workers and site neighbours,A12->X17,cut the path,Flexible-height barrier panels raised on the downwind side of the day (Choi 2023: resident exposure varies 2.3x with wind direction),fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-23,P1,Construction workers and site neighbours,A12->X17,change the decision,"SMS to registered neighbours before crushing or demolition hours, advising closed windows",pass,pass,pass,pass,through,4,5,4,3,2,2,4,5,3,2,5,46,61
+P1-24,P1,Construction workers and site neighbours,A12->X17,change the decision,Demolition and crushing restricted to hours when neighbouring homes are emptiest,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-25,P1,Construction workers and site neighbours,A24->S30,cut the path,Wind-vane-triggered misting that runs only on the downwind boundary,pass,pass,pass,pass,through,3,4,3,4,4,4,5,4,4,4,3,51,70
+P1-26,P1,Construction workers and site neighbours,A24->S30,change the decision,"Dust-operation permit tied to the forecast: no crushing, sweeping or demolition on high-wind days",fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-27,P1,Construction workers and site neighbours,A24->X17,cut the path,Portable fog cannon repositioned daily to the neighbour side downwind,pass,pass,pass,pass,through,3,4,3,3,3,3,4,4,2,3,3,44,57
+P1-28,P1,Construction workers and site neighbours,D09->D18,cut the source,Covered skips and on-site waste separation so demolition fines do not sit in open piles,"pass, to verify",pass,"pass, to verify",pass,through,2,5,4,4,3,2,3,5,1,3,4,44,56
+P1-29,P1,Construction workers and site neighbours,D09->D18,cut the source,Recycled aggregate specified in the contract to cut quarry haulage and crushing on site,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-30,P1,Construction workers and site neighbours,D09->X14,cut the source,Silica-free abrasive and low-silica block specified for the trades that generate the finest dust,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-31,P1,Construction workers and site neighbours,D09->X14,cut the source,"Off-site prefabrication of cut elements so cutting happens under extraction, not in the open",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P1-32,P1,Construction workers and site neighbours,D16->E18,cut receptor time or intake,Midday break window aligned with the dustiest tasks so heat and dust peaks are not stacked on the same hours,"pass, to verify",pass,"pass, to verify",pass,through,4,4,3,3,3,3,3,5,3,2,5,44,59
+P1-33,P1,Construction workers and site neighbours,D16->E18,cut receptor time or intake,Shaded rest areas with a filtered-air cabin on site,"pass, to verify",pass,pass,pass,through,5,4,3,4,3,3,4,4,2,1,3,47,56
+P1-34,P1,Construction workers and site neighbours,D16->E18,cut receptor time or intake,WBGT-triggered work stops with a site display of the reading,"pass, to verify",pass,"pass, to verify",pass,through,4,4,3,4,3,2,4,5,2,2,5,44,57
+P1-35,P1,Construction workers and site neighbours,D16->X14,cut receptor time or intake,Hydration and heart-rate wearables that flag workers in the danger zone (Moohialdin 2022),"pass, to verify",pass,pass,pass,through,4,3,3,3,3,2,4,4,3,1,4,40,52
+P1-36,P1,Construction workers and site neighbours,P16->S30,change the decision,Continuous perimeter PM10 monitor with a public dashboard for the site,pass,pass,pass,pass,through,3,5,4,4,3,3,5,5,3,2,4,52,66
+P1-37,P1,Construction workers and site neighbours,P16->S30,cut the source,Truck sheeting enforced at the gate: no uncovered load leaves the site,"pass, to verify",pass,"pass, to verify",pass,through,2,5,4,4,3,2,3,5,1,3,5,44,57
+P1-38,P1,Construction workers and site neighbours,S16->X14,cut receptor time or intake,Humidity-aware scheduling: on the most humid mornings the heaviest tasks move to the afternoon window,"pass, to verify",pass,pass,pass,through,3,4,3,3,3,2,3,5,3,2,5,40,55
+P1-39,P1,Construction workers and site neighbours,S30->X14,cut receptor time or intake,Site-wide dust alert on the PA or phones when any perimeter node crosses the threshold,"pass, to verify",pass,pass,pass,through,3,5,4,4,3,3,5,5,3,2,4,52,66
+P1-40,P1,Construction workers and site neighbours,S30->X14,cut receptor time or intake,Marked dust exclusion zones that clear non-essential workers during crushing or sweeping peaks,"pass, to verify",pass,pass,pass,through,3,4,3,3,3,3,3,5,2,2,5,43,56
+P1-41,P1,Construction workers and site neighbours,S30->X17,cut receptor time or intake,Contractor-funded air purifiers for the homes on the fence side for the duration of the works,pass,pass,pass,pass,through,5,4,3,4,2,3,4,5,2,1,2,47,55
+P1-42,P1,Construction workers and site neighbours,S30->X17,change the decision,Neighbour dashboard and complaint line fed by the perimeter monitors,pass,pass,pass,pass,through,4,5,4,4,2,2,5,5,3,2,4,49,63
+P1-43,P1,Construction workers and site neighbours,S30->X17,cut the path,Planning setback between the site fence and the nearest homes for future sites,fail,fail,fail,pass,out,,,,,,,,,,,,,
+P1-44,P1,Construction workers and site neighbours,X14->E18,cut receptor time or intake,Baseline and periodic spirometry for workers in high-dust trades,pass,pass,"pass, to verify",pass,through,4,4,3,3,2,2,5,4,1,1,5,43,52
+P1-45,P1,Construction workers and site neighbours,X14->E19,cut receptor time or intake,"Silicosis surveillance register for cutters, chippers and crushers",fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-46,P1,Construction workers and site neighbours,X14->E18,cut receptor time or intake,"Smoking cessation programme on site, since smoking multiplies dust harm",pass,pass,pass,pass,through,3,4,3,3,2,2,3,3,1,1,5,37,46
+P1-47,P1,Construction workers and site neighbours,X14->E19,change the decision,Medical surveillance requirement written into the visa medical for dust trades,fail,fail,fail,fail,out,,,,,,,,,,,,,
+P1-48,P1,Construction workers and site neighbours,X14->E18,change the decision,"Dust and silica training in the workers' own languages, with a short film for the site induction",pass,pass,pass,pass,through,4,5,4,4,3,2,3,5,1,2,5,46,57
+P1-49,P1,Construction workers and site neighbours,A12->S30,change the decision,Contractor dust-performance bond released against fenceline readings,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-50,P1,Construction workers and site neighbours,A12->P16,change the decision,Tender scoring that awards points for a measured dust plan,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-51,P1,Construction workers and site neighbours,P16->S30,change the decision,Public league table of sites by fenceline PM10,pass,pass,pass,pass,through,3,4,3,4,2,3,5,4,3,2,5,46,61
+P1-52,P1,Construction workers and site neighbours,A24->S30,change the decision,Drone dust patrol by the municipality over active sites on windy days,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-53,P1,Construction workers and site neighbours,A12->P16,change the decision,Reduced permit fees for sites that run continuous monitoring,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-54,P1,Construction workers and site neighbours,S30->X14,change the decision,Worker hotline for dust violations in three languages,pass,pass,pass,pass,through,4,5,4,3,2,2,3,5,2,2,5,44,57
+P1-55,P1,Construction workers and site neighbours,A12->S30,change the decision,Dust records linked to the contractor's insurance premium,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-56,P1,Construction workers and site neighbours,S30->X17,change the decision,"Resident app to report dust clouds with a geotagged photo, routed to the site and the municipality",pass,pass,pass,pass,through,4,4,3,4,2,2,4,4,3,2,4,42,56
+P1-57,P1,Construction workers and site neighbours,A12->X14,change the decision,Dust-control competency certificate required for site supervisors,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P1-58,P1,Construction workers and site neighbours,P16->S30,change the decision,"Site dust score printed as a QR on the hoarding, updated daily from the monitors",pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,4,2,5,47,64
+P1-59,P1,Construction workers and site neighbours,D09->X14,change the decision,Hoarding-side realtime display of PM10 so passers-by and workers see the number,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,3,2,4,47,61
+P1-60,P1,Construction workers and site neighbours,A12->X14,cut receptor time or intake,Shift-end shower and clothes-change facility so dust does not travel home,"pass, to verify",pass,"pass, to verify",pass,through,4,4,3,4,2,2,2,4,1,2,3,38,47
+P2-01,P2,Street food vendors,A23->P31,cut the source,"LPG conversion of charcoal grills at licensed stalls, with a rebate on the licence fee","pass, to verify",pass,"pass, to verify",pass,through,4,4,3,4,4,5,5,4,2,5,3,55,72
+P2-02,P2,Street food vendors,A23->P31,cut the source,Induction or electric grill at stalls with a power hookup,"pass, to verify",pass,pass,pass,through,4,4,3,4,3,5,5,4,3,5,3,54,73
+P2-03,P2,Street food vendors,A23->P31,cut the source,Low-smoke charcoal briquettes or coconut-shell charcoal in place of lump charcoal,pass,pass,pass,pass,through,4,5,4,5,4,3,4,5,2,4,4,53,69
+P2-04,P2,Street food vendors,A23->P31,cut the source,"Chimney starter for lighting charcoal, no lighter fluid",pass,pass,pass,pass,through,4,5,4,5,4,2,4,5,1,3,5,50,63
+P2-05,P2,Street food vendors,A23->P31,cut the source,Power hookups installed at fixed vending spots so electric cooking is possible,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P2-06,P2,Street food vendors,A23->P31,cut the source,Pellet grill or gas griddle for items now cooked over charcoal,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,4,5,4,2,4,3,50,65
+P2-07,P2,Street food vendors,A23->P31,cut the source,Solar-battery cart powering an induction plate at outdoor markets,pass,pass,pass,pass,through,3,3,3,3,3,4,5,3,5,5,4,46,70
+P2-08,P2,Street food vendors,A23->S29,cut the path,"Canopy hood over the grill with a fan and grease filter, exhaust above head height",pass,pass,pass,pass,through,4,4,3,3,4,4,5,4,2,3,3,51,64
+P2-09,P2,Street food vendors,A23->S29,cut the path,Extraction hood with an electrostatic precipitator on the exhaust,pass,pass,pass,pass,through,3,3,3,3,3,4,5,3,3,3,3,46,61
+P2-10,P2,Street food vendors,A23->S29,cut the path,Water-scrubber hood for charcoal exhaust,pass,pass,pass,pass,through,3,3,2,3,3,4,5,3,3,3,3,44,59
+P2-11,P2,Street food vendors,A23->S29,cut the path,Exhaust stack that discharges 3 m above the stall roof,pass,pass,pass,pass,through,3,4,3,4,3,3,5,4,1,3,3,47,58
+P2-12,P2,Street food vendors,A23->S29,cut the path,"Stall orientation rule: grill on the leeward edge, vendor upwind",pass,pass,pass,pass,through,3,5,4,3,4,3,4,5,3,2,5,50,65
+P2-13,P2,Street food vendors,A23->S29,cut the path,"Shared ventilated cooking kiosk at a market, several vendors under one hood",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P2-14,P2,Street food vendors,A23->S29,cut the path,Wind wall or screen between the grill and the vendor's station,pass,pass,pass,pass,through,3,5,4,3,4,2,4,5,2,2,5,47,60
+P2-15,P2,Street food vendors,A23->X16,cut receptor time or intake,"Vendor station moved to the upwind side of the grill, serving from the front",pass,pass,pass,pass,through,4,5,4,3,4,3,4,5,3,2,5,51,66
+P2-16,P2,Street food vendors,A23->X16,cut receptor time or intake,Rotation between grilling and serving so no one stands at the grill a full shift,pass,pass,pass,pass,through,3,5,4,3,4,3,3,5,2,2,5,48,61
+P2-17,P2,Street food vendors,A23->X16,cut receptor time or intake,"FFP2 mask during charcoal lighting and fanning, the highest-peak minutes",pass,pass,pass,pass,through,3,5,4,2,4,2,3,5,1,1,2,44,50
+P2-18,P2,Street food vendors,A23->X16,cut receptor time or intake,Helper handles charcoal lighting and ash while wearing a respirator,pass,pass,pass,pass,through,3,5,4,3,4,2,3,5,1,1,2,45,51
+P2-19,P2,Street food vendors,A23->X16,cut receptor time or intake,Shorter charcoal shifts with a break away from the stall each hour,pass,pass,pass,pass,through,3,4,3,3,3,2,3,5,1,2,4,40,50
+P2-20,P2,Street food vendors,D24->P31,change the decision,Clean fuel as a condition of vending licence renewal,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P2-21,P2,Street food vendors,D24->P31,change the decision,Vendors clustered in ventilated food courts or designated zones away from traffic,fail,fail,pass,pass,out,,,,,,,,,,,,,
+P2-22,P2,Street food vendors,D24->P31,change the decision,Cap on charcoal stalls per street or market,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P2-23,P2,Street food vendors,D24->P31,change the decision,Charcoal lighting restricted to set hours before the crowd arrives,pass,pass,pass,pass,through,3,5,4,3,4,2,4,5,3,3,5,47,64
+P2-24,P2,Street food vendors,D24->P31,change the decision,Minimum spacing between grills at a market so plumes do not stack,pass,pass,pass,pass,through,3,5,4,4,4,2,4,5,2,3,5,48,63
+P2-25,P2,Street food vendors,P31->S29,cut the source,Grill with controlled airflow and a lid so combustion is cleaner and fumes are trapped,pass,pass,pass,pass,through,3,4,3,4,4,3,5,4,4,4,4,48,68
+P2-26,P2,Street food vendors,P31->S29,cut the source,Catalytic afterburner on the grill exhaust,pass,pass,pass,pass,through,2,3,2,3,2,3,5,3,4,4,3,39,58
+P2-27,P2,Street food vendors,P31->S29,cut the source,"Lid-on cooking for items that allow it, cutting open-flame time",pass,pass,pass,pass,through,3,5,4,4,4,2,4,5,2,3,5,48,63
+P2-28,P2,Street food vendors,P31->S29,cut the source,"Pre-cooked items finished on the grill briefly, cutting minutes over charcoal",pass,pass,pass,pass,through,3,5,4,4,4,2,4,5,2,3,3,48,61
+P2-29,P2,Street food vendors,S29->X16,cut receptor time or intake,Personal PM monitor clipped at the stall with a visible alert,pass,pass,pass,pass,through,3,5,4,4,3,2,5,5,3,2,4,49,63
+P2-30,P2,Street food vendors,S29->X16,cut the path,Fan-based dilution blowing across the grill away from the vendor,pass,pass,pass,pass,through,3,5,4,4,4,3,4,5,2,2,2,51,61
+P2-31,P2,Street food vendors,S29->X16,cut the path,Stall layout with the grill at the edge and the vendor inside a partly enclosed counter,pass,pass,pass,pass,through,3,4,3,3,4,3,4,4,3,2,5,45,60
+P2-32,P2,Street food vendors,S29->X16,cut receptor time or intake,Customer queue positioned upwind of the grill so the crowd is not in the plume,pass,pass,pass,pass,through,3,5,4,4,4,1,3,5,2,2,5,43,56
+P2-33,P2,Street food vendors,X16->E18,cut receptor time or intake,Respiratory symptom screening at licence renewal with referral,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P2-34,P2,Street food vendors,X16->E18,cut receptor time or intake,Vendor health survey and free lung-function check at a market,pass,pass,pass,pass,through,4,4,3,4,2,2,5,4,1,1,5,44,53
+P2-35,P2,Street food vendors,X16->E18,change the decision,Training session for vendors on smoke exposure and the cheap fixes,pass,pass,pass,pass,through,4,5,4,4,3,2,3,5,1,2,5,46,57
+P2-36,P2,Street food vendors,X16->E18,cut receptor time or intake,CO alarm at charcoal stalls in semi-enclosed spots,pass,pass,pass,pass,through,4,5,4,4,4,2,4,5,1,1,5,49,58
+P2-37,P2,Street food vendors,A23->P31,change the decision,"Clean-stall label displayed to customers, awarded after a measurement",pass,pass,pass,pass,through,4,4,3,4,4,3,5,4,4,3,5,49,68
+P2-38,P2,Street food vendors,A23->S29,change the decision,Municipality rebate for hood installation at licensed stalls,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P2-39,P2,Street food vendors,A23->P31,change the decision,Vendor cooperative bulk-buying LPG and cylinders,"pass, to verify",pass,pass,pass,through,3,4,3,4,4,4,4,4,3,4,3,49,66
+P2-40,P2,Street food vendors,S29->X16,change the decision,Air-quality display facing customers at the stall,pass,pass,pass,pass,through,3,5,4,4,3,2,5,5,3,2,4,49,63
+P2-41,P2,Street food vendors,A23->P31,change the decision,Event-organiser rule: electric hookups and no charcoal at organised markets and festivals,"pass, to verify",pass,"pass, to verify",pass,through,3,4,3,4,4,4,5,4,2,5,3,51,68
+P2-42,P2,Street food vendors,A23->S29,change the decision,Hood retrofit built and installed by the engineering student group at one market as the pilot,pass,pass,pass,pass,through,4,4,3,3,3,4,5,4,3,3,3,50,65
+P2-43,P2,Street food vendors,A23->S29,change the decision,Filter-cleaning subscription so hoods keep working after installation,pass,pass,pass,pass,through,3,4,3,4,4,3,3,4,3,3,3,44,59
+P2-44,P2,Street food vendors,P31->S29,change the decision,Measurement campaign ranking stall types by PM2.5 so the worst are fixed first,pass,pass,pass,pass,through,3,5,4,5,3,3,5,5,3,2,5,53,68
+P2-45,P2,Street food vendors,D24->P31,change the decision,"Trained smoke marshal at markets who checks fuel, hoods and spacing",pass,pass,pass,pass,through,3,4,3,4,3,2,3,5,3,3,5,41,58
+P2-46,P2,Street food vendors,A23->P31,change the decision,Clean cooking zone pilot at one market with LPG and hoods for every stall,"pass, to verify",pass,pass,pass,through,4,4,3,4,4,5,5,4,3,5,3,55,74
+P2-47,P2,Street food vendors,A23->X16,cut receptor time or intake,Nose-and-mouth shield at the grill face for the minutes of flare-up,pass,pass,pass,pass,through,2,5,4,2,3,1,3,5,2,1,5,39,50
+P2-48,P2,Street food vendors,A23->S29,cut the path,Enclosed food truck with roof extraction and filter instead of an open stall,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P2-49,P2,Street food vendors,D24->P31,change the decision,Vendor spacing and orientation drawn into the market floor plan,pass,pass,pass,pass,through,3,5,4,4,4,2,4,5,2,3,5,48,63
+P2-50,P2,Street food vendors,S29->X16,cut receptor time or intake,"Two-station stall: hot station for 20 minutes, cold station for 20, alternating",pass,pass,pass,pass,through,3,5,4,3,4,3,3,5,3,2,5,48,63
+P3-01,P3,School gate and idling,A05->P05,change the decision,School idle-free policy with signage at the gate and in the parent handbook,pass,pass,pass,pass,through,4,5,4,4,3,3,4,5,1,4,5,51,66
+P3-02,P3,School gate and idling,A05->P05,change the decision,Engine-off pledge signed by parents and drivers at the start of term,pass,pass,pass,pass,through,4,5,4,4,3,2,4,5,1,3,5,48,61
+P3-03,P3,School gate and idling,A05->S20,change the decision,Staff-enforced engine-off in the queue with a verbal reminder at the window (Ryan 2013: 4.11 to 0.99 ug/m3 at the most-bused school),pass,pass,pass,pass,through,4,5,4,3,3,4,3,5,2,4,5,51,68
+P3-04,P3,School gate and idling,A05->S20,change the decision,Student idle marshals with tally sheets at the gate,pass,pass,pass,pass,through,4,5,4,3,2,3,3,5,2,4,5,47,64
+P3-05,P3,School gate and idling,A05->P05,change the decision,Camera plus plate reading that sends a letter home to idling families,"pass, to verify",pass,"pass, to verify",pass,through,2,3,2,4,2,3,3,3,3,4,4,36,54
+P3-06,P3,School gate and idling,A05->P05,change the decision,Idle-free zone painted on the road surface at the drop-off,pass,pass,pass,pass,through,3,5,4,5,3,2,4,5,1,3,5,48,61
+P3-07,P3,School gate and idling,A05->P05,change the decision,Municipal anti-idling rule for school zones with an air-quality rationale (Abu Dhabi Police's Dh300 covers unattended engines only),fail,fail,pass,fail,out,,,,,,,,,,,,,
+P3-08,P3,School gate and idling,A05->S07,change the decision,"Countdown display at the gate showing minutes since arrival, engine-off asked at one minute",pass,pass,pass,pass,through,3,4,3,4,3,3,3,5,4,4,5,44,65
+P3-09,P3,School gate and idling,A05->P05,change the decision,"Engine-off training for hired family drivers, who do most Abu Dhabi school runs",pass,pass,pass,pass,through,4,5,4,4,3,4,4,5,2,4,5,54,71
+P3-10,P3,School gate and idling,A05->S08,change the decision,"Bus operator contract clause: no idling over one minute at the gate, checked by telematics","pass, to verify",pass,pass,pass,through,4,4,3,4,3,4,3,4,2,4,5,47,64
+P3-11,P3,School gate and idling,A07->D14,cut the path,School Street: the gate road closed to cars at drop-off and pick-up (Mayor of London 2021: NO2 down up to 23 %),"pass, to verify",pass,pass,pass,through,4,3,2,3,3,5,3,4,3,5,2,45,63
+P3-12,P3,School gate and idling,A07->D14,cut the path,Park-and-stride: drop-off point 300 m away with a marshalled walking route,pass,pass,pass,pass,through,3,4,3,3,3,4,3,5,2,4,2,46,60
+P3-13,P3,School gate and idling,A07->S20,cut the path,Staggered drop-off and pick-up by grade to shorten the queue,pass,pass,pass,pass,through,4,5,4,4,3,4,3,5,2,4,5,52,69
+P3-14,P3,School gate and idling,A07->S20,cut the path,"One-way rolling drop-off loop, no stopping, staff open the doors",pass,pass,pass,pass,through,4,4,3,4,3,4,3,5,2,4,5,48,65
+P3-15,P3,School gate and idling,A07->S20,cut the path,Drop-off bays relocated away from the pedestrian gate,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,4,3,4,2,3,3,46,59
+P3-16,P3,School gate and idling,A07->S20,cut the path,Kiss-and-ride lane with attendants so cars keep moving,pass,pass,pass,pass,through,4,4,3,4,3,4,3,5,2,4,5,48,65
+P3-17,P3,School gate and idling,A07->S20,cut the path,Pedestrian entrance moved to the side away from the queue,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-18,P3,School gate and idling,A07->S20,cut receptor time or intake,"Shaded, cooled parent waiting area so parents do not wait in cars with the AC on",pass,pass,pass,pass,through,5,4,3,4,3,4,3,4,3,4,3,48,65
+P3-19,P3,School gate and idling,A07->S20,cut the path,Covered walkway from the drop-off bay to the door,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,2,3,4,1,2,4,40,50
+P3-20,P3,School gate and idling,A07->S20,cut the path,Hedge or tree screen between the queue lane and the gate,pass,fail,pass,pass,out,,,,,,,,,,,,,
+P3-21,P3,School gate and idling,A07->D14,change the decision,"Just-in-time pick-up app: parents are called when the child reaches the gate, so nobody queues with the engine on (car half only; rescored 04:10 after the pre-mortem: relocates the wait, dismissal only, gate effect under sensor noise, exists as iSchoolRide PickupLine)",pass,pass,pass,pass,through,5,4,3,4,4,2,2,4,2,4,3,41,56
+P3-22,P3,School gate and idling,A07->D14,change the decision,"Numbered pick-up tags and a call board, the low-tech version of the app (car half only, rescored 04:10 with the app)",pass,pass,pass,pass,through,4,5,4,4,3,2,2,5,2,4,3,44,59
+P3-23,P3,School gate and idling,A07->D14,cut the path,Remote pick-up points at a nearby car park with staff walking the children over,pass,pass,pass,pass,through,3,4,3,3,3,4,3,5,2,4,2,46,60
+P3-24,P3,School gate and idling,A07->D14,cut the path,Walking bus with adult marshals from a collection point,pass,pass,pass,pass,through,3,4,3,3,2,3,4,5,2,4,5,44,61
+P3-25,P3,School gate and idling,A15->S21,cut receptor time or intake,Portable HEPA cleaners in classrooms (Simona 2025: PM2.5 39.9 % lower over the year),pass,pass,pass,pass,through,5,5,4,5,3,2,5,5,1,1,2,52,58
+P3-26,P3,School gate and idling,A15->X10,cut receptor time or intake,MERV13 filter upgrade on the school's air handling units,pass,pass,pass,pass,through,4,4,3,5,3,2,5,4,1,1,3,46,53
+P3-27,P3,School gate and idling,A15->X10,cut receptor time or intake,Positive pressure in gate-side classrooms with filtered supply air,"pass, to verify",pass,pass,pass,through,4,3,2,5,3,2,5,3,2,1,3,41,50
+P3-28,P3,School gate and idling,A15->S21,cut the path,Sealing window and door gaps on the gate-facing façade,pass,pass,pass,pass,through,3,5,4,5,3,2,4,5,1,1,4,48,56
+P3-29,P3,School gate and idling,A15->S21,cut receptor time or intake,"Purifiers only in the gate-facing classrooms, the cheapest targeting",pass,pass,pass,pass,through,4,5,4,5,4,2,5,5,2,1,2,52,60
+P3-30,P3,School gate and idling,A15->X10,cut receptor time or intake,Filter change schedule driven by a classroom PM sensor,pass,pass,pass,pass,through,3,5,4,4,3,2,5,5,3,1,3,49,60
+P3-31,P3,School gate and idling,A18->X10,change the decision,Siting rule for new schools: at least 300 m from an arterial,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P3-32,P3,School gate and idling,A18->X10,change the decision,Gate placement rule away from the arterial for new schools,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P3-33,P3,School gate and idling,A18->X10,cut receptor time or intake,Room allocation: the youngest classes furthest from the gate and the road,pass,pass,pass,pass,through,4,5,4,5,3,3,4,5,2,2,5,52,65
+P3-34,P3,School gate and idling,A26->D26,cut the source,Automatic idle shut-off timers on school buses,"pass, to verify",pass,pass,pass,through,3,4,3,5,3,4,3,4,2,4,5,47,64
+P3-35,P3,School gate and idling,A26->P32,cut the source,Electric school buses on the routes serving the school,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-36,P3,School gate and idling,A26->D26,cut the source,Shore power at the depot and the staging area so bus AC runs without the engine,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-37,P3,School gate and idling,D26->P05,cut the path,"Bus staging area away from the gate, engines off until loading",pass,pass,pass,pass,through,3,5,4,4,3,4,3,5,2,4,3,51,66
+P3-38,P3,School gate and idling,D26->P05,cut the path,Bus arrival slots so buses load on arrival instead of waiting,pass,pass,pass,pass,through,3,4,3,4,3,3,3,5,3,4,5,44,63
+P3-39,P3,School gate and idling,A26->P32,cut the source,Diesel oxidation catalyst or DPF retrofit on older buses,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-40,P3,School gate and idling,D26->P32,change the decision,Telematics idle report per bus with a league table for the operator,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,3,3,4,3,4,5,43,62
+P3-41,P3,School gate and idling,D26->P32,change the decision,Driver bonus for the lowest idle hours,"pass, to verify",pass,pass,pass,through,3,4,3,4,4,3,3,4,2,4,5,44,61
+P3-42,P3,School gate and idling,A26->P32,cut the source,CNG buses on school contracts,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-43,P3,School gate and idling,A27->X10,cut receptor time or intake,Demand-controlled ventilation with CO2 and PM sensors (Arar 2021: ventilation beat purifiers in UAE nurseries),"pass, to verify",pass,pass,pass,through,4,3,2,5,3,2,5,3,2,1,3,41,50
+P3-44,P3,School gate and idling,A27->X10,cut receptor time or intake,"Outdoor-air intake reduced during the drop-off peak, restored after",pass,pass,pass,pass,through,3,4,3,5,3,2,5,4,3,1,4,45,57
+P3-45,P3,School gate and idling,A27->X10,cut the path,Air intake relocated away from the gate and the road,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-46,P3,School gate and idling,A27->X10,cut receptor time or intake,Energy recovery ventilator with filtration for the gate-side wing,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-47,P3,School gate and idling,D04->D14,change the decision,School bus fee discount funded by a car drop-off fee,"pass, to verify",pass,"pass, to verify",pass,through,3,4,3,4,4,4,4,4,3,4,4,49,67
+P3-48,P3,School gate and idling,D04->D14,change the decision,Carpool matching for families on the same streets,pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,1,3,5,49,62
+P3-49,P3,School gate and idling,D15->D14,change the decision,Enrolment preference for families within walking distance,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-50,P3,School gate and idling,D04->D14,cut the path,Bike and e-scooter parking with a safe entry lane,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,1,3,5,47,60
+P3-51,P3,School gate and idling,D15->D14,change the decision,Public bus route stop at the school gate at the school's hours,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-52,P3,School gate and idling,D14->P05,cut the path,Staff load and unload children so the queue rolls (Kumar 2020: drop-off PM2.5 nearly 3x off-peak from queuing),pass,pass,pass,pass,through,4,5,4,4,3,4,3,5,2,4,5,52,69
+P3-53,P3,School gate and idling,D14->P05,change the decision,"No-parking, roll-through rule with cones and a marshal",pass,pass,pass,pass,through,3,5,4,4,3,3,3,5,2,4,5,48,65
+P3-54,P3,School gate and idling,D14->P05,change the decision,Parent briefing on engine-off in the queue at the term's first assembly,pass,pass,pass,pass,through,4,5,4,4,3,3,4,5,1,3,5,51,64
+P3-55,P3,School gate and idling,D14->P05,change the decision,Signage that states the fuel and dirhams saved by switching off,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,2,3,5,47,62
+P3-56,P3,School gate and idling,P05->S20,cut the path,Physical distance: the queue lane moved 30 m from the pedestrian gate,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,4,3,4,2,3,3,46,59
+P3-57,P3,School gate and idling,P05->S20,cut the path,"Enclosed, ventilated gate vestibule where children wait",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-58,P3,School gate and idling,P05->S20,cut the path,Green wall at the gate as a partial screen (Kumar 2024: hedges about 23 %),pass,fail,pass,pass,out,,,,,,,,,,,,,
+P3-59,P3,School gate and idling,S13->S20,change the decision,Stable-morning alert: on inversion days the queue is shortened by a later staggered slot,pass,pass,pass,pass,through,3,4,3,3,3,2,4,5,4,3,5,42,61
+P3-60,P3,School gate and idling,S13->S20,cut receptor time or intake,Dust and inversion day protocol: children wait indoors at pick-up,pass,pass,pass,pass,through,4,5,4,4,3,2,4,5,2,1,5,48,59
+P3-61,P3,School gate and idling,S20->S21,cut receptor time or intake,Windows closed during drop-off and pick-up in gate-side rooms,pass,pass,pass,pass,through,3,5,4,4,3,2,5,5,1,1,5,49,58
+P3-62,P3,School gate and idling,S20->X10,cut receptor time or intake,"Gate-side doors kept shut during the peak, entry through the far door",pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,1,1,5,47,56
+P3-63,P3,School gate and idling,S20->X10,cut the path,Air curtain at the main entrance,"pass, to verify",pass,pass,pass,through,3,4,3,5,3,2,4,4,2,1,3,43,52
+P3-64,P3,School gate and idling,S26->X10,cut the source,"No chalk, wet cleaning and HEPA vacuums after hours (Arar 2021: TSP moved with children's activity)",pass,pass,pass,pass,through,3,5,4,4,3,3,4,5,1,3,4,50,62
+P3-65,P3,School gate and idling,S26->X10,cut the source,Entrance mats and a shoe-off rule in the youngest classes,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,1,3,5,46,59
+P3-66,P3,School gate and idling,S26->X10,cut the source,No incense or air fresheners in classrooms,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,1,4,5,47,62
+P3-67,P3,School gate and idling,S07->E14,change the decision,Black-carbon co-benefit reported in the school's sustainability report,pass,pass,pass,pass,through,2,5,4,5,2,1,3,5,2,1,5,41,52
+P3-68,P3,School gate and idling,S08->X10,cut receptor time or intake,Youngest pupils kept away from the tail of the queue at pick-up,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,2,2,5,47,60
+P3-69,P3,School gate and idling,P05->S20,change the decision,Real-time PM display at the gate visible to every parent in the queue,pass,pass,pass,pass,through,4,5,4,4,3,3,3,5,3,3,4,49,65
+P3-70,P3,School gate and idling,P05->S20,change the decision,Weekly gate air-quality report to parents,pass,pass,pass,pass,through,3,5,4,4,3,2,3,5,2,2,5,45,58
+P3-71,P3,School gate and idling,A05->S20,change the decision,"ADEK guideline for school-gate air, drafted from the pilot's data",fail,fail,pass,pass,out,,,,,,,,,,,,,
+P3-72,P3,School gate and idling,A05->S20,change the decision,Air quality as a criterion in the school inspection framework,fail,fail,pass,fail,out,,,,,,,,,,,,,
+P3-73,P3,School gate and idling,P05->S20,change the decision,Student measurement project with low-cost sensors feeding the gate display,pass,pass,pass,pass,through,4,5,4,4,2,3,3,5,3,2,4,48,62
+P3-74,P3,School gate and idling,A05->P05,change the decision,Class competition on engine-off rates counted by the marshals,pass,pass,pass,pass,through,4,5,4,4,2,3,3,5,3,4,5,48,67
+P3-75,P3,School gate and idling,D14->P05,change the decision,Peak-hour parking enforcement on the gate road by the municipality,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P3-76,P3,School gate and idling,D04->D14,change the decision,Fee rebate for families who use the bus all year,"pass, to verify",pass,"pass, to verify",pass,through,3,4,3,4,4,3,4,4,2,4,4,46,62
+P3-77,P3,School gate and idling,D04->D14,change the decision,"Clean-commute badge for families who walk, bus or carpool",pass,pass,pass,pass,through,3,5,4,4,2,2,4,5,2,3,5,46,61
+P3-78,P3,School gate and idling,S20->S21,cut receptor time or intake,Corridor doors kept shut on the gate side to keep the peak out of the wing,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,1,1,5,47,56
+P3-79,P3,School gate and idling,A26->D26,cut the source,Bus AC pre-cooled on shore power before departure so the wait at the gate is engine-off,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P3-80,P3,School gate and idling,A07->S20,cut the path,Queue lane on the downwind side of the gate on the prevailing wind,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,3,4,4,3,3,3,45,60
+P3-81,P3,School gate and idling,D26->P05,change the decision,"Gate orchestration system: buses get arrival slots and an engine-off staging bay, cars get the just-in-time call, one dashboard at the door (rescored 04:10 after the pre-mortem: engine-off is not available in the heat, the wait relocates, the gate effect is under sensor noise)","pass, to verify",pass,pass,pass,through,5,2,3,4,4,3,2,4,3,4,3,40,57
+P4-01,P4,Child commute and daily dose,A04->A20,change the decision,Bus-first policy: bus fee cut and a car drop-off fee,"pass, to verify",pass,"pass, to verify",pass,through,3,4,3,4,4,4,4,4,2,4,4,49,65
+P4-02,P4,Child commute and daily dose,A04->A20,change the decision,Electric buses required in the next school transport tender,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P4-03,P4,Child commute and daily dose,A04->X08,cut the path,Route optimisation to cut time on board for the youngest pupils,"pass, to verify",pass,pass,pass,through,4,4,3,4,4,3,5,4,3,3,5,49,66
+P4-04,P4,Child commute and daily dose,A04->X08,cut the path,Bus stops sited off the arterial and away from queues,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,2,4,4,2,3,4,42,56
+P4-05,P4,Child commute and daily dose,A04->X08,cut receptor time or intake,Windows-closed and recirculation policy on buses in traffic (Matthaios 2020: lowest I/O with recirculation),pass,pass,pass,pass,through,3,5,4,4,3,3,5,5,1,2,5,52,63
+P4-06,P4,Child commute and daily dose,A04->X08,cut receptor time or intake,HEPA-grade cabin filters on the school buses,"pass, to verify",pass,pass,pass,through,4,4,3,5,3,4,5,4,2,1,3,52,61
+P4-07,P4,Child commute and daily dose,A04->X08,change the decision,Cabin PM monitor on each bus with driver feedback,pass,pass,pass,pass,through,3,4,3,4,3,3,5,5,4,3,4,48,66
+P4-08,P4,Child commute and daily dose,A13->X03,change the decision,Dust-day alert to schools with an indoor-recess protocol (MOCCAE 2022 lists the missing public warning system as a gap),pass,pass,pass,pass,through,4,5,4,4,3,3,4,5,3,2,5,51,66
+P4-09,P4,Child commute and daily dose,A13->X03,change the decision,NCM dust forecast pushed into the school app,"pass, to verify",pass,pass,pass,through,4,4,3,4,3,3,4,4,3,2,5,46,61
+P4-10,P4,Child commute and daily dose,A13->X11,change the decision,Asthma-register pupils get a personal alert on dust and peak days,pass,pass,pass,pass,through,5,4,3,4,3,3,4,5,4,2,5,48,65
+P4-11,P4,Child commute and daily dose,A13->X03,change the decision,Outdoor PE timetable set by the forecast,pass,pass,pass,pass,through,4,5,4,4,3,3,4,5,3,2,5,51,66
+P4-12,P4,Child commute and daily dose,A14->X03,change the decision,School-level air-quality display in the lobby,pass,pass,pass,pass,through,3,5,4,4,3,2,5,5,2,2,4,49,61
+P4-13,P4,Child commute and daily dose,A14->X03,change the decision,Parent app showing commute air quality by route,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,2,4,4,4,2,4,42,58
+P4-14,P4,Child commute and daily dose,A14->X03,change the decision,"Route advice: walking routes on quieter streets, away from the queue",pass,pass,pass,pass,through,3,5,4,3,2,2,4,5,2,2,5,45,58
+P4-15,P4,Child commute and daily dose,A17->X11,cut receptor time or intake,School nurse asthma action plans for every registered pupil,pass,pass,pass,pass,through,5,5,4,4,2,2,4,5,1,1,5,48,57
+P4-16,P4,Child commute and daily dose,A17->X11,cut receptor time or intake,Inhaler-at-school programme,pass,pass,pass,pass,through,5,5,4,4,2,2,3,5,1,1,5,46,55
+P4-17,P4,Child commute and daily dose,A17->X11,cut receptor time or intake,Spirometry screening for the highest-exposure pupils,pass,pass,pass,pass,through,4,4,3,3,2,2,5,4,1,1,5,43,52
+P4-18,P4,Child commute and daily dose,A20->E05,cut the source,DPF or DOC retrofit on the oldest buses (Adar 2015: on-board particles 10 to 50 % lower with cleaner tech),fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P4-19,P4,Child commute and daily dose,A20->S22,cut the source,"Closed crankcase ventilation retrofit, the cheapest cabin fix","pass, to verify",pass,"pass, to verify",pass,through,3,4,3,5,3,4,5,4,2,4,4,51,67
+P4-20,P4,Child commute and daily dose,A20->S22,cut the source,Bus age cap in the school's transport contract,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P4-21,P4,Child commute and daily dose,A20->X19,cut the source,Electric buses on the longest routes first,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P4-22,P4,Child commute and daily dose,A20->X19,cut receptor time or intake,Positive-pressure filtered cabin on the buses,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P4-23,P4,Child commute and daily dose,A20->X19,cut receptor time or intake,"Seating plan: youngest at the front, away from the engine and exhaust",pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,3,2,5,47,62
+P4-24,P4,Child commute and daily dose,A20->S22,cut the source,Exhaust-leak inspection of every bus at the start of term,pass,pass,pass,pass,through,4,5,4,5,3,3,5,5,2,4,5,54,71
+P4-25,P4,Child commute and daily dose,A20->S22,cut the source,Idle timers on buses so cabin fumes do not build while waiting,"pass, to verify",pass,pass,pass,through,3,4,3,5,3,3,5,4,2,4,5,48,65
+P4-26,P4,Child commute and daily dose,P30->X09,cut the source,"Bakhoor and oud burning guidance: outdoors or with the window open, never in the child's room (Cohen 2013)",pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,2,4,5,49,66
+P4-27,P4,Child commute and daily dose,P30->X09,cut the source,Electric bakhoor burners that produce less smoke,pass,pass,pass,pass,through,3,5,4,4,4,2,4,5,2,4,4,48,64
+P4-28,P4,Child commute and daily dose,P30->X09,cut the source,Kitchen extraction hood used every time the stove is on,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,1,3,4,46,58
+P4-29,P4,Child commute and daily dose,P30->E06,cut the source,No shisha or smoking indoors where children sleep,pass,pass,pass,pass,through,4,5,4,3,2,3,4,5,1,4,5,49,64
+P4-30,P4,Child commute and daily dose,P30->X09,cut receptor time or intake,Air purifier in the child's bedroom,pass,pass,pass,pass,through,4,5,4,5,4,3,5,5,1,1,2,55,61
+P4-31,P4,Child commute and daily dose,P30->X13,cut the source,"Incense only after the children are out of the room, with ventilation after",pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,2,3,5,46,61
+P4-32,P4,Child commute and daily dose,P30->X09,change the decision,Home air-quality information pack sent through the school,pass,pass,pass,pass,through,3,5,4,4,3,2,3,5,1,2,5,45,56
+P4-33,P4,Child commute and daily dose,S22->X08,cut receptor time or intake,"Car: recirculation and closed windows in traffic, a one-line parent instruction",pass,pass,pass,pass,through,4,5,4,4,3,3,5,5,1,2,5,53,64
+P4-34,P4,Child commute and daily dose,S22->X08,cut receptor time or intake,HEPA cabin filter in the family car,pass,pass,pass,pass,through,4,5,4,5,4,3,5,5,1,1,3,55,62
+P4-35,P4,Child commute and daily dose,S22->X08,cut receptor time or intake,Driver training: do not follow diesel vehicles closely in the queue,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,2,2,5,46,59
+P4-36,P4,Child commute and daily dose,S22->X08,cut the path,Route choice via quieter roads for the school run,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,2,2,5,46,59
+P4-37,P4,Child commute and daily dose,S22->X06,cut receptor time or intake,Commute shortened by staggered school timings that avoid the road peak,"pass, to verify",pass,pass,pass,through,4,4,3,4,3,3,4,4,3,3,5,46,63
+P4-38,P4,Child commute and daily dose,X03->X05,cut receptor time or intake,No strenuous sport at road-peak hours or on dust days,pass,pass,pass,pass,through,4,5,4,4,3,3,4,5,2,2,5,51,64
+P4-39,P4,Child commute and daily dose,X03->X05,cut receptor time or intake,Indoor sports hall use on dust days,pass,pass,pass,pass,through,4,5,4,4,3,2,4,5,1,2,4,48,58
+P4-40,P4,Child commute and daily dose,X03->X08,cut receptor time or intake,"Shaded, cooled waiting pods at bus stops",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P4-41,P4,Child commute and daily dose,X03->X08,cut receptor time or intake,Bus tracking app so children wait indoors until the bus is two minutes away,pass,pass,pass,pass,through,5,4,3,4,4,3,4,4,3,3,5,48,65
+P4-42,P4,Child commute and daily dose,X04->X06,cut receptor time or intake,Just-in-time pick-up app to cut gate waiting time (rescored 04:10 with P3-21),pass,pass,pass,pass,through,5,4,3,4,4,2,3,4,2,3,3,43,56
+P4-43,P4,Child commute and daily dose,X04->X06,cut receptor time or intake,Gate waiting moved indoors,pass,pass,pass,pass,through,4,5,4,4,3,3,5,5,2,2,4,53,65
+P4-44,P4,Child commute and daily dose,X04->X13,cut receptor time or intake,"Bus staging inside the campus, away from the road","pass, to verify",pass,pass,pass,through,3,4,3,4,3,3,5,4,2,3,4,47,61
+P4-45,P4,Child commute and daily dose,X04->X13,cut the path,Walking routes that avoid the car queue,pass,pass,pass,pass,through,3,5,4,3,2,2,4,5,2,2,5,45,58
+P4-46,P4,Child commute and daily dose,X05->X06,cut receptor time or intake,PE moved to midday indoors rather than morning outdoors beside the road,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,2,2,4,47,59
+P4-47,P4,Child commute and daily dose,X05->X06,cut receptor time or intake,Running events held at the field furthest from the road,pass,pass,pass,pass,through,3,5,4,4,3,2,3,5,2,2,5,45,58
+P4-48,P4,Child commute and daily dose,X06->E05,cut receptor time or intake,"Lung-function cohort at the school, measured each term",pass,pass,pass,pass,through,4,4,3,3,2,2,5,4,2,1,5,43,54
+P4-49,P4,Child commute and daily dose,X06->E06,cut receptor time or intake,School health screening with an air-exposure questionnaire,pass,pass,pass,pass,through,3,5,4,4,2,2,4,5,1,1,5,46,55
+P4-50,P4,Child commute and daily dose,X08->X13,cut receptor time or intake,Peak-avoidance: walkers routed away from the queue tail,pass,pass,pass,pass,through,3,5,4,3,2,2,4,5,2,2,5,45,58
+P4-51,P4,Child commute and daily dose,X13->X06,change the decision,Personal monitors worn for a week to find each pupil's peaks,pass,pass,pass,pass,through,4,4,3,3,2,3,5,5,3,2,4,47,61
+P4-52,P4,Child commute and daily dose,X13->X06,cut receptor time or intake,Commute shifted by 20 minutes off the road peak,pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,3,3,5,49,66
+P4-53,P4,Child commute and daily dose,X09->X06,cut receptor time or intake,Home ventilation guidance by week type (Yuan 2020: sealed homes in dust weeks),pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,3,2,5,49,64
+P4-54,P4,Child commute and daily dose,X09->X06,cut receptor time or intake,Window-sealing kits for road-facing bedrooms,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,2,1,4,47,57
+P4-55,P4,Child commute and daily dose,X09->X06,cut receptor time or intake,MERV13 filter on the home AC,pass,pass,pass,pass,through,4,5,4,5,4,3,5,5,1,1,3,55,62
+P4-56,P4,Child commute and daily dose,X09->X06,change the decision,Purifier subsidy for asthmatic pupils' homes,"pass, to verify",pass,pass,pass,through,5,4,3,5,3,3,5,4,1,1,2,50,56
+P4-57,P4,Child commute and daily dose,X19->X06,change the decision,Cabin air-quality clause in the school bus contract,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,4,5,4,3,4,5,50,69
+P4-58,P4,Child commute and daily dose,X19->X06,change the decision,Driver engine-off training and a no-idling rule while loading,pass,pass,pass,pass,through,3,5,4,4,3,3,5,5,2,4,5,52,69
+P4-59,P4,Child commute and daily dose,X19->X06,cut the path,Loading order: the pupils with the longest ride board last,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,3,3,5,46,63
+P4-60,P4,Child commute and daily dose,X19->E06,cut the path,Direct routes for the youngest pupils,"pass, to verify",pass,pass,pass,through,4,4,3,4,3,3,4,4,2,3,5,46,61
+P4-61,P4,Child commute and daily dose,X19->X06,change the decision,Regulator bus air-quality standard,fail,fail,pass,fail,out,,,,,,,,,,,,,
+P4-62,P4,Child commute and daily dose,S22->X19,change the decision,"Parent campaign on car cabin settings, one page",pass,pass,pass,pass,through,3,5,4,4,3,2,3,5,1,2,5,45,56
+P4-63,P4,Child commute and daily dose,X08->X13,change the decision,School clean-commute scorecard published each term,pass,pass,pass,pass,through,3,5,4,4,2,2,4,5,3,2,5,46,61
+P4-64,P4,Child commute and daily dose,S22->X08,change the decision,School bulk-buys HEPA cabin filters for families at cost,pass,pass,pass,pass,through,4,5,4,5,4,3,5,5,2,1,3,55,64
+P4-65,P4,Child commute and daily dose,X04->X06,change the decision,Student sensor project mapping commute exposure by mode,pass,pass,pass,pass,through,4,5,4,4,2,3,5,5,3,2,4,52,66
+P4-66,P4,Child commute and daily dose,A04->X08,change the decision,"Bus routes redesigned on exposure, not distance alone","pass, to verify",pass,pass,pass,through,3,3,2,4,3,3,4,3,4,3,5,40,59
+P4-67,P4,Child commute and daily dose,A20->X19,change the decision,Bus age legislation,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P4-68,P4,Child commute and daily dose,A04->A20,change the decision,Walking and cycling infrastructure around the school,fail,fail,pass,pass,out,,,,,,,,,,,,,
+P4-69,P4,Child commute and daily dose,X03->X06,cut receptor time or intake,Time-outdoors budget on dust days in the school timetable,pass,pass,pass,pass,through,3,5,4,4,3,2,4,5,2,2,5,47,60
+P4-70,P4,Child commute and daily dose,X13->X06,cut receptor time or intake,Bus stop waiting indoors when the stop is on an arterial,pass,pass,pass,pass,through,4,5,4,4,3,2,4,5,2,2,4,48,60
+P4-71,P4,Child commute and daily dose,S22->X19,cut the source,"Clean Cabin: per-bus cabin air diagnosis (cabin vs roof sensor ratio while idling and moving), fix kit (exhaust-leak sealing, closed-crankcase retrofit, tailpipe routed up and off-side away from the door and the intake), climate-aware idle timer, and a published cabin air rating per bus (added 04:10 after the pre-mortem, replaces gate orchestration as the pick)","pass, to verify",pass,pass,pass,through,5,4,3,5,4,5,5,5,4,4,5,58,79
+P5-01,P5,Near-road residents and delivery riders,A16->S18,cut the path,Dense roadside hedge 1.5 to 2 m between the road and the homes (Kumar 2024: hedges about 23 %),pass,fail,pass,pass,out,,,,,,,,,,,,,
+P5-02,P5,Near-road residents and delivery riders,A16->S18,cut the path,"Street trees where the street is open, not in canyons where they trap",fail,fail,pass,pass,out,,,,,,,,,,,,,
+P5-03,P5,Near-road residents and delivery riders,A16->X18,cut the path,Green wall on the road-facing façade of labour housing,pass,fail,pass,pass,out,,,,,,,,,,,,,
+P5-04,P5,Near-road residents and delivery riders,A16->X18,cut the path,Vegetation barrier at the boundary of a road-facing compound,pass,fail,pass,pass,out,,,,,,,,,,,,,
+P5-05,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Surgical or FFP2 masks supplied by the platform (Patel 2016: only surgical masks cut PM for motorcycle commuters),pass,pass,pass,pass,through,3,5,4,2,3,4,4,5,1,1,2,51,57
+P5-06,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Shift scheduling that keeps riders off the road at the traffic peaks,"pass, to verify",pass,pass,pass,through,3,4,3,3,3,4,4,4,3,2,4,47,61
+P5-07,P5,Near-road residents and delivery riders,A22->X15,cut the path,Route choice through lower-traffic roads coded into the dispatch app,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,3,4,4,4,3,4,45,63
+P5-08,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,"Filtered-air rest stops (the 12,000 summer rest areas exist for heat, not air, Gulf News 2026)","pass, to verify",pass,"pass, to verify",pass,through,4,4,3,4,3,2,3,4,2,1,3,41,50
+P5-09,P5,Near-road residents and delivery riders,A22->X15,change the decision,Exposure-based break entitlement written into rider contracts,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-10,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Helmet with a filtered visor intake,pass,pass,pass,pass,through,2,3,3,2,3,2,4,4,3,1,3,37,48
+P5-11,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Enclosed three-wheeler or small e-van instead of a motorcycle for long routes,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-12,P5,Near-road residents and delivery riders,A22->X15,cut the source,"Electric motorcycles for the fleet, cutting the rider's own exhaust and the fleet's",fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-13,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Rider health screening at onboarding and yearly,"pass, to verify",pass,pass,pass,through,4,4,3,4,2,2,5,4,1,1,5,44,53
+P5-14,P5,Near-road residents and delivery riders,A22->X15,change the decision,Personal PM monitors on bikes producing an exposure heat map of the city,pass,pass,pass,pass,through,3,4,3,4,3,3,5,4,4,2,4,47,63
+P5-15,P5,Near-road residents and delivery riders,A22->X15,change the decision,"Dispatch algorithm cap on time spent on arterials per shift (the highway ban exists, arterials do not)","pass, to verify",pass,pass,pass,through,3,3,2,4,3,4,4,3,4,3,3,43,60
+P5-16,P5,Near-road residents and delivery riders,A22->X15,cut the path,Delivery hubs closer to demand so each order rides fewer kilometres,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-17,P5,Near-road residents and delivery riders,A25->S18,cut the path,Setback rule for new housing from arterials,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-18,P5,Near-road residents and delivery riders,A25->S18,cut the path,Noise barriers designed to double as air barriers,fail,fail,pass,pass,out,,,,,,,,,,,,,
+P5-19,P5,Near-road residents and delivery riders,A25->S18,cut the path,Solid barrier plus vegetation at the worst road-facing compounds,fail,fail,pass,pass,out,,,,,,,,,,,,,
+P5-20,P5,Near-road residents and delivery riders,A25->X18,cut the path,Building orientation: bedrooms on the far side from the road in new builds,fail,fail,pass,pass,out,,,,,,,,,,,,,
+P5-21,P5,Near-road residents and delivery riders,A25->X18,cut the path,"Non-residential uses (parking, retail) as the roadside buffer",fail,fail,pass,pass,out,,,,,,,,,,,,,
+P5-22,P5,Near-road residents and delivery riders,A25->S18,cut the source,"Lower speed limit on the arterial, cutting exhaust and non-exhaust emission",fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-23,P5,Near-road residents and delivery riders,A25->S18,cut the source,Signal timing that cuts stop-go queues on the stretch,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-24,P5,Near-road residents and delivery riders,D23->X15,change the decision,Order batching so each trip carries more,"pass, to verify",pass,pass,pass,through,2,4,3,4,4,2,3,4,2,3,5,40,55
+P5-25,P5,Near-road residents and delivery riders,D23->X15,change the decision,Peak-hour delivery surcharge that smooths demand,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-26,P5,Near-road residents and delivery riders,D23->X15,cut the path,Pickup lockers that replace door-to-door trips,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-27,P5,Near-road residents and delivery riders,D25->X18,change the decision,"Zoning: no new schools, nurseries or clinics within 300 m of an arterial",fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-28,P5,Near-road residents and delivery riders,D25->X18,cut receptor time or intake,Retrofit filtration in existing near-road labour housing,"pass, to verify",pass,pass,pass,through,5,4,3,4,2,4,5,4,2,1,2,51,59
+P5-29,P5,Near-road residents and delivery riders,D25->X18,change the decision,Air-quality disclosure at lease or sale for road-facing units,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-30,P5,Near-road residents and delivery riders,S09->S01,cut the source,SO2 and NOx control at refineries and power plants,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-31,P5,Near-road residents and delivery riders,S17->S01,cut the source,Regional dust cooperation,fail,fail,fail,fail,out,,,,,,,,,,,,,
+P5-32,P5,Near-road residents and delivery riders,S01->X01,cut the source,City fleet electrification,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-33,P5,Near-road residents and delivery riders,S18->E03,cut receptor time or intake,HEPA purifiers in the road-facing bedrooms of one compound as the pilot,pass,pass,pass,pass,through,5,5,4,5,3,4,5,5,1,1,2,58,64
+P5-34,P5,Near-road residents and delivery riders,S18->E07,cut receptor time or intake,Window sealing plus MERV13 on the AC for road-facing units,pass,pass,pass,pass,through,4,5,4,5,3,4,5,5,1,1,3,57,64
+P5-35,P5,Near-road residents and delivery riders,S18->X18,cut receptor time or intake,Bedroom moved to the rear of the flat where the layout allows,pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,2,1,5,49,60
+P5-36,P5,Near-road residents and delivery riders,S18->S28,cut receptor time or intake,"Rider positioning: never behind a bus or truck at the light, stop ahead or upwind",pass,pass,pass,pass,through,3,5,4,3,3,3,4,5,3,2,5,49,64
+P5-37,P5,Near-road residents and delivery riders,S28->X15,cut receptor time or intake,Following-distance rule from diesel vehicles in rider training,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,2,2,5,46,59
+P5-38,P5,Near-road residents and delivery riders,S28->X15,cut receptor time or intake,Waiting position at red lights ahead of the queue where the app allows,pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,2,2,5,46,59
+P5-39,P5,Near-road residents and delivery riders,S28->X15,cut the path,"Fairing or windscreen that deflects the plume, low effect",pass,pass,pass,pass,through,2,4,3,3,3,1,3,4,3,1,4,35,47
+P5-40,P5,Near-road residents and delivery riders,X01->E01,change the decision,Public air-quality alerts with plain guidance (the MOCCAE gap),fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-41,P5,Near-road residents and delivery riders,X01->E03,cut receptor time or intake,Clinic-based advice on exposure for respiratory patients,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-42,P5,Near-road residents and delivery riders,X02->E17,cut the source,NO2-targeted retrofit of diesel buses and trucks on the corridor,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-43,P5,Near-road residents and delivery riders,X02->E01,change the decision,Low-emission zone on the corridor,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-44,P5,Near-road residents and delivery riders,X12->X15,change the decision,Rider protections written into platform licensing,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-45,P5,Near-road residents and delivery riders,X12->E01,cut receptor time or intake,Targeted protection for labour housing next to highways: filtration and sealing first there,"pass, to verify",pass,pass,pass,through,5,4,3,4,2,4,5,4,2,1,2,51,59
+P5-46,P5,Near-road residents and delivery riders,X18->E17,cut receptor time or intake,Asthma care access for near-road residents through a mobile clinic,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-47,P5,Near-road residents and delivery riders,X18->E03,cut receptor time or intake,Health screening for the residents of one road-facing compound,pass,pass,pass,pass,through,4,4,3,4,2,2,5,4,1,1,5,44,53
+P5-48,P5,Near-road residents and delivery riders,X18->E01,change the decision,Near-road resident register for follow-up,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-49,P5,Near-road residents and delivery riders,S18->X18,change the decision,Near-road monitoring network with public data,fail,pass,pass,pass,out,,,,,,,,,,,,,
+P5-50,P5,Near-road residents and delivery riders,D25->X18,change the decision,Developer requirement: air-quality assessment for road-facing housing,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-51,P5,Near-road residents and delivery riders,A22->X15,change the decision,Platform publishes rider exposure metrics each quarter,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-52,P5,Near-road residents and delivery riders,A25->X18,change the decision,Healthy-streets score for each arterial published by the municipality,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-53,P5,Near-road residents and delivery riders,X18->E02,change the decision,Insurance incentive for filtered housing,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-54,P5,Near-road residents and delivery riders,S18->X18,change the decision,Community low-cost sensors along one arterial run by residents,pass,pass,pass,pass,through,3,5,4,4,2,2,5,5,3,2,4,48,62
+P5-55,P5,Near-road residents and delivery riders,D25->X18,change the decision,Tenant information sheet on road-facing units,pass,pass,pass,pass,through,3,5,4,4,2,1,3,5,2,1,5,41,52
+P5-56,P5,Near-road residents and delivery riders,A25->S18,cut the path,Street canyon geometry rules for new streets,fail,fail,"pass, to verify",fail,out,,,,,,,,,,,,,
+P5-57,P5,Near-road residents and delivery riders,S18->X18,cut the path,Bus lane placed on the side away from housing,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-58,P5,Near-road residents and delivery riders,S18->X18,change the decision,Parking policy that removes kerbside stop-go on the residential side,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-59,P5,Near-road residents and delivery riders,S18->X18,change the decision,Freight time windows off the residential arterial at night,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-60,P5,Near-road residents and delivery riders,S18->X18,change the decision,Idling ban at loading bays on the corridor,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-61,P5,Near-road residents and delivery riders,S18->X18,cut the source,Street washing and sweeping to cut resuspended road dust on the corridor,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-62,P5,Near-road residents and delivery riders,S18->X18,cut the source,Dust binder on the corridor's unpaved shoulders,fail,pass,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-63,P5,Near-road residents and delivery riders,D23->X15,cut the source,Electrification incentives for delivery fleets,fail,fail,"pass, to verify",pass,out,,,,,,,,,,,,,
+P5-64,P5,Near-road residents and delivery riders,S28->X15,cut receptor time or intake,"Rider exposure briefing in the onboarding course, in the riders' languages",pass,pass,pass,pass,through,4,5,4,4,3,2,3,5,2,2,5,46,59
+P5-65,P5,Near-road residents and delivery riders,A22->X15,cut receptor time or intake,Rest-stop siting away from the road edge,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,2,4,4,2,2,5,42,55
+P5-66,P5,Near-road residents and delivery riders,X15->E18,cut receptor time or intake,Spirometry for riders at one company as the pilot cohort,pass,pass,pass,pass,through,4,4,3,3,2,2,5,4,1,1,5,43,52
+P5-67,P5,Near-road residents and delivery riders,S28->X15,change the decision,Rider app shows the exposure of each route option,"pass, to verify",pass,pass,pass,through,3,4,3,4,3,3,4,4,4,3,4,45,63
+P5-68,P5,Near-road residents and delivery riders,D25->X18,cut receptor time or intake,Filtered fresh-air unit in the shared rooms of one labour accommodation as the pilot,pass,pass,pass,pass,through,5,4,3,5,3,4,5,4,2,1,3,53,62
+P5-69,P5,Near-road residents and delivery riders,X18->E17,cut receptor time or intake,Asthma screening and inhaler access at one labour accommodation,pass,pass,pass,pass,through,5,4,3,4,2,2,4,4,1,1,5,43,52
+P5-70,P5,Near-road residents and delivery riders,S28->X15,cut the path,"Lane choice guidance: the kerbside lane is the worst behind buses, ride the middle lane where legal",pass,pass,pass,pass,through,3,5,4,3,3,2,4,5,3,2,5,46,61
