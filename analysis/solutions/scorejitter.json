@@ -1,0 +1,24 @@
+{
+ "draws": 10000,
+ "scores_pm1_stated_weights": {
+  "rank1": 0.4769,
+  "top3": 0.7194,
+  "top10": 0.9229,
+  "median_rank": 2.0,
+  "p90_rank": 9.0
+ },
+ "scores_pm1_uniform_weights": {
+  "rank1": 0.2836,
+  "top3": 0.4592,
+  "top10": 0.6791,
+  "median_rank": 4.0,
+  "p90_rank": 40.0
+ },
+ "scores_half_pm1_uniform_weights": {
+  "rank1": 0.4904,
+  "top3": 0.6796,
+  "top10": 0.8474,
+  "median_rank": 2.0,
+  "p90_rank": 18.0
+ }
+}

@@ -1,0 +1,244 @@
+{
+ "n_rows": 232,
+ "draws": 10000,
+ "top10_baseline": [
+  [
+   "P4-71",
+   79.0
+  ],
+  [
+   "P2-46",
+   74.0
+  ],
+  [
+   "P2-02",
+   73.0
+  ],
+  [
+   "P2-01",
+   72.0
+  ],
+  [
+   "P3-09",
+   71.0
+  ],
+  [
+   "P4-24",
+   71.0
+  ],
+  [
+   "P1-12",
+   70.0
+  ],
+  [
+   "P1-25",
+   70.0
+  ],
+  [
+   "P2-07",
+   70.0
+  ],
+  [
+   "P2-03",
+   69.0
+  ]
+ ],
+ "rank1": {
+  "centred": {
+   "P4-71": 0.9028,
+   "P2-46": 0.0411,
+   "P2-02": 0.0,
+   "P2-01": 0.0,
+   "P3-09": 0.0095,
+   "P4-24": 0.0282,
+   "P1-12": 0.0,
+   "P1-25": 0.0,
+   "P2-07": 0.0129,
+   "P2-03": 0.0015
+  },
+  "pm50": {
+   "P4-71": 1.0,
+   "P2-46": 0.0,
+   "P2-02": 0.0,
+   "P2-01": 0.0,
+   "P3-09": 0.0,
+   "P4-24": 0.0,
+   "P1-12": 0.0,
+   "P1-25": 0.0,
+   "P2-07": 0.0,
+   "P2-03": 0.0
+  },
+  "uniform": {
+   "P4-71": 0.8599,
+   "P2-46": 0.0168,
+   "P2-02": 0.0,
+   "P2-01": 0.0,
+   "P3-09": 0.0093,
+   "P4-24": 0.0629,
+   "P1-12": 0.0,
+   "P1-25": 0.0,
+   "P2-07": 0.0105,
+   "P2-03": 0.0159
+  }
+ },
+ "central_weights": {
+  "centred": {
+   "User": 1.06,
+   "Feasibility": 1.94,
+   "Implementability": 1.9,
+   "Usability": 1.02,
+   "Market": 1.02,
+   "Impact": 3.07,
+   "Measurability": 1.99,
+   "Time": 1.04,
+   "Novelty": 2.07,
+   "Cure": 1.87,
+   "Transfer": 1.02
+  },
+  "pm50": {
+   "User": 0.99,
+   "Feasibility": 2.0,
+   "Implementability": 2.01,
+   "Usability": 1.0,
+   "Market": 1.0,
+   "Impact": 3.01,
+   "Measurability": 1.99,
+   "Time": 1.0,
+   "Novelty": 2.0,
+   "Cure": 2.01,
+   "Transfer": 1.0
+  },
+  "uniform": {
+   "User": 1.77,
+   "Feasibility": 1.44,
+   "Implementability": 1.43,
+   "Usability": 1.68,
+   "Market": 1.69,
+   "Impact": 1.76,
+   "Measurability": 1.64,
+   "Time": 1.65,
+   "Novelty": 1.71,
+   "Cure": 1.53,
+   "Transfer": 1.69
+  }
+ },
+ "winners": {
+  "centred": {
+   "P4-71": 0.9028,
+   "P2-46": 0.0411,
+   "P4-24": 0.0282,
+   "P2-07": 0.0129,
+   "P3-09": 0.0095,
+   "P2-44": 0.002,
+   "P2-03": 0.0015,
+   "P5-33": 0.001
+  },
+  "pm50": {
+   "P4-71": 1.0
+  },
+  "uniform": {
+   "P4-71": 0.8599,
+   "P4-24": 0.0629,
+   "P2-46": 0.0168,
+   "P2-03": 0.0159,
+   "P2-07": 0.0105,
+   "P3-09": 0.0093,
+   "P2-44": 0.0051,
+   "P5-33": 0.0043
+  }
+ },
+ "leave_one_out": {
+  "User": {
+   "winner": "P4-71",
+   "winner_score": 74.0,
+   "pick_rank": 1,
+   "pick_score": 74.0
+  },
+  "Feasibility": {
+   "winner": "P4-71",
+   "winner_score": 71.0,
+   "pick_rank": 1,
+   "pick_score": 71.0
+  },
+  "Implementability": {
+   "winner": "P4-71",
+   "winner_score": 73.0,
+   "pick_rank": 1,
+   "pick_score": 73.0
+  },
+  "Usability": {
+   "winner": "P4-71",
+   "winner_score": 74.0,
+   "pick_rank": 1,
+   "pick_score": 74.0
+  },
+  "Market": {
+   "winner": "P4-71",
+   "winner_score": 75.0,
+   "pick_rank": 1,
+   "pick_score": 75.0
+  },
+  "Impact": {
+   "winner": "P4-71",
+   "winner_score": 64.0,
+   "pick_rank": 1,
+   "pick_score": 64.0
+  },
+  "Measurability": {
+   "winner": "P4-71",
+   "winner_score": 69.0,
+   "pick_rank": 1,
+   "pick_score": 69.0
+  },
+  "Time": {
+   "winner": "P4-71",
+   "winner_score": 74.0,
+   "pick_rank": 1,
+   "pick_score": 74.0
+  },
+  "Novelty": {
+   "winner": "P4-71",
+   "winner_score": 71.0,
+   "pick_rank": 1,
+   "pick_score": 71.0
+  },
+  "Cure": {
+   "winner": "P4-71",
+   "winner_score": 71.0,
+   "pick_rank": 1,
+   "pick_score": 71.0
+  },
+  "Transfer": {
+   "winner": "P4-71",
+   "winner_score": 74.0,
+   "pick_rank": 1,
+   "pick_score": 74.0
+  }
+ },
+ "round1_rubric_on_final": {
+  "top5": [
+   [
+    "P4-71",
+    58.0
+   ],
+   [
+    "P5-33",
+    58.0
+   ],
+   [
+    "P5-34",
+    57.0
+   ],
+   [
+    "P2-01",
+    55.0
+   ],
+   [
+    "P2-46",
+    55.0
+   ]
+  ],
+  "pick_rank": 1,
+  "pick_score": 58.0
+ }
+}

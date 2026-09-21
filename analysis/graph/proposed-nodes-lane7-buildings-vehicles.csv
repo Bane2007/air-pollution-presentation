@@ -1,0 +1,5 @@
+id,layer,label,definition,unit,scope,citation
+D27,driver,Classroom occupant density and activity,Pupils per m2 and physical activity level in the room which drive both CO2 and resuspended coarse particles,persons/m2,uae,"Jung 2025 10.70917/fce-2025-040; Arar 2021 10.3390/ijerph182212091"
+S35,state,Bus cabin sealing and window position,Whether bus windows are closed with AC on which raises self-pollution from the bus's own exhaust,fraction closed,global,"Sabin 2005 10.1038/sj.jea.7500414; Marshall 2005 10.1021/es040377v"
+S36,state,Indoor evaporator coil fouling,Dust deposition on the indoor cooling coil driven by indoor particle load and filter grade,fraction,global,"Siegel 2002 https://www.aceee.org/files/proceedings/2002/data/papers/SS02_Panel1_Paper23.pdf"
+P34,pressure,Service station and depot benzene,Evaporative benzene at bus depots and refuelling points,ug/m3,global,"Moolla 2015 10.3390/ijerph120404101"

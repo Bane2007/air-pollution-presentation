@@ -1,0 +1,292 @@
+{
+ "P1": [
+  [
+   1,
+   70,
+   51,
+   "cut the path",
+   "Fenceline PM10 sensors that trigger the perimeter misting line automatically above a threshold"
+  ],
+  [
+   2,
+   70,
+   51,
+   "cut the path",
+   "Wind-vane-triggered misting that runs only on the downwind boundary"
+  ],
+  [
+   3,
+   66,
+   52,
+   "change the decision",
+   "Continuous perimeter PM10 monitor with a public dashboard for the site"
+  ],
+  [
+   4,
+   66,
+   52,
+   "cut receptor time or intake",
+   "Site-wide dust alert on the PA or phones when any perimeter node crosses the threshold"
+  ],
+  [
+   5,
+   64,
+   47,
+   "change the decision",
+   "Site dust score printed as a QR on the hoarding, updated daily from the monitors"
+  ],
+  [
+   6,
+   63,
+   48,
+   "cut the source",
+   "Surfactant or polymer binder sprayed on unpaved site roads (Chang 2010: about 93 % control on unpaved roads)"
+  ],
+  [
+   7,
+   63,
+   49,
+   "cut the source",
+   "Wet cutting mandatory for concrete and block cutting, dry cutting banned on site (Middaugh 2012: 78 % cut)"
+  ],
+  [
+   8,
+   63,
+   47,
+   "cut receptor time or intake",
+   "Personal real-time dust badge with a vibrating alert at a set PM2.5 level (Kim 2025: alerts within 20 m)"
+  ]
+ ],
+ "P2": [
+  [
+   1,
+   74,
+   55,
+   "change the decision",
+   "Clean cooking zone pilot at one market with LPG and hoods for every stall"
+  ],
+  [
+   2,
+   73,
+   54,
+   "cut the source",
+   "Induction or electric grill at stalls with a power hookup"
+  ],
+  [
+   3,
+   72,
+   55,
+   "cut the source",
+   "LPG conversion of charcoal grills at licensed stalls, with a rebate on the licence fee"
+  ],
+  [
+   4,
+   70,
+   46,
+   "cut the source",
+   "Solar-battery cart powering an induction plate at outdoor markets"
+  ],
+  [
+   5,
+   69,
+   53,
+   "cut the source",
+   "Low-smoke charcoal briquettes or coconut-shell charcoal in place of lump charcoal"
+  ],
+  [
+   6,
+   68,
+   51,
+   "change the decision",
+   "Event-organiser rule: electric hookups and no charcoal at organised markets and festivals"
+  ],
+  [
+   7,
+   68,
+   48,
+   "cut the source",
+   "Grill with controlled airflow and a lid so combustion is cleaner and fumes are trapped"
+  ],
+  [
+   8,
+   68,
+   49,
+   "change the decision",
+   "Clean-stall label displayed to customers, awarded after a measurement"
+  ]
+ ],
+ "P3": [
+  [
+   1,
+   71,
+   54,
+   "change the decision",
+   "Engine-off training for hired family drivers, who do most Abu Dhabi school runs"
+  ],
+  [
+   2,
+   69,
+   52,
+   "cut the path",
+   "Staggered drop-off and pick-up by grade to shorten the queue"
+  ],
+  [
+   3,
+   69,
+   52,
+   "cut the path",
+   "Staff load and unload children so the queue rolls (Kumar 2020: drop-off PM2.5 nearly 3x off-peak from queuing)"
+  ],
+  [
+   4,
+   68,
+   51,
+   "change the decision",
+   "Staff-enforced engine-off in the queue with a verbal reminder at the window (Ryan 2013: 4.11 to 0.99 ug/m3 at the most-bused school)"
+  ],
+  [
+   5,
+   67,
+   49,
+   "change the decision",
+   "School bus fee discount funded by a car drop-off fee"
+  ],
+  [
+   6,
+   67,
+   48,
+   "change the decision",
+   "Class competition on engine-off rates counted by the marshals"
+  ],
+  [
+   7,
+   66,
+   51,
+   "cut the path",
+   "Bus staging area away from the gate, engines off until loading"
+  ],
+  [
+   8,
+   66,
+   51,
+   "change the decision",
+   "School idle-free policy with signage at the gate and in the parent handbook"
+  ]
+ ],
+ "P4": [
+  [
+   1,
+   79,
+   58,
+   "cut the source",
+   "Clean Cabin: per-bus cabin air diagnosis (cabin vs roof sensor ratio while idling and moving), fix kit (exhaust-leak sealing, closed-crankcase retrofit, tailpipe routed up and off-side away from the door and the intake), climate-aware idle timer, and a published cabin air rating per bus (added 04:10 after the pre-mortem, replaces gate orchestration as the pick)"
+  ],
+  [
+   2,
+   71,
+   54,
+   "cut the source",
+   "Exhaust-leak inspection of every bus at the start of term"
+  ],
+  [
+   3,
+   69,
+   50,
+   "change the decision",
+   "Cabin air-quality clause in the school bus contract"
+  ],
+  [
+   4,
+   69,
+   52,
+   "change the decision",
+   "Driver engine-off training and a no-idling rule while loading"
+  ],
+  [
+   5,
+   67,
+   51,
+   "cut the source",
+   "Closed crankcase ventilation retrofit, the cheapest cabin fix"
+  ],
+  [
+   6,
+   66,
+   49,
+   "cut the source",
+   "Bakhoor and oud burning guidance: outdoors or with the window open, never in the child's room (Cohen 2013)"
+  ],
+  [
+   7,
+   66,
+   49,
+   "cut the path",
+   "Route optimisation to cut time on board for the youngest pupils"
+  ],
+  [
+   8,
+   66,
+   48,
+   "change the decision",
+   "Cabin PM monitor on each bus with driver feedback"
+  ]
+ ],
+ "P5": [
+  [
+   1,
+   64,
+   49,
+   "cut receptor time or intake",
+   "Rider positioning: never behind a bus or truck at the light, stop ahead or upwind"
+  ],
+  [
+   2,
+   64,
+   58,
+   "cut receptor time or intake",
+   "HEPA purifiers in the road-facing bedrooms of one compound as the pilot"
+  ],
+  [
+   3,
+   64,
+   57,
+   "cut receptor time or intake",
+   "Window sealing plus MERV13 on the AC for road-facing units"
+  ],
+  [
+   4,
+   63,
+   45,
+   "cut the path",
+   "Route choice through lower-traffic roads coded into the dispatch app"
+  ],
+  [
+   5,
+   63,
+   45,
+   "change the decision",
+   "Rider app shows the exposure of each route option"
+  ],
+  [
+   6,
+   63,
+   47,
+   "change the decision",
+   "Personal PM monitors on bikes producing an exposure heat map of the city"
+  ],
+  [
+   7,
+   62,
+   48,
+   "change the decision",
+   "Community low-cost sensors along one arterial run by residents"
+  ],
+  [
+   8,
+   62,
+   53,
+   "cut receptor time or intake",
+   "Filtered fresh-air unit in the shared rooms of one labour accommodation as the pilot"
+  ]
+ ]
+}

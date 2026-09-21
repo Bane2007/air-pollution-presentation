@@ -2,855 +2,769 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#071018" />
-  <title>Air Pollution Implication Graph</title>
+  <title>Clean Cabin, from a cited graph to one buildable intervention</title>
+  <meta name="description" content="AGRL130 week 3: a cited implication graph of Abu Dhabi's air pollution, four separable problems, 332 interventions, four gates, eleven criteria, one pick. Nambiar, Jamsandekar, Thomas." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%23071018'/%3E%3Cpath d='M24 62c14-4 17-27 32-27 9 0 12 10 20 10' fill='none' stroke='%23f4c95d' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="preconnect" href="https://unpkg.com" crossorigin />
-  <script defer src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
-  <script defer src="https://unpkg.com/three-spritetext@1.6.5/dist/three-spritetext.min.js"></script>
-  <script defer src="https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
+  <script src="https://unpkg.com/3d-force-graph@1.73.3/dist/3d-force-graph.min.js"></script>
+  <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
   <style>
     :root {
-      --sidebar-width: 340px;
-      --mobile-panel-height: clamp(260px, 42dvh, 380px);
       --bg: #071018;
       --panel: rgba(11, 17, 24, 0.82);
       --panel-border: rgba(255,255,255,0.08);
       --text: #e8edf1;
       --muted: #a9b5bf;
+      --dim: #6f7d8a;
       --gold: #f4c95d;
-      --driver: #7db7ff;
-      --source: #ef8a7a;
-      --pollutant: #8bd9a3;
-      --interaction: #f4c873;
-      --environment: #b99cf7;
-      --health: #f4a7cb;
-      --school: #ffb454;
-      --accent: #6fe3d1;
-      --grey: rgba(160, 170, 180, 0.38);
-      --shadow: rgba(0, 0, 0, 0.28);
+      --b1: #4b93ef; --b2: #e56637; --b3: #2bab78; --b4: #a276ea;
+      --c-source: #c98500; --c-path: #d55181; --c-receptor: #0aa3c2; --c-decision: #72a332;
+      --fatal: #e66767;
+      --grid: rgba(255,255,255,0.07);
+      --radius: 14px;
+      --pad: clamp(16px, 3vw, 40px);
     }
-
     * { box-sizing: border-box; }
+    html { background: var(--bg); color: var(--text); font-family: Inter, ui-sans-serif, -apple-system, "Segoe UI", sans-serif; scroll-behavior: smooth; }
+    body { margin: 0; background:
+        radial-gradient(circle at 18% 12%, rgba(75,112,148,0.16), transparent 30%),
+        radial-gradient(circle at 82% 78%, rgba(108,95,140,0.14), transparent 32%),
+        var(--bg); }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .serif { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; letter-spacing: -0.01em; }
 
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      min-height: 100dvh;
-      overflow: hidden;
-      overscroll-behavior: none;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* top bar */
+    .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px var(--pad); background: linear-gradient(180deg, rgba(7,16,24,0.92), rgba(7,16,24,0.55) 70%, transparent); pointer-events: none; }
+    .bar > * { pointer-events: auto; }
+    .brand { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+    .brand .t { font-weight: 800; letter-spacing: -0.03em; font-size: 15px; white-space: nowrap; }
+    .brand .s { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav { display: flex; align-items: center; background: rgba(10,16,22,0.7); border: 1px solid var(--panel-border); border-radius: 999px; backdrop-filter: blur(12px); overflow: hidden; }
+    .nav a { color: var(--muted); font-weight: 600; font-size: 12px; padding: 8px 12px; white-space: nowrap; }
+    .nav a:hover { text-decoration: none; color: var(--text); }
+    .nav a.active { color: var(--gold); background: rgba(244,201,93,0.12); }
+    .nav a.ext { border-left: 1px solid var(--panel-border); }
+
+    /* slides */
+    main { scroll-snap-type: y proximity; }
+    .slide { position: relative; min-height: 100dvh; padding: 58px var(--pad) 36px; scroll-snap-align: start; display: grid; grid-template-rows: auto 1fr auto; gap: 10px; overflow: hidden; }
+    .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .eyebrow { margin: 0 0 4px; color: var(--gold); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+    h2 { margin: 0; font-size: clamp(26px, 3.6vw, 44px); line-height: 1.02; letter-spacing: -0.035em; font-weight: 800; }
+    h2 em { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; color: var(--gold); letter-spacing: 0; }
+    .lede { margin: 5px 0 0; color: var(--muted); font-size: 13.5px; max-width: 64ch; line-height: 1.4; }
+    .tiles { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tile { background: rgba(255,255,255,0.035); border: 1px solid var(--panel-border); border-radius: 12px; padding: 8px 12px; min-width: 96px; }
+    .tile .v { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+    .tile .k { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .stage { position: relative; min-height: 0; }
+    .foot { display: flex; justify-content: flex-end; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+    #s5 .foot { justify-content: space-between; }
+    .sources { color: var(--dim); font-size: 11px; line-height: 1.45; max-width: 90ch; }
+    .sources b { color: var(--muted); font-weight: 600; }
+    .controls { display: flex; align-items: center; gap: 6px; background: rgba(10,16,22,0.7); border: 1px solid var(--panel-border); border-radius: 999px; padding: 4px; backdrop-filter: blur(10px); }
+    .controls button { appearance: none; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+    .controls button:hover { color: var(--text); }
+    .controls button.on { color: var(--gold); background: rgba(244,201,93,0.12); }
+    .controls button.replay { color: var(--text); border-left: 1px solid var(--panel-border); border-radius: 0 999px 999px 0; }
+    .line { font-size: clamp(16px, 1.7vw, 21px); line-height: 1.3; letter-spacing: -0.01em; max-width: 60ch; }
+    .line b { color: var(--gold); font-weight: 700; }
+    .panel { background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); backdrop-filter: blur(14px); padding: 14px 16px; }
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .legend { display: flex; gap: 10px 16px; flex-wrap: wrap; font-size: 12px; color: var(--muted); }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .legend i.sq { border-radius: 2px; }
+    .legend i.ring { background: transparent; border: 2px solid var(--muted); }
+    .num { font-variant-numeric: tabular-nums; }
+    svg text { font-family: Inter, ui-sans-serif, sans-serif; }
+    .axis text { fill: var(--muted); font-size: 11px; }
+    .axis line, .axis path { stroke: var(--grid); }
+    .tip { position: fixed; z-index: 60; pointer-events: none; background: rgba(9,14,20,0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 8px 10px; font-size: 12px; line-height: 1.4; max-width: 320px; color: var(--text); opacity: 0; transition: opacity .12s; box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    .tip b { color: var(--gold); }
+    .tip .m { color: var(--muted); }
+    abbr.src { text-decoration: underline dotted var(--dim); text-underline-offset: 3px; cursor: help; }
+
+    /* slide 1 */
+    #s1 .stage { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+    #g3d { position: relative; min-height: 420px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--panel-border); background: rgba(0,0,0,0.12); }
+    #g3d canvas { outline: none; }
+    #s1 .side { display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+    .blk { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; font-size: 12.5px; padding: 6px 0; border-bottom: 1px solid var(--grid); }
+    .blk i { width: 12px; height: 12px; border-radius: 50%; }
+    .blk .n { color: var(--muted); font-size: 11.5px; }
+    .blk .e { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+    #loads svg { width: 100%; height: auto; display: block; }
+
+    /* slide 2 */
+    #s2 .stage { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: center; }
+    #mind { width: 100%; height: auto; max-height: calc(100dvh - 330px); display: block; margin: 0 auto; }
+    .cls { display: grid; gap: 8px; }
+    .cls .row { display: grid; grid-template-columns: 12px 1fr auto; gap: 10px; align-items: center; font-size: 12.5px; }
+    .cls .row i { width: 12px; height: 12px; border-radius: 50%; }
+    .cls .row .d { color: var(--muted); font-size: 11.5px; }
+    .cls .row .n { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .probs { display: grid; gap: 6px; font-size: 12px; color: var(--muted); }
+    .probs .row { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; }
+    .probs .row i { width: 10px; height: 10px; border-radius: 3px; }
+    .probs .row b { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+    /* slide 3 */
+    #s3 .stage { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+    #gates svg, #rubric svg, #lam svg { width: 100%; height: auto; display: block; }
+    .gatechips { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 4px; }
+    .chip { border: 1px solid var(--panel-border); background: rgba(255,255,255,0.03); border-radius: 999px; padding: 5px 10px; font-size: 12px; color: var(--muted); transition: all .35s; }
+    .chip b { color: var(--text); font-variant-numeric: tabular-nums; }
+    .chip.closed { border-color: rgba(244,201,93,0.55); color: var(--text); background: rgba(244,201,93,0.08); }
+    .chip.closed::before { content: "✓ "; color: var(--gold); }
+    .subhead { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 0 0 6px; }
+
+    /* slide 4 */
+    #s4 .stage { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 14px 18px; }
+    #rank { grid-column: 1; grid-row: 1; }
+    #smaa { grid-column: 2; grid-row: 1; }
+    #fmea { grid-column: 1 / -1; grid-row: 2; }
+    #rank svg, #fmea svg, #smaa svg { width: 100%; height: auto; display: block; }
+    .big { font-size: clamp(30px, 3.6vw, 46px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .big small { font-size: 0.4em; color: var(--muted); font-weight: 600; letter-spacing: -0.01em; }
+    .fill { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; margin: 8px 0; }
+    .fill i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--b3), var(--gold)); border-radius: 999px; transition: width .2s linear; }
+    .schemes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+    .schemes .tile .v { font-size: 17px; }
+    .schemes .tile { padding: 6px 10px; }
+    .rules { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 6px; }
+    .rule { border: 1px solid rgba(230,103,103,0.35); background: rgba(230,103,103,0.06); border-radius: 10px; padding: 6px 9px; font-size: 11.5px; line-height: 1.3; opacity: 0; transform: translateY(6px); transition: all .5s; }
+    .rule.in { opacity: 1; transform: none; }
+    .rule b { display: block; color: var(--fatal); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+    .rule span { color: var(--text); }
+
+    /* slide 5 */
+    #s5 .stage { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+    #bus svg, #art svg, #pilot svg { width: 100%; height: auto; display: block; }
+    .scale { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .scale .tile .v { font-size: 24px; }
+    .badge { transform-origin: center; }
+    .credits { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .credits a { margin-right: 10px; }
+
+    @media (max-width: 980px) {
+      .slide { min-height: auto; scroll-snap-align: none; padding-top: 70px; }
+      #s1 .stage, #s2 .stage, #s3 .stage, #s4 .stage, #s5 .stage { grid-template-columns: 1fr; }
+      #rank, #smaa, #fmea { grid-column: 1; grid-row: auto; }
+      #g3d { height: 58dvh; min-height: 340px; }
+      #mind { max-height: none; }
+      .bar .brand .s { display: none; }
+      .nav a { padding: 8px 10px; font-size: 12px; }
+      .nav a .l { display: none; }
+      .scale, .schemes { grid-template-columns: repeat(2, 1fr); }
+      .rules { grid-template-columns: 1fr 1fr; }
     }
-
-    body {
-      background:
-        radial-gradient(circle at 20% 15%, rgba(75, 112, 148, 0.15), transparent 28%),
-        radial-gradient(circle at 80% 70%, rgba(108, 95, 140, 0.12), transparent 30%),
-        var(--bg);
-    }
-
-    [id="3d-graph"] {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: var(--sidebar-width);
-      width: calc(100vw - var(--sidebar-width));
-      height: 100dvh;
-      z-index: 1;
-    }
-
-    .sidebar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: var(--sidebar-width);
-      height: 100dvh;
-      padding: max(24px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
-      background: linear-gradient(180deg, rgba(11,17,24,0.88), rgba(11,17,24,0.7));
-      border-right: 1px solid var(--panel-border);
-      backdrop-filter: blur(14px);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-    }
-
-    .eyebrow {
-      margin: 0;
-      color: var(--gold);
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .title {
-      margin: 0 0 2px 0;
-      font-size: 30px;
-      line-height: 1.1;
-      font-weight: 800;
-      letter-spacing: -0.06em;
-    }
-
-    .subtitle {
-      margin: 0 0 8px 0;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .card {
-      width: 100%;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 12px 14px;
-      cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.12);
-    }
-
-    .card:hover {
-      transform: translateX(2px);
-      border-color: rgba(244, 201, 93, 0.45);
-      background: rgba(244, 201, 93, 0.04);
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .card-meta {
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-    }
-
-    .card-meta strong { font-weight: 600; }
-
-    .card-meta .good { color: #7fe0b0; }
-    .card-meta .warn { color: #f1a5a5; }
-
-    .top-nav {
-      position: absolute;
-      right: 28px;
-      top: 28px;
-      z-index: 11;
-      display: flex;
-      align-items: center;
-      background: rgba(10, 16, 22, 0.66);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 999px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
-      overflow: hidden;
-    }
-
-    .nav-btn {
-      appearance: none;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font: inherit;
-      font-weight: 600;
-      padding: 10px 18px;
-      cursor: pointer;
-      transition: background 0.18s ease, color 0.18s ease;
-    }
-
-    .nav-btn.active {
-      background: rgba(244, 201, 93, 0.12);
-      color: var(--gold);
-    }
-
-    @media (max-width: 900px) {
-      :root {
-        --sidebar-width: 290px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      :root {
-        --sidebar-width: 0px;
-      }
-
-      .sidebar {
-        top: 0;
-        width: 100vw;
-        height: var(--mobile-panel-height);
-        padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) 14px max(14px, env(safe-area-inset-left));
-        border-right: 0;
-        border-bottom: 1px solid var(--panel-border);
-        backdrop-filter: none;
-        gap: 8px;
-      }
-
-      [id="3d-graph"] {
-        top: var(--mobile-panel-height);
-        left: 0;
-        width: 100vw;
-        height: calc(100dvh - var(--mobile-panel-height));
-      }
-
-      .title {
-        font-size: 25px;
-      }
-
-      .subtitle {
-        margin-bottom: 2px;
-        font-size: 12px;
-      }
-
-      .card-list {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 7px;
-        margin-top: 2px;
-      }
-
-      .card {
-        min-width: 0;
-        padding: 9px 10px;
-      }
-
-      .card-title {
-        font-size: 13px;
-      }
-
-      .card-meta {
-        align-items: flex-start;
-        flex-direction: column;
-        font-size: 10px;
-      }
-
-      .top-nav {
-        top: calc(var(--mobile-panel-height) + 10px);
-        right: max(10px, env(safe-area-inset-right));
-      }
-
-      .nav-btn {
-        min-height: 44px;
-        padding: 9px 13px;
-        font-size: 13px;
-      }
-    }
-
-    @media (max-height: 600px) and (orientation: landscape) {
-      :root {
-        --sidebar-width: 250px;
-      }
-
-      .sidebar {
-        top: 0;
-        width: var(--sidebar-width);
-        height: 100dvh;
-        padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
-        border-right: 1px solid var(--panel-border);
-        border-bottom: 0;
-        gap: 6px;
-      }
-
-      [id="3d-graph"] {
-        top: 0;
-        left: var(--sidebar-width);
-        width: calc(100vw - var(--sidebar-width));
-        height: 100dvh;
-      }
-
-      .title {
-        font-size: 23px;
-      }
-
-      .subtitle {
-        display: none;
-      }
-
-      .card-list {
-        display: flex;
-        gap: 5px;
-        margin-top: 2px;
-      }
-
-      .card {
-        padding: 7px 9px;
-      }
-
-      .card-title {
-        margin-bottom: 2px;
-        font-size: 12px;
-      }
-
-      .card-meta {
-        display: none;
-      }
-
-      .top-nav {
-        top: max(10px, env(safe-area-inset-top));
-        right: max(10px, env(safe-area-inset-right));
-      }
-    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { transition: none; } }
   </style>
 </head>
 <body>
-  <div id="3d-graph"></div>
-
-  <aside class="sidebar">
-    <div>
-      <p class="eyebrow">Systems map</p>
-      <h1 class="title">Air pollution</h1>
-      <p class="subtitle">Causal implication graph of drivers, sources, exposures and health effects.</p>
-    </div>
-
-    <div class="card-list">
-      <div class="card" data-module="school_traffic">
-        <div class="card-title">Vehicle idling</div>
-        <div class="card-meta"><span class="good">Pathway visible</span><span>Local exposure</span></div>
-      </div>
-      <div class="card" data-module="staggered_pickup">
-        <div class="card-title">Staggered pickup times</div>
-        <div class="card-meta"><span class="good">Reduces congestion</span><span>Exposure</span></div>
-      </div>
-      <div class="card" data-module="school_street">
-        <div class="card-title">Temporary school zones</div>
-        <div class="card-meta"><span class="good">Access control</span><span>Displacement</span></div>
-      </div>
-      <div class="card" data-module="electric_bus">
-        <div class="card-title">Electric bus policy</div>
-        <div class="card-meta"><span class="good">Low tailpipe</span><span>System-wide</span></div>
-      </div>
-    </div>
-
-  </aside>
-
-  <div class="top-nav">
-    <button class="nav-btn" id="btn-river">River View</button>
-    <button class="nav-btn active" id="btn-rotary">Rotary View</button>
+  <div class="tip" id="tip"></div>
+  <div class="bar">
+    <div class="brand"><span class="t">Clean Cabin</span><span class="s">AGRL130 week 3, Nambiar, Jamsandekar, Thomas</span></div>
+    <nav class="nav" id="nav">
+      <a href="#s1" data-s="s1">1<span class="l"> Need</span></a><a href="#s2" data-s="s2">2<span class="l"> Mind map</span></a><a href="#s3" data-s="s3">3<span class="l"> Filters</span></a><a href="#s4" data-s="s4">4<span class="l"> Applied</span></a><a href="#s5" data-s="s5">5<span class="l"> Clean Cabin</span></a>
+      <a class="ext" href="report.pdf" target="_blank" rel="noopener">Paper</a><a class="ext" href="week2/">Week 2</a>
+    </nav>
   </div>
 
+  <main>
+    <!-- 1 THE NEED -->
+    <section class="slide" id="s1">
+      <div class="head">
+        <div>
+          <p class="eyebrow">1 · The need</p>
+          <h2>One system, <em>four separable problems</em></h2>
+          <p class="lede">A cited graph of Abu Dhabi's air pollution, the blocks that hold together on their own, and the breathing each one meets.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="v num" id="t-nodes">0</div><div class="k">nodes</div></div>
+          <div class="tile"><div class="v num" id="t-edges">0</div><div class="k">cited edges</div></div>
+          <div class="tile"><div class="v num" id="t-rows">0</div><div class="k">cited rows</div></div>
+        </div>
+      </div>
+      <div class="stage">
+        <div id="g3d"></div>
+        <div class="side">
+          <div class="panel reveal" id="blocks">
+            <p class="subhead">The four candidate blocks, a lever and an outcome inside, ε<sub>sym</sub> &lt; 1</p>
+            <div id="blk-list"></div>
+            <div class="legend" style="margin-top:8px"><span><i style="background:#40556a"></i> other blocks and isolated nodes</span></div>
+          </div>
+          <div class="panel reveal" id="loads">
+            <p class="subhead">Exposure load L = N × h × ΔC, million person·µg/m³·h per day</p>
+            <div id="loads-chart"></div>
+            <p class="line" id="s1-line" style="margin:8px 0 0; font-size:15px"></p>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <div class="controls" data-for="s1"><button data-step="0">system</button><button data-step="1">blocks</button><button data-step="2">load</button><button class="replay">↻ replay</button></div>
+      </div>
+    </section>
+
+    <!-- 2 THE MIND MAP -->
+    <section class="slide" id="s2">
+      <div class="head">
+        <div>
+          <p class="eyebrow">2 · Every solution explored</p>
+          <h2>The mind map <em>is the graph itself</em></h2>
+          <p class="lede">Every cited edge inside a block is a place to intervene, and each was asked four questions. Hover any dot.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="v num" id="t-sol">0</div><div class="k">interventions</div></div>
+          <div class="tile"><div class="v num" id="t-edg">0</div><div class="k">cited edges cut</div></div>
+          <div class="tile"><div class="v">5 × 4</div><div class="k">problems × mechanisms</div></div>
+        </div>
+      </div>
+      <div class="stage">
+        <svg id="mind" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="332 interventions arranged around the five problems by the edge they act on"></svg>
+        <div class="side">
+          <div class="panel">
+            <p class="subhead">Mechanism, the DPSEEA level at which the edge is cut</p>
+            <div class="cls" id="cls-list"></div>
+          </div>
+          <div class="panel" style="margin-top:10px">
+            <p class="subhead">Problems, interventions on edges</p>
+            <div class="probs" id="prob-list"></div>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <div class="controls" data-for="s2"><button class="replay">↻ replay</button></div>
+      </div>
+    </section>
+
+    <!-- 3 THE FILTERS -->
+    <section class="slide" id="s3">
+      <div class="head">
+        <div>
+          <p class="eyebrow">3 · The filters</p>
+          <h2>Four gates, <em>eleven criteria</em></h2>
+          <p class="lede">Four all-or-nothing gates, then eleven weighted criteria, five of them the instructor's and six our own.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="v num" id="t-alive">332</div><div class="k">still in</div></div>
+          <div class="tile"><div class="v">90</div><div class="k">maximum score, 11 criteria</div></div>
+        </div>
+      </div>
+      <div class="stage">
+        <div>
+          <div class="gatechips" id="gatechips"></div>
+          <div id="gates"></div>
+          <p class="line" id="s3-line" style="margin:6px 0 0; font-size:15px; color:var(--muted)"></p>
+        </div>
+        <div>
+          <p class="subhead">The rubric and its weights</p>
+          <div id="rubric"></div>
+          <p class="subhead" style="margin-top:10px">Criteria ablation: scale λ on the three source-side weights</p>
+          <div id="lam"></div>
+        </div>
+      </div>
+      <div class="foot">
+        <div class="controls" data-for="s3"><button data-step="0">gates</button><button data-step="1">criteria</button><button data-step="2">ablation</button><button class="replay">↻ replay</button></div>
+      </div>
+    </section>
+
+    <!-- 4 APPLIED -->
+    <section class="slide" id="s4">
+      <div class="head">
+        <div>
+          <p class="eyebrow">4 · Applied</p>
+          <h2>Rank, <em>stress the weights</em>, fix the specification</h2>
+          <p class="lede">232 survivors ranked, the weights and the scores shaken 10,000 times, and a premortem that turned fatal modes into design rules.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="v num">79 <small style="font-size:.5em;color:var(--muted)">of 90</small></div><div class="k">Clean Cabin, the top row</div></div>
+          <div class="tile"><div class="v num">5 <small style="font-size:.5em;color:var(--muted)">of 29</small></div><div class="k">fatal modes, none applies to the pick</div></div>
+        </div>
+      </div>
+      <div class="stage">
+        <div id="rank" class="panel"><p class="subhead">The 232 survivors by weighted score, top five named</p><div id="rank-chart"></div></div>
+        <div id="smaa" class="panel">
+          <p class="subhead">SMAA over the weights, the exact 10,000 draws replayed, no weight information</p>
+          <div class="big num"><span id="smaa-pct">0.0</span> %<br><small>of draws put Clean Cabin at rank 1</small></div>
+          <div class="fill"><i id="smaa-fill"></i></div>
+          <div id="smaa-w"></div>
+          <div class="schemes">
+            <div class="tile"><div class="v num">86.0 %</div><div class="k">uniform, no preference</div></div>
+            <div class="tile"><div class="v num">90.3 %</div><div class="k">centred on our weights</div></div>
+            <div class="tile"><div class="v num">100 %</div><div class="k">each weight ±50 %</div></div>
+          </div>
+          <p style="margin:8px 0 0; font-size:12px; color:var(--muted)">Shake every score by ±1 as well: rank 1 in <b style="color:var(--text)">48 %</b>, top 3 in 72 %. The pick still leads.</p>
+        </div>
+        <div id="fmea" class="panel">
+          <p class="subhead">29 failure modes of a gate-side design, by layer and severity. The fatal ones set the rules</p>
+          <div id="fmea-chart"></div>
+          <div class="rules" id="rules"></div>
+          <div class="legend" id="fmea-legend" style="margin-top:8px"></div>
+        </div>
+      </div>
+      <div class="foot">
+        <div class="controls" data-for="s4"><button data-step="0">rank</button><button data-step="1">SMAA</button><button data-step="2">FMEA</button><button class="replay">↻ replay</button></div>
+      </div>
+    </section>
+
+    <!-- 5 CLEAN CABIN -->
+    <section class="slide" id="s5">
+      <div class="head">
+        <div>
+          <p class="eyebrow">5 · The pick</p>
+          <h2>Clean Cabin, <em>find, fix why, verify</em></h2>
+          <p class="lede">Find which school buses pollute their own cabin, identify why, apply the smallest compatible repair, verify on the same bus.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile"><div class="v num">4.11</div><div class="k">M person·µg/m³·h/day in the bus cabin, six times the gate</div></div>
+        </div>
+      </div>
+      <div class="stage">
+        <div>
+          <div id="bus" class="panel"></div>
+          <div class="scale" style="margin-top:10px">
+            <div class="tile"><div class="v num"><span data-count="279000">0</span>+</div><div class="k">pupils on school buses, 2026</div></div>
+            <div class="tile"><div class="v num"><span data-count="10000">0</span>+</div><div class="k">licensed buses, 2026 (8,568 in 2024)</div></div>
+            <div class="tile"><div class="v num" data-count="206">0</div><div class="k">operators, 672 schools and nurseries, 2024</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="panel"><p class="subhead">Prior art, measured in-cabin reductions from the source-side kit</p><div id="art"></div></div>
+          <div class="panel" style="margin-top:10px"><p class="subhead">The pilot, one term, success fixed in advance</p><div id="pilot"></div>
+            <p style="margin:6px 0 0; font-size:12px; color:var(--muted)">Success, fixed in advance: every flagged bus's idle excess falls into the unflagged range after its repair, on the same bus. 10 to 20 buses, one term.</p>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <div>
+          <div class="credits">Karthik Nambiar, Sumedh Nitin Jamsandekar, Paul Tiju Thomas · IIT Delhi Abu Dhabi, AGRL130, 21 September 2026 · <a href="report.pdf" target="_blank" rel="noopener">the paper, 16 pages</a> <a href="week2/">week 2 site, archived</a></div>
+        </div>
+        <div class="controls" data-for="s5"><button class="replay">↻ replay</button></div>
+      </div>
+    </section>
+  </main>
+
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-    const categoryColors = {
-      driver: '#7db7ff',
-      source: '#ef8a7a',
-      pollutant: '#8bd9a3',
-      interaction: '#f4c873',
-      environment: '#b99cf7',
-      health: '#f4a7cb',
-      school: '#ffb454',
-      other: '#c7ced7'
-    };
+  (async function () {
+    const D = await fetch('data/site.json').then(r => r.json());
+    const BLK = { 1: '#4b93ef', 2: '#e56637', 3: '#2bab78', 4: '#a276ea' };
+    const PCOL = { P1: BLK[1], P2: BLK[1], P3: BLK[2], P4: BLK[3], P5: BLK[4] };
+    const CLS = { 'cut the source': '#c98500', 'cut the path': '#d55181', 'cut receptor time or intake': '#0aa3c2', 'change the decision': '#72a332' };
+    const CLS_DEF = { 'cut the source': 'emit less, the pressure level', 'cut the path': 'block or dilute, the state level', 'cut receptor time or intake': 'less time or intake, the exposure level', 'change the decision': 'a rule, a price, information or enforcement' };
+    const SHORT = { 'P4-71': 'Clean Cabin, per-bus cabin air service', 'P2-46': 'clean cooking zone pilot', 'P2-02': 'induction grill at stalls', 'P2-01': 'LPG conversion at stalls', 'P3-09': 'engine-off training, hired drivers', 'P4-24': 'exhaust-leak inspection, every bus', 'P1-12': 'fenceline PM10 sensors', 'P1-25': 'downwind misting', 'P2-07': 'solar-battery induction cart', 'P2-03': 'stall hoods', 'P5-33': 'HEPA purifiers, road-facing bedrooms' };
+    const MUTED = '#a9b5bf', DIM = '#6f7d8a', TEXT = '#e8edf1', GOLD = '#f4c95d', GRID = 'rgba(255,255,255,0.08)';
+    const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const T = RM ? 0 : 1;                          // time scale, 0 skips every animation
+    const fmt = d3.format(','), f1 = d3.format('.1f');
+    const sleep = ms => new Promise(r => setTimeout(r, ms * T));
 
-    const nodes = [
-      { id: 'mobility_demand', label: 'Mobility demand', category: 'driver', detail: 'Travel and movement demand shapes vehicle activity and exposure.' },
-      { id: 'household_energy_demand', label: 'Household energy demand', category: 'driver', detail: 'Domestic heating and cooking create combustion emissions.' },
-      { id: 'electricity_demand', label: 'Electricity demand', category: 'driver', detail: 'Power needs drive fossil generation and upstream emissions.' },
-      { id: 'industrial_production', label: 'Industrial production', category: 'driver', detail: 'Output and scale increase combustion, dust and process emissions.' },
-      { id: 'agriculture', label: 'Agriculture', category: 'driver', detail: 'Animal and crop systems create ammonia and related precursor emissions.' },
-      { id: 'construction', label: 'Construction', category: 'driver', detail: 'Building activity generates dust and local disturbance.' },
+    // ---- tooltip ----
+    const tip = document.getElementById('tip');
+    function showTip(html, ev) { tip.innerHTML = html; tip.style.opacity = 1; moveTip(ev); }
+    function moveTip(ev) { const x = ev.clientX + 14, y = ev.clientY + 14; const w = tip.offsetWidth, h = tip.offsetHeight; tip.style.left = Math.min(x, innerWidth - w - 8) + 'px'; tip.style.top = Math.min(y, innerHeight - h - 8) + 'px'; }
+    function hideTip() { tip.style.opacity = 0; }
+    function bindTip(sel, html) { sel.on('mouseenter', (ev, d) => showTip(html(d), ev)).on('mousemove', moveTip).on('mouseleave', hideTip); }
+    document.querySelectorAll('abbr.src').forEach(a => { a.addEventListener('mouseenter', ev => showTip(a.dataset.tip, ev)); a.addEventListener('mousemove', moveTip); a.addEventListener('mouseleave', hideTip); });
 
-      { id: 'school_schedule', label: 'School schedule', category: 'school', detail: 'Timetables concentrate pickups and drop-offs into brief windows.' },
-      { id: 'simultaneous_arrivals', label: 'Simultaneous arrivals', category: 'school', detail: 'Compressed pickup windows create surges in vehicle movement.' },
-      { id: 'queueing_congestion', label: 'Queueing / congestion', category: 'school', detail: 'Cars stack near the gate and circulate repeatedly.' },
-      { id: 'idling_cruising_manoeuvring', label: 'Idling / cruising', category: 'school', detail: 'Short stop-and-go cycles raise local emissions per trip.' },
-      { id: 'road_traffic', label: 'Road traffic', category: 'source', detail: 'Vehicle activity is a major source of NOx, PM and ultrafine particles.' },
-      { id: 'tailpipe_combustion', label: 'Tailpipe combustion', category: 'source', detail: 'Engine exhaust emits NOx, VOCs, carbon species and heat.' },
-      { id: 'brake_tyre_wear', label: 'Brake / tyre wear', category: 'source', detail: 'Non-exhaust particles add primary PM and ultrafine material.' },
-      { id: 'power_generation', label: 'Power generation', category: 'source', detail: 'Thermal generation adds SO2, NOx and secondary particle precursors.' },
-      { id: 'factories', label: 'Factories', category: 'source', detail: 'Industrial stacks, boilers and processes emit fine particles and gases.' },
-      { id: 'fuel_burning', label: 'Fuel burning', category: 'source', detail: 'Residential and commercial combustion releases soot and pollutants.' },
-      { id: 'fertiliser_manure', label: 'Fertiliser / manure', category: 'source', detail: 'Ammonia emissions react with acidic gases to form secondary PM.' },
-      { id: 'construction_dust', label: 'Construction dust', category: 'source', detail: 'Dust emissions increase coarse particles and local visibility loss.' },
+    // ---- counters ----
+    function countTo(el, value, ms = 1200, dec = 0) {
+      const start = +el.dataset.cur || 0; el.dataset.cur = value;
+      if (!T) { el.textContent = dec ? value.toFixed(dec) : fmt(Math.round(value)); return; }
+      const t0 = performance.now();
+      (function tick(now) { const p = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - p, 3), v = start + (value - start) * e; el.textContent = dec ? v.toFixed(dec) : fmt(Math.round(v)); if (p < 1) requestAnimationFrame(tick); })(t0);
+    }
 
-      { id: 'nox_no2', label: 'NOx / NO₂', category: 'pollutant', detail: 'Nitrogen oxides drive ozone and NO₂-related local pollution.' },
-      { id: 'pm25', label: 'Primary PM₂.₅', category: 'pollutant', detail: 'Fine particulates are inhaled deeply and worsen cardiopulmonary risk.' },
-      { id: 'pm10', label: 'PM₁₀', category: 'pollutant', detail: 'Coarse particles carry dust, soot and other local aerosol material.' },
-      { id: 'vocs', label: 'VOCs', category: 'pollutant', detail: 'Volatile organics react to form ozone and secondary products.' },
-      { id: 'so2', label: 'SO₂', category: 'pollutant', detail: 'Sulphur dioxide contributes to acidification and secondary PM.' },
-      { id: 'nh3', label: 'NH₃', category: 'pollutant', detail: 'Ammonia readily reacts with NOx and SO₂ to form ammonium particles.' },
-      { id: 'black_carbon', label: 'Black carbon', category: 'pollutant', detail: 'Soot warms and damages airways while contributing to exposure.' },
-      { id: 'ultrafine_particles', label: 'Ultrafine particles', category: 'pollutant', detail: 'Tiny particles penetrate deeply and are elevated near traffic.' },
-      { id: 'ozone_precursors', label: 'Ozone precursors', category: 'pollutant', detail: 'NOx and VOCs form ground-level ozone under sunlight.' },
+    // ---- slide runner: each slide is {steps:[fn...], reset:fn}, plays once on entry, replay on demand ----
+    const slides = {};
+    let runToken = {};
+    function register(id, spec) { slides[id] = spec; spec.played = false; spec.step = -1; }
+    async function play(id, from = 0) {
+      const s = slides[id]; const token = runToken[id] = {};
+      if (from === 0) s.reset();
+      for (let k = from; k < s.steps.length; k++) {
+        if (runToken[id] !== token) return;
+        s.step = k; markStep(id, k);
+        await s.steps[k]();
+        if (k < s.steps.length - 1) await sleep(s.gap || 900);
+      }
+    }
+    function markStep(id, k) { document.querySelectorAll(`.controls[data-for=${id}] button[data-step]`).forEach(b => b.classList.toggle('on', +b.dataset.step === k)); }
+    document.querySelectorAll('.controls').forEach(c => {
+      const id = c.dataset.for;
+      c.querySelectorAll('button[data-step]').forEach(b => b.addEventListener('click', () => { const k = +b.dataset.step; const s = slides[id]; s.reset(); (async () => { for (let j = 0; j < k; j++) { s.instant = true; await s.steps[j](); } s.instant = false; play(id, k); })(); }));
+      c.querySelector('.replay').addEventListener('click', () => play(id, 0));
+    });
+    const nav = document.getElementById('nav');
+    nav.querySelectorAll('a[data-s]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const id = a.dataset.s; const el = document.getElementById(id); history.replaceState(null, '', '#' + id); el.scrollIntoView({ behavior: RM ? 'instant' : 'smooth' }); slides[id].played = true; setTimeout(() => play(id, 0), RM ? 0 : 450); }));
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        const id = e.target.id;
+        if (e.isIntersecting) { nav.querySelectorAll('a[data-s]').forEach(a => a.classList.toggle('active', a.dataset.s === id)); if (slides[id] && !slides[id].played) { slides[id].played = true; play(id, 0); } if (id === 's1') startOrbit(); }
+        else if (id === 's1') stopOrbit();
+      }
+    }, { threshold: 0.45 });
+    document.querySelectorAll('.slide').forEach(s => io.observe(s));
 
-      { id: 'secondary_pm25', label: 'Secondary PM₂.₅ formation', category: 'interaction', detail: 'Reacting gases and aerosol chemistry produce fine particles.' },
-      { id: 'photochemical_ozone', label: 'Photochemical ozone formation', category: 'interaction', detail: 'Sunlight turns precursors into ozone and secondary oxidants.' },
+    // =====================================================================
+    // SLIDE 1: the graph, the blocks, the load
+    // =====================================================================
+    const nodes = D.graph.nodes.map(n => ({ ...n })), links = D.graph.edges.map(e => ({ source: e.s, target: e.t, w: e.w, n: e.n }));
+    const deg = {}; links.forEach(l => { deg[l.source] = (deg[l.source] || 0) + 1; deg[l.target] = (deg[l.target] || 0) + 1; });
+    const blockOf = {}; nodes.forEach(n => blockOf[n.id] = n.block);
+    const same = l => { const a = blockOf[typeof l.source === 'object' ? l.source.id : l.source], b = blockOf[typeof l.target === 'object' ? l.target.id : l.target]; return a && a === b ? a : 0; };
+    const ANCH = { 1: [-170, 95, 0], 2: [170, 95, 0], 3: [170, -95, 0], 4: [-170, -95, 0] };
+    let split = 0;                                 // 0 = one system, 1 = the blocks pulled apart
+    function clusterForce() { let ns; const f = alpha => { if (!split) return; for (const n of ns) { const a = n.block ? ANCH[n.block] : [0, 0, 0]; const s = (n.block ? 0.11 : 0.02) * split * alpha; n.vx += (a[0] - n.x) * s; n.vy += (a[1] - n.y) * s; n.vz += (a[2] - n.z) * s; } }; f.initialize = x => ns = x; return f; }
+    const g3 = document.getElementById('g3d');
+    const Graph = ForceGraph3D({ controlType: 'orbit' })(g3)
+      .backgroundColor('rgba(0,0,0,0)').showNavInfo(false).enableNodeDrag(false)
+      .width(g3.clientWidth).height(g3.clientHeight)
+      .nodeVal(n => 0.6 + (deg[n.id] || 0) * 0.28).nodeOpacity(0.95).nodeResolution(12)
+      .nodeColor(n => n.block ? BLK[n.block] : (split ? 'rgba(64,85,106,0.35)' : '#40556a'))
+      .nodeLabel(n => `<div style="background:rgba(9,14,20,.95);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 10px;font:12px Inter,sans-serif;max-width:280px;color:#e8edf1"><b style="color:#f4c95d">${n.id}</b> ${n.label}<div style="color:#a9b5bf">${n.layer}${n.block ? ', block ' + n.block + ' ' + D.graph.blocks[n.block - 1].name : ''}</div><div style="color:#6f7d8a;margin-top:3px">${n.def}</div></div>`)
+      .linkColor(l => { const b = same(l); return b ? BLK[b] : (split ? 'rgba(120,140,160,0.06)' : 'rgba(150,170,190,0.28)'); })
+      .linkWidth(l => same(l) ? 0.35 * l.w : 0).linkOpacity(0.5)
+      .d3Force('cluster', clusterForce())
+      .graphData({ nodes, links });
+    Graph.d3Force('charge').strength(-38);
+    Graph.scene().traverse(o => { if (o.isAmbientLight) { o.color.set(0xffffff); o.intensity = 0.88 * Math.PI; } if (o.isDirectionalLight) o.intensity = 0.16 * Math.PI; });
+    Graph.cameraPosition({ x: 0, y: 0, z: 700 });
+    let fitted = false; Graph.onEngineStop(() => { if (!fitted) { fitted = true; Graph.zoomToFit(600, 30); } });
+    const ctl = Graph.controls(); ctl.autoRotate = !RM; ctl.autoRotateSpeed = 0.55; ctl.enableZoom = false;
+    function startOrbit() { ctl.autoRotate = !RM; } function stopOrbit() { ctl.autoRotate = false; }
+    new ResizeObserver(() => Graph.width(g3.clientWidth).height(g3.clientHeight)).observe(g3);
+    function setSplit(v) { split = v; Graph.nodeColor(Graph.nodeColor()).linkColor(Graph.linkColor()); Graph.d3ReheatSimulation(); if (v) setTimeout(() => Graph.zoomToFit(900, 20, n => n.block > 0), 1500 * T); }
 
-      { id: 'urban_background', label: 'Urban background concentration', category: 'environment', detail: 'Regional pollution builds a background layer across the city.' },
-      { id: 'near_school_concentration', label: 'Near-school NO₂ / PM / BC / UFP', category: 'environment', detail: 'School-gate concentrations rise sharply during school travel peaks.' },
-      { id: 'indoor_infiltration', label: 'Indoor infiltration', category: 'environment', detail: 'Outdoor pollution enters classrooms and homes through windows and leaks.' },
-      { id: 'school_commute_microenvironments', label: 'School / commute microenvironments', category: 'environment', detail: 'Exposure is concentrated in travel corridors and waiting areas.' },
-      { id: 'inhaled_dose', label: 'Child inhaled dose', category: 'environment', detail: 'Dose reflects pollution concentration, time, breathing rate and activity.' },
+    const blkList = d3.select('#blk-list');
+    D.graph.blocks.forEach(b => { const r = blkList.append('div').attr('class', 'blk'); r.append('i').style('background', BLK[b.k]); r.append('div').html(`<div>${b.k} · ${b.name}</div><div class="n">${b.n} nodes, W<sub>in</sub> ${b.W_in}</div>`); r.append('div').attr('class', 'e').text('ε ' + b.eps_sym.toFixed(3)); bindTip(r, () => `<b>block ${b.k}</b> ${b.name}<div class="m">ε<sub>out</sub> ${b.eps_out}, ε<sub>in</sub> ${b.eps_in}, ε<sub>sym</sub> ${b.eps_sym}. Leaks least in ${Math.round(D.perturb.rank1[b.k] * 100)} % of 200 weight perturbations, mean Jaccard ${D.perturb.jaccard_mean[b.k].toFixed(2)}.</div>`); });
 
-      { id: 'respiratory_disease', label: 'Respiratory disease', category: 'health', detail: 'Asthma, inflammation and reduced lung function worsen with exposure.' },
-      { id: 'cardiovascular_effects', label: 'Cardiovascular effects', category: 'health', detail: 'Pollution contributes to blood pressure stress and vascular strain.' },
-      { id: 'mortality', label: 'Mortality', category: 'health', detail: 'Long-term and acute exposure raise mortality risk.' },
-      { id: 'cognitive_developmental_effects', label: 'Cognitive / developmental effects', category: 'health', detail: 'Exposure can affect attention, learning and child development.' },
-
-      { id: 'local_traffic_emissions', label: 'Local traffic emissions', category: 'school', detail: 'Traffic near schools raises hot spots of NO₂, PM and black carbon.' },
-      { id: 'child_inhaled_exposure', label: 'Child inhaled exposure', category: 'school', detail: 'Children experience higher doses during queues, walking and waiting.' },
-      { id: 'school_health_outcomes', label: 'Respiratory / cognitive effects', category: 'school', detail: 'Schoolgate exposure links to asthma, attention and developmental impacts.' }
-    ];
-
-    const links = [
-      ['mobility_demand', 'road_traffic'],
-      ['household_energy_demand', 'fuel_burning'],
-      ['electricity_demand', 'power_generation'],
-      ['industrial_production', 'factories'],
-      ['agriculture', 'fertiliser_manure'],
-      ['construction', 'construction_dust'],
-
-      ['school_schedule', 'simultaneous_arrivals'],
-      ['simultaneous_arrivals', 'queueing_congestion'],
-      ['queueing_congestion', 'idling_cruising_manoeuvring'],
-      ['idling_cruising_manoeuvring', 'local_traffic_emissions'],
-      ['local_traffic_emissions', 'near_school_concentration'],
-      ['near_school_concentration', 'child_inhaled_exposure'],
-      ['child_inhaled_exposure', 'school_health_outcomes'],
-      ['school_health_outcomes', 'respiratory_disease'],
-      ['school_health_outcomes', 'cognitive_developmental_effects'],
-
-      ['road_traffic', 'tailpipe_combustion'],
-      ['road_traffic', 'brake_tyre_wear'],
-      ['road_traffic', 'local_traffic_emissions'],
-      ['road_traffic', 'nox_no2'],
-      ['tailpipe_combustion', 'nox_no2'],
-      ['tailpipe_combustion', 'vocs'],
-      ['tailpipe_combustion', 'black_carbon'],
-      ['tailpipe_combustion', 'ultrafine_particles'],
-      ['brake_tyre_wear', 'pm25'],
-      ['brake_tyre_wear', 'pm10'],
-      ['brake_tyre_wear', 'ultrafine_particles'],
-
-      ['power_generation', 'so2'],
-      ['power_generation', 'nox_no2'],
-      ['fuel_burning', 'pm25'],
-      ['factories', 'pm25'],
-      ['factories', 'so2'],
-      ['factories', 'nox_no2'],
-      ['fertiliser_manure', 'nh3'],
-      ['construction_dust', 'pm10'],
-
-      ['nox_no2', 'ozone_precursors'],
-      ['vocs', 'ozone_precursors'],
-      ['ozone_precursors', 'photochemical_ozone'],
-      ['so2', 'secondary_pm25'],
-      ['nh3', 'secondary_pm25'],
-      ['nox_no2', 'secondary_pm25'],
-      ['pm25', 'secondary_pm25'],
-      ['secondary_pm25', 'urban_background'],
-      ['photochemical_ozone', 'urban_background'],
-      ['urban_background', 'near_school_concentration'],
-      ['near_school_concentration', 'school_commute_microenvironments'],
-      ['school_commute_microenvironments', 'inhaled_dose'],
-      ['inhaled_dose', 'respiratory_disease'],
-      ['inhaled_dose', 'cardiovascular_effects'],
-      ['inhaled_dose', 'mortality'],
-      ['inhaled_dose', 'cognitive_developmental_effects'],
-      ['near_school_concentration', 'inhaled_dose'],
-      ['urban_background', 'indoor_infiltration'],
-      ['indoor_infiltration', 'inhaled_dose'],
-      ['pm25', 'respiratory_disease'],
-      ['black_carbon', 'respiratory_disease'],
-      ['ultrafine_particles', 'cognitive_developmental_effects'],
-      ['nox_no2', 'respiratory_disease'],
-      ['pm10', 'cardiovascular_effects'],
-      ['mortality', 'respiratory_disease'],
-      ['school_health_outcomes', 'mortality'],
-      ['school_schedule', 'road_traffic'],
-      ['simultaneous_arrivals', 'road_traffic'],
-      ['local_traffic_emissions', 'road_traffic']
-    ].map(([source, target]) => ({ source, target }));
-
-    const nodeMap = Object.fromEntries(nodes.map(node => [node.id, node]));
-    const adjacency = new Map();
-    nodes.forEach(node => adjacency.set(node.id, new Set()));
-    links.forEach(link => {
-      adjacency.get(link.source).add(link.target);
-      adjacency.get(link.target).add(link.source);
+    function drawLoads(animate) {
+      const box = d3.select('#loads-chart').html(''); const W = 300, H = 150, m = { l: 108, r: 70, t: 4, b: 18 };
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      const x = d3.scaleLinear().domain([0, 21]).range([m.l, W - m.r]); const y = d3.scaleBand().domain(D.loads.map(d => d.name)).range([m.t, H - m.b]).padding(0.32);
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(4).tickSize(-(H - m.b - m.t))).call(g => g.select('.domain').remove()).selectAll('text').attr('fill', DIM).style('font-size', '9px');
+      const row = svg.selectAll('g.row').data(D.loads).join('g').attr('class', 'row');
+      row.append('text').attr('x', m.l - 6).attr('y', d => y(d.name) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').attr('fill', MUTED).style('font-size', '10px').text(d => ({ 1: 'construction workers', 4: 'near-road, riders', 3: 'child commute', 2: 'school gate' })[d.block]);
+      const bar = row.append('rect').attr('x', x(0)).attr('y', d => y(d.name)).attr('height', y.bandwidth()).attr('rx', 3).attr('fill', d => BLK[d.block]).attr('width', 0);
+      const rng = row.append('line').attr('y1', d => y(d.name) + y.bandwidth() / 2).attr('y2', d => y(d.name) + y.bandwidth() / 2).attr('x1', d => x(d.lo)).attr('x2', d => x(d.lo)).attr('stroke', TEXT).attr('stroke-opacity', 0.55).attr('stroke-width', 1.2);
+      const lab = row.append('text').attr('x', d => x(d.hi) + 5).attr('y', d => y(d.name) + y.bandwidth() / 2).attr('dy', '0.35em').attr('fill', TEXT).style('font-size', '10.5px').style('font-weight', 700).text(d => d.L).attr('opacity', 0);
+      bindTip(row, d => `<b>${d.name}</b> L = ${d.L} (${d.lo} to ${d.hi})<div class="m">N ${typeof d.N === 'number' ? fmt(d.N) : d.N}, h ${d.h} h/day, ΔC ${d.dC} µg/m³</div><div class="m">${d.src}</div>`);
+      const dur = animate ? 1000 : 0;
+      bar.transition().duration(dur).delay((d, i) => i * 120 * T).ease(d3.easeCubicOut).attr('width', d => x(d.L) - x(0));
+      rng.transition().duration(dur).delay((d, i) => 500 * T + i * 120 * T).attr('x2', d => x(d.hi));
+      lab.transition().duration(300).delay((d, i) => 700 * T + i * 120 * T).attr('opacity', 1);
+    }
+    register('s1', {
+      gap: 1400,
+      reset() { setSplit(0); d3.selectAll('#s1 .reveal').classed('in', false); d3.select('#s1-line').html(''); ['t-nodes', 't-edges', 't-rows'].forEach(i => { const e = document.getElementById(i); e.textContent = '0'; e.dataset.cur = 0; }); },
+      steps: [
+        async () => { countTo(document.getElementById('t-nodes'), D.graph.counts.nodes); countTo(document.getElementById('t-edges'), D.graph.counts.edges); countTo(document.getElementById('t-rows'), D.graph.counts.rows); await sleep(1500); },
+        async () => { setSplit(1); d3.select('#blocks').classed('in', true); await sleep(1800); },
+        async () => { d3.select('#loads').classed('in', true); drawLoads(!slides.s1.instant); await sleep(1300); d3.select('#s1-line').html('The school gate is the smallest term, <b>0.68</b>. The bus cabin alone is <b>4.11</b>, six times it.'); },
+      ],
     });
 
-    const riverSubset = new Set([
-      'school_schedule',
-      'simultaneous_arrivals',
-      'queueing_congestion',
-      'idling_cruising_manoeuvring',
-      'local_traffic_emissions',
-      'near_school_concentration',
-      'child_inhaled_exposure',
-      'school_health_outcomes'
-    ]);
+    // =====================================================================
+    // SLIDE 2: the mind map, 332 dots on their edges
+    // =====================================================================
+    const S = D.solutions; const PROBS = D.problems;
+    const nodeLabel = {}; nodes.forEach(n => nodeLabel[n.id] = n.label);
+    const clsCounts = d3.rollup(S, v => v.length, d => d.cls);
+    const clsList = d3.select('#cls-list');
+    Object.keys(CLS).forEach(c => { const r = clsList.append('div').attr('class', 'row'); r.append('i').style('background', CLS[c]); r.append('div').html(`${c}<div class="d">${CLS_DEF[c]}</div>`); r.append('div').attr('class', 'n').text(clsCounts.get(c)); });
+    const probList = d3.select('#prob-list');
+    PROBS.forEach(p => { const r = probList.append('div').attr('class', 'row'); r.append('i').style('background', PCOL[p.id]).style('opacity', p.id === 'P2' ? 0.55 : 1); r.append('div').text(`${p.id} ${p.name}`); r.append('div').html(`<b>${p.generated}</b> on ${p.edges}`); });
+    const edgeTotal = PROBS.reduce((a, p) => a + p.edges, 0);
 
-    const moduleSets = {
-      school_traffic: new Set([
-        'school_schedule',
-        'simultaneous_arrivals',
-        'queueing_congestion',
-        'idling_cruising_manoeuvring',
-        'road_traffic',
-        'local_traffic_emissions',
-        'near_school_concentration',
-        'school_commute_microenvironments',
-        'inhaled_dose',
-        'child_inhaled_exposure',
-        'school_health_outcomes',
-        'respiratory_disease',
-        'cognitive_developmental_effects'
-      ]),
-      staggered_pickup: new Set([
-        'school_schedule',
-        'simultaneous_arrivals',
-        'queueing_congestion',
-        'idling_cruising_manoeuvring',
-        'local_traffic_emissions',
-        'near_school_concentration',
-        'child_inhaled_exposure',
-        'school_health_outcomes'
-      ]),
-      school_street: new Set([
-        'road_traffic',
-        'local_traffic_emissions',
-        'near_school_concentration',
-        'school_commute_microenvironments',
-        'child_inhaled_exposure',
-        'school_health_outcomes',
-        'respiratory_disease',
-        'cognitive_developmental_effects'
-      ]),
-      electric_bus: new Set([
-        'road_traffic',
-        'tailpipe_combustion',
-        'nox_no2',
-        'pm25',
-        'black_carbon',
-        'ultrafine_particles',
-        'local_traffic_emissions',
-        'near_school_concentration',
-        'child_inhaled_exposure',
-        'school_health_outcomes'
-      ])
-    };
-
-    let selectionMode = 'none';
-    let selectedNodeId = null;
-    let viewMode = 'rotary';
-
-    // 3d-force-graph replaces link endpoint IDs with their node objects once the
-    // simulation starts. Always normalize them before doing map/set lookups so
-    // later refreshes (including those triggered after rotating) stay valid.
-    function getLinkEndpointId(endpoint) {
-      return typeof endpoint === 'object' && endpoint !== null ? endpoint.id : endpoint;
+    function layoutMind() {
+      const cx = 500, cy = 380, r0 = 78, r1 = 158, r2 = 180, step = 14.6, gap = 0.06;
+      const groups = PROBS.map(p => { const rows = S.filter(s => s.p === p.id); const edges = d3.groups(rows, s => s.edge).sort((a, b) => d3.ascending(a[0], b[0])); return { p, rows, edges }; });
+      const totalE = d3.sum(groups, g => g.edges.length); const span = 2 * Math.PI - gap * groups.length;
+      let a = -Math.PI / 2; const out = { sectors: [], edges: [], dots: [] };
+      groups.forEach(g => { const w = span * g.edges.length / totalE; const a0 = a, a1 = a + w; out.sectors.push({ p: g.p, a0, a1, mid: (a0 + a1) / 2 });
+        g.edges.forEach(([edge, rows], k) => { const ang = a0 + w * (k + 0.5) / g.edges.length; out.edges.push({ edge, ang, p: g.p, n: rows.length });
+          rows.sort((x, y) => d3.ascending(x.cls, y.cls)).forEach((s, i) => { const jitter = (i % 2 ? 1 : -1) * 0.012; const rr = r2 + i * step; out.dots.push({ s, x: cx + rr * Math.cos(ang + jitter), y: cy + rr * Math.sin(ang + jitter), ang, edge, i }); }); });
+        a = a1 + gap; });
+      return { ...out, cx, cy, r0, r1, r2 };
     }
-
-    function getRelevantNodeIds() {
-      if (selectionMode === 'none') return null;
-      if (selectionMode === 'node') {
-        const refs = new Set([selectedNodeId]);
-        for (const n of adjacency.get(selectedNodeId) || []) refs.add(n);
-        return refs;
-      }
-      return moduleSets[selectionMode] || null;
+    function drawMind(animate) {
+      const svg = d3.select('#mind').html(''); const L = layoutMind(); const { cx, cy, r0, r1 } = L;
+      const arc = d3.arc().innerRadius(r1 - 2).outerRadius(r1 + 2);
+      const sec = svg.append('g').selectAll('path').data(L.sectors).join('path').attr('d', d => arc({ startAngle: d.a0 + Math.PI / 2, endAngle: d.a1 + Math.PI / 2 })).attr('transform', `translate(${cx},${cy})`).attr('fill', d => PCOL[d.p.id]).attr('opacity', d => d.p.id === 'P2' ? 0.55 : 0.95);
+      const secLab = svg.append('g').selectAll('text').data(L.sectors).join('text').attr('x', d => cx + (r1 - 22) * Math.cos(d.mid)).attr('y', d => cy + (r1 - 22) * Math.sin(d.mid)).attr('text-anchor', 'middle').attr('dy', '0.35em').attr('fill', d => PCOL[d.p.id]).style('font-size', '13px').style('font-weight', 800).text(d => d.p.id);
+      bindTip(sec, d => `<b>${d.p.id}</b> ${d.p.name}<div class="m">${d.p.generated} interventions on ${d.p.edges} cited edges, ${d.p.through} through the gates, load ${d.p.L}</div>`);
+      const spokes = svg.append('g').selectAll('line').data(L.edges).join('line').attr('x1', d => cx + r0 * Math.cos(d.ang)).attr('y1', d => cy + r0 * Math.sin(d.ang)).attr('x2', d => cx + r0 * Math.cos(d.ang)).attr('y2', d => cy + r0 * Math.sin(d.ang)).attr('stroke', d => PCOL[d.p.id]).attr('stroke-opacity', 0.55).attr('stroke-width', 1);
+      const ticks = svg.append('g').selectAll('circle').data(L.edges).join('circle').attr('cx', d => cx + (r1 + 8) * Math.cos(d.ang)).attr('cy', d => cy + (r1 + 8) * Math.sin(d.ang)).attr('r', 0).attr('fill', '#071018').attr('stroke', d => PCOL[d.p.id]).attr('stroke-width', 1.4);
+      bindTip(ticks, d => { const [u, v] = d.edge.split('->'); return `<b>${d.edge}</b> ${nodeLabel[u] || u} → ${nodeLabel[v] || v}<div class="m">${d.n} interventions on this edge, ${d.p.id}</div>`; });
+      const dots = svg.append('g').selectAll('circle').data(L.dots).join('circle').attr('cx', d => d.x).attr('cy', d => d.y).attr('r', 0).attr('fill', d => CLS[d.s.cls]).attr('stroke', '#071018').attr('stroke-width', 0.8).style('cursor', 'default');
+      bindTip(dots, d => `<b>${d.s.id}</b> ${d.s.text}<div class="m">${d.s.cls} · edge ${d.edge} · ${d.s.fail ? 'out at gate G' + d.s.fail : 'through the gates, score ' + d.s.ws + ' of 90'}</div>`);
+      const centre = svg.append('g').attr('transform', `translate(${cx},${cy})`);
+      centre.append('text').attr('class', 'serif').attr('text-anchor', 'middle').attr('dy', '0.15em').attr('fill', TEXT).style('font-size', '40px').style('font-family', 'Instrument Serif, Georgia, serif').attr('id', 'mind-n').text('0');
+      centre.append('text').attr('text-anchor', 'middle').attr('dy', '2.2em').attr('fill', MUTED).style('font-size', '11px').text('interventions');
+      const dur = animate ? 1 : 0;
+      spokes.transition().duration(500 * dur).delay((d, i) => i * 8 * dur).ease(d3.easeCubicOut).attr('x2', d => cx + r1 * Math.cos(d.ang)).attr('y2', d => cy + r1 * Math.sin(d.ang));
+      ticks.transition().duration(300 * dur).delay((d, i) => 300 * dur + i * 8 * dur).attr('r', 3);
+      dots.transition().duration(380 * dur).delay((d, i) => 900 * dur + i * 5 * dur).ease(d3.easeBackOut.overshoot(2.2)).attr('r', 5);
+      const nEl = document.getElementById('mind-n');
+      if (animate && T) { const t0 = performance.now(), total = 900 + L.dots.length * 5 + 300; (function tick(now) { const p = Math.min(1, (now - t0 - 900) / (total - 900)); nEl.textContent = Math.max(0, Math.round(L.dots.length * p)); if (p < 1) requestAnimationFrame(tick); })(t0); } else nEl.textContent = L.dots.length;
+      return 900 + L.dots.length * 5 + 500;
     }
-
-    function getLinkOpacity(link) {
-      const sourceId = getLinkEndpointId(link.source);
-      const targetId = getLinkEndpointId(link.target);
-
-      if (viewMode === 'river') {
-        const inRiver = riverSubset.has(sourceId) && riverSubset.has(targetId);
-        return inRiver ? 0.95 : 0.08;
-      }
-
-      if (selectionMode === 'none') {
-        const src = nodeMap[sourceId];
-        const tgt = nodeMap[targetId];
-        const isSchool = src.category === 'school' || tgt.category === 'school';
-        return isSchool ? 0.85 : 0.28;
-      }
-
-      const refs = getRelevantNodeIds();
-      if (!refs) return 0.25;
-      const isRelevant = refs.has(sourceId) && refs.has(targetId);
-      return isRelevant ? 1 : 0.12;
-    }
-
-    function getNodeOpacity(nodeId) {
-      if (viewMode === 'river') {
-        return riverSubset.has(nodeId) ? 1 : 0.05;
-      }
-
-      if (selectionMode === 'none') {
-        return 1;
-      }
-
-      const refs = getRelevantNodeIds();
-      if (!refs) return 1;
-      if (selectionMode === 'node') {
-        return refs.has(nodeId) ? 1 : 0.16;
-      }
-      return refs.has(nodeId) ? 1 : 0.14;
-    }
-
-    function getNodeColor(node) {
-      const base = categoryColors[node.category] || categoryColors.other;
-      const selected = selectionMode === 'node' && selectedNodeId === node.id;
-      const relevant = selectionMode !== 'none' && getRelevantNodeIds() && getRelevantNodeIds().has(node.id);
-      if (selected) return '#ffffff';
-      if (selectionMode !== 'none' && !relevant) return '#727c86';
-      return base;
-    }
-
-    function configureStaticForces(linkDistance) {
-      const chargeForce = Graph.d3Force('charge');
-      const linkForce = Graph.d3Force('link');
-      if (chargeForce?.strength) chargeForce.strength(0);
-      if (linkForce?.distance) linkForce.distance(linkDistance).strength(0);
-    }
-
-    function getGraphAspect() {
-      return graphElement.clientWidth / Math.max(graphElement.clientHeight, 1);
-    }
-
-    function getRotaryCameraPosition() {
-      const mobileScale = Math.max(1, 1.15 / Math.max(getGraphAspect(), 0.5));
-      return {
-        x: 420 * mobileScale,
-        y: 260 * mobileScale,
-        z: 700 * mobileScale
-      };
-    }
-
-    function getRiverCameraDistance() {
-      return getGraphAspect() < 0.9 ? 850 : 800;
-    }
-
-    function applySphereLayout() {
-      const radius = 330;
-      nodes.forEach((node, index) => {
-        const i = index + 1;
-        const theta = Math.PI * (3 - Math.sqrt(5)) * index;
-        const phi = Math.acos(1 - (2 * i) / (nodes.length + 1));
-        const x = radius * Math.cos(theta) * Math.sin(phi);
-        const y = radius * Math.sin(theta) * Math.sin(phi);
-        const z = radius * Math.cos(phi);
-        node.x = x;
-        node.y = y;
-        node.z = z;
-        node.fx = x;
-        node.fy = y;
-        node.fz = z;
-      });
-      configureStaticForces(80);
-    }
-
-    function applyRiverLayout() {
-      const ordered = Array.from(riverSubset);
-      ordered.forEach((id, index) => {
-        const node = nodeMap[id];
-        const useVerticalZigZag = getGraphAspect() < 0.9;
-        let x;
-        let y;
-
-        if (useVerticalZigZag) {
-          // Phones get an alternating top-to-bottom path that keeps every
-          // label inside the narrow canvas at a readable scale.
-          x = (index % 2 === 0 ? -1 : 1) * 115;
-          y = ((ordered.length - 1) / 2 - index) * 105;
-        } else {
-          const columns = 4;
-          const row = Math.floor(index / columns);
-          const positionInRow = index % columns;
-          // Wider screens snake across two rows while alternating vertical
-          // positions so every causal step follows a clear zig-zag.
-          const column = row % 2 === 0 ? positionInRow : columns - 1 - positionInRow;
-          x = (column - (columns - 1) / 2) * 230;
-          const rowCenter = row === 0 ? 130 : -130;
-          const zigZagOffset = positionInRow % 2 === 0 ? 70 : -70;
-          y = rowCenter + zigZagOffset;
-        }
-        node.x = x;
-        node.y = y;
-        node.z = 0;
-        node.fx = x;
-        node.fy = y;
-        node.fz = 0;
-      });
-
-      nodes.forEach(node => {
-        if (!riverSubset.has(node.id)) {
-          node.x = 0;
-          node.y = 0;
-          node.z = -2000;
-          node.fx = 0;
-          node.fy = 0;
-          node.fz = -2000;
-        }
-      });
-      configureStaticForces(40);
-    }
-
-    function setViewMode(mode) {
-      viewMode = mode;
-      if (mode === 'river') {
-        riverBtn.classList.add('active');
-        rotaryBtn.classList.remove('active');
-        Graph.enableNavigationControls(false);
-        Graph.controls().enableRotate = false;
-        Graph.controls().enablePan = false;
-        Graph.controls().enableZoom = false;
-        applyRiverLayout();
-        Graph.camera().up.set(0, 1, 0);
-        Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
-      } else {
-        rotaryBtn.classList.add('active');
-        riverBtn.classList.remove('active');
-        Graph.enableNavigationControls(true);
-        Graph.controls().enableRotate = true;
-        Graph.controls().enablePan = false;
-        Graph.controls().enableZoom = true;
-        applySphereLayout();
-        Graph.cameraPosition(getRotaryCameraPosition(), { x: 0, y: 0, z: 0 }, 250);
-      }
-      Graph.refresh();
-    }
-
-    const graphElement = document.getElementById('3d-graph');
-    const Graph = ForceGraph3D()(graphElement)
-      .width(graphElement.clientWidth)
-      .height(graphElement.clientHeight)
-      .graphData({ nodes, links })
-      .backgroundColor('#071018')
-      .showNavInfo(false)
-      .nodeRelSize(6)
-      .nodeResolution(26)
-      .warmupTicks(30)
-      .enableNodeDrag(false)
-      .enableNavigationControls(true)
-      .nodeVisibility(node => viewMode !== 'river' || riverSubset.has(node.id))
-      .linkVisibility(link => viewMode !== 'river' || (
-        riverSubset.has(getLinkEndpointId(link.source)) &&
-        riverSubset.has(getLinkEndpointId(link.target))
-      ))
-      .linkDirectionalArrowLength(6)
-      .linkDirectionalArrowRelPos(0.55)
-      .linkColor(link => {
-        const source = nodeMap[getLinkEndpointId(link.source)];
-        const target = nodeMap[getLinkEndpointId(link.target)];
-        const base = source && target ? (source.category === 'school' || target.category === 'school' ? '#ffb454' : '#b7c6d1') : '#b7c6d1';
-        return getLinkOpacity(link) > 0.15 ? base : 'rgba(160, 170, 180, 0.18)';
-      })
-      .linkWidth(link => {
-        const source = nodeMap[getLinkEndpointId(link.source)];
-        const target = nodeMap[getLinkEndpointId(link.target)];
-        const isSchoolLink = source?.category === 'school' || target?.category === 'school';
-        return getLinkOpacity(link) > 0.15 ? (isSchoolLink ? 2.2 : 1.2) : 0.5;
-      })
-      .nodeThreeObject(node => {
-        const color = getNodeColor(node);
-        const opacity = getNodeOpacity(node.id);
-        const sprite = new SpriteText(node.label);
-        sprite.textHeight = node.category === 'school' || node.category === 'health' ? 24 : 20;
-        sprite.color = color;
-        sprite.backgroundColor = 'rgba(10, 14, 18, 0.80)';
-        sprite.borderColor = opacity > 0.8 ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.08)';
-        sprite.borderWidth = 1;
-        sprite.borderRadius = 12;
-        sprite.padding = 8;
-        sprite.material.transparent = true;
-        sprite.material.opacity = opacity;
-        sprite.material.depthWrite = false;
-        return sprite;
-      })
-      .onNodeClick(node => {
-        selectedNodeId = node.id;
-        selectionMode = 'node';
-        Graph.refresh();
-      })
-      .onBackgroundClick(() => {
-        if (selectionMode === 'none') return;
-        selectionMode = 'none';
-        selectedNodeId = null;
-        Graph.refresh();
-      });
-
-    Graph.controls().enableDamping = true;
-    Graph.controls().dampingFactor = 0.08;
-    Graph.controls().rotateSpeed = 0.8;
-    Graph.controls().zoomSpeed = 0.7;
-    Graph.controls().enablePan = false;
-    Graph.controls().enableRotate = true;
-    Graph.renderer().setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    Graph.cameraPosition(getRotaryCameraPosition());
-    applySphereLayout();
-
-    const riverBtn = document.getElementById('btn-river');
-    const rotaryBtn = document.getElementById('btn-rotary');
-
-    riverBtn.addEventListener('click', () => setViewMode('river'));
-    rotaryBtn.addEventListener('click', () => setViewMode('rotary'));
-
-    let resizeFrame = null;
-    function syncGraphSize() {
-      if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(() => {
-        resizeFrame = null;
-        const width = Math.max(1, graphElement.clientWidth);
-        const height = Math.max(1, graphElement.clientHeight);
-        if (Graph.width() !== width) Graph.width(width);
-        if (Graph.height() !== height) Graph.height(height);
-        if (viewMode === 'river') {
-          applyRiverLayout();
-          Graph.refresh();
-          Graph.cameraPosition({ x: 0, y: 0, z: getRiverCameraDistance() }, { x: 0, y: 0, z: 0 }, 0);
-        }
-      });
-    }
-
-    if ('ResizeObserver' in window) {
-      new ResizeObserver(syncGraphSize).observe(graphElement);
-    } else {
-      window.addEventListener('resize', syncGraphSize);
-    }
-    window.visualViewport?.addEventListener('resize', syncGraphSize);
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) Graph.pauseAnimation();
-      else Graph.resumeAnimation();
+    register('s2', {
+      reset() { d3.select('#mind').html(''); ['t-sol', 't-edg'].forEach(i => { const e = document.getElementById(i); e.textContent = '0'; e.dataset.cur = 0; }); },
+      steps: [async () => { const ms = drawMind(!slides.s2.instant); countTo(document.getElementById('t-sol'), S.length, ms); countTo(document.getElementById('t-edg'), edgeTotal, ms); await sleep(ms); }],
     });
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        const module = card.dataset.module;
-        selectionMode = selectionMode === module ? 'none' : module;
-        selectedNodeId = null;
-        Graph.refresh();
-      });
+    // =====================================================================
+    // SLIDE 3: the gates close, the criteria appear, the ablation
+    // =====================================================================
+    const GCHIP = d3.select('#gatechips').selectAll('div').data(D.gates).join('div').attr('class', 'chip').html(d => `${d.id} ${d.name} · <b>${({ G1: 94, G2: 56, G3: 3, G4: 17 })[d.id]}</b> fail`);
+    bindTip(GCHIP, d => `<b>${d.id} ${d.name}</b> ${d.rule}<div class="m">${d.id === 'G1' ? '94 rows fail it' : d.id === 'G2' ? '56 rows fail it, 6 of them pass G1' : d.id === 'G3' ? '3 rows fail it, all already out' : '17 rows fail it, all already out'}</div>`);
+    function drawGates() {
+      const box = d3.select('#gates').html(''); const cell = 14, rows = 10, pad = 30, gapx = 20; const SHORTP = { P1: 'construction', P2: 'vendors', P3: 'school gate', P4: 'commute', P5: 'near-road' };
+      const groups = PROBS.map(p => S.filter(s => s.p === p.id)); const ncols = groups.map(g => Math.ceil(g.length / rows));
+      const W = 8 + d3.sum(ncols) * cell + gapx * 4 + 8, H = pad + rows * cell + 26;
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      let x0 = 8; const cells = [];
+      PROBS.forEach((p, k) => { const rs = groups[k], nc = ncols[k]; rs.forEach((s, i) => cells.push({ s, x: x0 + (i % nc) * cell, y: pad + Math.floor(i / nc) * cell, p })); svg.append('text').attr('x', x0).attr('y', 11).attr('fill', PCOL[p.id]).style('font-size', '11px').style('font-weight', 800).text(p.id); svg.append('text').attr('x', x0).attr('y', 23).attr('fill', DIM).style('font-size', '9.5px').text(SHORTP[p.id]); svg.append('text').attr('class', 'cnt').attr('data-p', p.id).attr('x', x0).attr('y', pad + rows * cell + 16).attr('fill', TEXT).style('font-size', '13px').style('font-weight', 800).text(rs.length); x0 += nc * cell + gapx; });
+      const c = svg.append('g').selectAll('rect').data(cells).join('rect').attr('x', d => d.x).attr('y', d => d.y).attr('width', cell - 3).attr('height', cell - 3).attr('rx', 3).attr('fill', d => PCOL[d.p.id]).attr('opacity', d => d.p.id === 'P2' ? 0.6 : 0.9);
+      bindTip(c, d => `<b>${d.s.id}</b> ${d.s.text}<div class="m">${d.s.cls} · ${d.s.fail ? 'fails G' + d.s.fail + ' ' + D.gates[d.s.fail - 1].name : 'through, score ' + d.s.ws}</div>`);
+      return { svg, c };
+    }
+    let G3;
+    async function closeGate(k, instant) {
+      const dur = instant ? 0 : 700;
+      G3.c.filter(d => d.s.fail === k).transition().duration(dur).ease(d3.easeCubicIn).attr('opacity', 0.12).attr('transform', d => `translate(0,${instant ? 0 : 10})`).attr('fill', DIM);
+      GCHIP.filter(d => +d.id[1] === k).classed('closed', true);
+      const alive = S.filter(s => s.fail === 0 || s.fail > k).length; countTo(document.getElementById('t-alive'), alive, dur);
+      G3.svg.selectAll('text.cnt').each(function () { const p = this.dataset.p; d3.select(this).text(S.filter(s => s.p === p && (s.fail === 0 || s.fail > k)).length); });
+      await sleep(dur + 250);
+    }
+    function drawRubric(animate) {
+      const box = d3.select('#rubric').html(''); const W = 520, H = 190, m = { l: 128, r: 40, t: 6, b: 4 };
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      const y = d3.scaleBand().domain(D.rubric.map(d => d.c)).range([m.t, H - m.b]).padding(0.3); const x = d3.scaleLinear().domain([0, 3]).range([m.l, W - m.r]);
+      const col = d => d.who === 'source' ? GOLD : d.who === 'ours' ? '#7fa6c9' : '#5a6b7c';
+      const row = svg.selectAll('g').data(D.rubric).join('g');
+      row.append('text').attr('x', m.l - 8).attr('y', d => y(d.c) + y.bandwidth() / 2).attr('dy', '0.35em').attr('text-anchor', 'end').attr('fill', d => d.who === 'source' ? GOLD : MUTED).style('font-size', '10.5px').style('font-weight', d => d.who === 'source' ? 700 : 500).text(d => d.c);
+      const bar = row.append('rect').attr('x', x(0)).attr('y', d => y(d.c)).attr('height', y.bandwidth()).attr('rx', 3).attr('fill', col).attr('width', 0);
+      const wl = row.append('text').attr('x', d => x(d.w) + 6).attr('y', d => y(d.c) + y.bandwidth() / 2).attr('dy', '0.35em').attr('fill', TEXT).style('font-size', '10.5px').style('font-weight', 700).text(d => 'w ' + d.w).attr('opacity', 0);
+      bindTip(row, d => `<b>${d.c}</b> weight ${d.w}, ${d.who === 'instructor' ? "the instructor's family" : d.who === 'ours' ? 'ours' : 'ours, source-side'}<div class="m">5: ${d.five}</div><div class="m">1: ${d.one}</div>`);
+      box.append('div').attr('class', 'legend').style('margin-top', '4px').html(`<span><i style="background:#5a6b7c"></i> the instructor's five</span><span><i style="background:#7fa6c9"></i> ours, three</span><span><i style="background:${GOLD}"></i> ours, the three that separate a cure from a shield</span>`);
+      const dur = animate ? 700 : 0; bar.transition().duration(dur).delay((d, i) => i * 90 * T).ease(d3.easeCubicOut).attr('width', d => x(d.w) - x(0)); wl.transition().duration(200).delay((d, i) => 300 * T + i * 90 * T).attr('opacity', 1);
+      return 300 + 11 * 90 + dur;
+    }
+    function drawLambda(animate) {
+      const box = d3.select('#lam').html(''); const W = 520, H = 170, m = { l: 40, r: 130, t: 12, b: 24 };
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`); const L = D.lambda.lambda;
+      const x = d3.scaleLinear().domain([0, 2]).range([m.l, W - m.r]); const y = d3.scaleLinear().domain([50, 102]).range([H - m.b, m.t]);
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(4).tickSize(0)).call(g => g.select('.domain').attr('stroke', GRID)).selectAll('text').attr('fill', DIM).style('font-size', '9px');
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r))).call(g => g.select('.domain').remove()).selectAll('text').attr('fill', DIM).style('font-size', '9px');
+      svg.append('text').attr('x', x(0)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').text('λ = 0, eight criteria');
+      svg.append('text').attr('x', x(1)).attr('y', H - 6).attr('fill', DIM).style('font-size', '9px').attr('text-anchor', 'middle').text('λ = 1, stated weights');
+      svg.append('line').attr('x1', x(1)).attr('x2', x(1)).attr('y1', y(50)).attr('y2', y(100)).attr('stroke', GRID);
+      const line = d3.line().x((v, i) => x(L[i])).y(v => y(v));
+      const rows = Object.entries(D.lambda.rows); const ends = rows.map(([id, v]) => ({ id, y: y(v[v.length - 1]) })).sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 11) ends[i].y = ends[i - 1].y + 11; const endY = Object.fromEntries(ends.map(e => [e.id, e.y]));
+      rows.forEach(([id, v]) => { const pick = id === 'P4-71', pur = id === 'P5-33'; const p = svg.append('path').attr('d', line(v)).attr('fill', 'none').attr('stroke', pur ? MUTED : PCOL[id.slice(0, 2)]).attr('stroke-width', pick ? 2.4 : 1.4).attr('stroke-dasharray', pur ? '4 3' : null).attr('opacity', pick ? 1 : 0.85); const len = p.node().getTotalLength(); if (!pur) p.attr('stroke-dasharray', len).attr('stroke-dashoffset', animate ? len : 0).transition().duration(1400 * T).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); else p.attr('opacity', animate ? 0 : 0.85).transition().duration(600 * T).delay(400 * T).attr('opacity', 0.85);
+        svg.append('text').attr('x', x(2) + 5).attr('y', endY[id]).attr('dy', '0.35em').attr('fill', pick ? GOLD : MUTED).style('font-size', '9px').style('font-weight', pick ? 700 : 500).text(pur ? 'HEPA purifiers, ties at λ = 0' : (SHORT[id] || id).split(',')[0]).attr('opacity', animate ? 0 : 1).transition().delay(1300 * T).duration(300 * T).attr('opacity', 1);
+        bindTip(p, () => `<b>${id}</b> ${SHORT[id] || ''}<div class="m">score at λ = 0: ${v[0]}, at λ = 1: ${v[20]}, at λ = 2: ${v[40]}</div>`); });
+      return 1600;
+    }
+    register('s3', {
+      gap: 800,
+      reset() { G3 = drawGates(); GCHIP.classed('closed', false); const e = document.getElementById('t-alive'); e.textContent = '332'; e.dataset.cur = 332; d3.select('#s3-line').html(''); d3.select('#rubric').html(''); d3.select('#lam').html(''); },
+      steps: [
+        async () => { const inst = slides.s3.instant; await sleep(300); for (let k = 1; k <= 4; k++) await closeGate(k, inst); d3.select('#s3-line').html('<b>232</b> pass, 38 · 42 · 62 · 62 · 28. Near-road loses most, its levers need a regulator.'); },
+        async () => { const ms = drawRubric(!slides.s3.instant); await sleep(ms); },
+        async () => { const ms = drawLambda(!slides.s3.instant); await sleep(ms); },
+      ],
     });
 
-    document.addEventListener('dblclick', () => {
-      selectionMode = 'none';
-      selectedNodeId = null;
-      Graph.refresh();
+    // =====================================================================
+    // SLIDE 4: the ranking, SMAA replay, the FMEA grid
+    // =====================================================================
+    const THROUGH = S.filter(s => s.fail === 0).sort((a, b) => b.ws - a.ws || a.id.localeCompare(b.id));
+    function drawRank(animate) {
+      const box = d3.select('#rank-chart').html(''); const W = 620, H = 200, m = { l: 34, r: 12, t: 66, b: 22 };
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      const x = d3.scaleLinear().domain([25, 85]).range([m.l, W - m.r]); const y = d3.scalePoint().domain(PROBS.map(p => p.id)).range([m.t + 10, H - m.b - 10]);
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickSize(-(H - m.b - m.t))).call(g => g.select('.domain').remove()).selectAll('text').attr('fill', DIM).style('font-size', '9.5px');
+      svg.append('text').attr('x', W - m.r).attr('y', H - 4).attr('text-anchor', 'end').attr('fill', DIM).style('font-size', '9px').text('weighted score, max 90');
+      PROBS.forEach(p => svg.append('text').attr('x', m.l - 6).attr('y', y(p.id)).attr('dy', '0.35em').attr('text-anchor', 'end').attr('fill', PCOL[p.id]).style('font-size', '10px').style('font-weight', 700).text(p.id));
+      const pts = THROUGH.map(s => ({ s, x: x(s.ws), y: y(s.p), tx: x(s.ws), ty: y(s.p) }));
+      const sim = d3.forceSimulation(pts).force('x', d3.forceX(d => d.tx).strength(1)).force('y', d3.forceY(d => d.ty).strength(0.12)).force('c', d3.forceCollide(3.6)).stop(); for (let i = 0; i < 160; i++) sim.tick();
+      const rnd = d3.randomLcg(4);
+      const dots = svg.append('g').selectAll('circle').data(pts).join('circle').attr('r', 3).attr('fill', d => PCOL[d.s.p]).attr('opacity', d => d.s.p === 'P2' ? 0.6 : 0.85).attr('stroke', d => d.s.id === 'P4-71' ? GOLD : 'none').attr('stroke-width', 2)
+        .attr('cx', d => animate ? m.l + rnd() * (W - m.l - m.r) : d.x).attr('cy', d => animate ? m.t + rnd() * (H - m.t - m.b) : d.y);
+      bindTip(dots, d => `<b>${d.s.id}</b> ${d.s.text}<div class="m">${d.s.cls} · score ${d.s.ws} of 90 · rank ${THROUGH.indexOf(d.s) + 1} of 232</div>`);
+      dots.transition().duration(1400 * T).delay((d, i) => i * 2 * T).ease(d3.easeCubicInOut).attr('cx', d => d.x).attr('cy', d => d.y);
+      const top5 = pts.slice(0, 5); const lab = svg.append('g').selectAll('g').data(top5).join('g').attr('opacity', animate ? 0 : 1);
+      const ly = i => 12 + i * 11, lx = m.l + 6;
+      lab.append('text').attr('x', lx).attr('y', (d, i) => ly(i)).attr('dy', '0.35em').attr('fill', d => d.s.id === 'P4-71' ? GOLD : MUTED).style('font-size', '9.5px').style('font-weight', d => d.s.id === 'P4-71' ? 800 : 600).text((d, i) => `${i + 1}  ${d.s.ws}  ${(SHORT[d.s.id] || d.s.id).split(',')[0]}`);
+      lab.append('text').attr('x', d => d.x).attr('y', d => d.y - 6).attr('text-anchor', 'middle').attr('fill', d => d.s.id === 'P4-71' ? GOLD : TEXT).style('font-size', '8px').style('font-weight', 800).text((d, i) => i + 1);
+      lab.transition().delay((d, i) => 1500 * T + i * 150 * T).duration(300 * T).attr('opacity', 1);
+      return 1500 + 5 * 150 + 300;
+    }
+    const smaaBox = d3.select('#smaa-w'); let smaaRAF = null;
+    function drawSmaa(animate) {
+      if (smaaRAF) cancelAnimationFrame(smaaRAF);
+      smaaBox.html(''); const W = 380, H = 76; const svg = smaaBox.append('svg').attr('viewBox', `0 0 ${W} ${H}`).style('width', '100%').style('height', 'auto');
+      const wx = d3.scaleBand().domain(d3.range(11)).range([0, 150]).padding(0.25); const wy = d3.scaleLinear().domain([0, 6]).range([44, 4]);
+      const wg = svg.append('g'); wg.append('text').attr('x', 0).attr('y', 68).attr('fill', DIM).style('font-size', '8.5px').text('this draw\'s eleven weights');
+      const wbars = wg.selectAll('rect').data(d3.range(11)).join('rect').attr('x', i => wx(i)).attr('width', wx.bandwidth()).attr('y', wy(0)).attr('height', 0).attr('fill', i => i >= 8 ? GOLD : '#7fa6c9').attr('rx', 1);
+      wg.selectAll('text.c').data(D.criteria).join('text').attr('class', 'c').attr('x', (d, i) => wx(i) + wx.bandwidth() / 2).attr('y', 52).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '6px').text(d => d.slice(0, 3));
+      const ids = D.smaa.winner_ids; const counts = new Array(ids.length).fill(0); const shown = ids.slice(0, 5);
+      const bx = d3.scaleLinear().domain([0, 1]).range([0, 96]); const rg = svg.append('g').attr('transform', 'translate(176,0)');
+      rg.append('text').attr('x', 0).attr('y', 68).attr('fill', DIM).style('font-size', '8.5px').text('rank 1 share so far');
+      const rows = rg.selectAll('g').data(shown).join('g').attr('transform', (d, i) => `translate(0,${4 + i * 9.5})`);
+      rows.append('rect').attr('height', 6).attr('rx', 2).attr('width', 0).attr('fill', d => d === 'P4-71' ? GOLD : PCOL[d.slice(0, 2)]);
+      rows.append('text').attr('x', 102).attr('y', 3).attr('dy', '0.35em').attr('fill', MUTED).style('font-size', '7.5px').style('font-size', '7px').text(d => (SHORT[d] || d).split(',')[0].slice(0, 21));
+      const pctEl = document.getElementById('smaa-pct'), fillEl = document.getElementById('smaa-fill');
+      const seq = D.smaa.winner_seq, N = seq.length, pick = ids.indexOf('P4-71'), Wsamp = D.smaa.weights_sample;
+      function paint(i) { const share = counts[pick] / Math.max(1, i); pctEl.textContent = f1(share * 100); fillEl.style.width = (share * 100) + '%'; rows.select('rect').attr('width', d => bx(counts[ids.indexOf(d)] / Math.max(1, i))); const w = Wsamp[i % Wsamp.length]; wbars.attr('y', k => wy(w[k])).attr('height', k => wy(0) - wy(w[k])); }
+      if (!animate || !T) { for (let i = 0; i < N; i++) counts[seq.charCodeAt(i) - 48]++; paint(N); return 0; }
+      let i = 0; const per = 40;                    // 40 draws a frame, 10,000 draws in about four seconds
+      (function frame() { const end = Math.min(N, i + per); for (; i < end; i++) counts[seq.charCodeAt(i) - 48]++; paint(i); if (i < N) smaaRAF = requestAnimationFrame(frame); })();
+      return 4400;
+    }
+    const LAYERS = ['heat', 'traffic', 'people', 'rules', 'instrument', 'mechanism', 'market', 'course'];
+    const STATE = { removed: [BLK[3], 'does not apply to Clean Cabin'], remains: [BLK[2], 'applies, carried into the pilot'], open: ['none', 'open'], 'n/a': ['none', 'specific to the gate design, no counterpart'] };
+    d3.select('#fmea-legend').selectAll('span').data(Object.entries(STATE)).join('span').html(([k, [c, t]]) => `<i class="${k === 'n/a' ? 'sq ' : ''}${c === 'none' ? 'ring' : ''}" style="${c === 'none' ? '' : 'background:' + c}"></i> ${t} (${D.fmea.filter(m => m.state === k).length})`);
+    let fmeaSvg;
+    function drawFmea() {
+      const box = d3.select('#fmea-chart').html(''); const W = 1200, H = 108, m = { l: 44, r: 8, t: 20, b: 14 };
+      const svg = fmeaSvg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      const x = d3.scalePoint().domain(D.fmea.map(d => d.id)).range([m.l, W - m.r]).padding(0.5); const y = d3.scalePoint().domain(['minor', 'major', 'fatal']).range([H - m.b - 6, m.t + 8]);
+      let x0 = 0; LAYERS.forEach((l, i) => { const ms = D.fmea.filter(d => d.layer === l); const xa = x(ms[0].id) - x.step() / 2, xb = x(ms[ms.length - 1].id) + x.step() / 2; if (i % 2) svg.append('rect').attr('x', xa).attr('y', m.t - 8).attr('width', xb - xa).attr('height', H - m.t - m.b + 10).attr('fill', 'rgba(255,255,255,0.035)'); svg.append('text').attr('x', (xa + xb) / 2).attr('y', 10).attr('text-anchor', 'middle').attr('fill', MUTED).style('font-size', '9px').text(l); });
+      ['minor', 'major', 'fatal'].forEach(s => svg.append('text').attr('x', m.l - 8).attr('y', y(s)).attr('dy', '0.35em').attr('text-anchor', 'end').attr('fill', s === 'fatal' ? '#e66767' : DIM).style('font-size', '9.5px').style('font-weight', s === 'fatal' ? 700 : 500).text(s));
+      const g = svg.append('g').selectAll('g').data(D.fmea).join('g').attr('transform', d => `translate(${x(d.id)},${y(d.sev)})`);
+      g.append('rect').attr('class', 'mk').attr('x', -6).attr('y', -6).attr('width', 12).attr('height', 12).attr('rx', d => d.state === 'n/a' ? 2 : 6).attr('fill', '#40556a').attr('stroke', 'none').attr('opacity', 0).attr('transform', 'scale(0.2)');
+      svg.append('g').selectAll('text').data(D.fmea).join('text').attr('x', d => x(d.id)).attr('y', H - 4).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '7.5px').text(d => d.id.slice(1));
+      bindTip(g, d => `<b>${d.id}</b> ${d.title}<div class="m">${d.layer} · ${d.sev} · ${STATE[d.state][1]}${d.rule ? '<br>rule: ' + d.rule : ''}</div>`);
+      return g;
+    }
+    async function playFmea(instant) {
+      const g = drawFmea(); const rules = d3.select('#rules').html('');
+      g.select('.mk').transition().duration(instant ? 0 : 350).delay((d, i) => instant ? 0 : i * 45 * T).ease(d3.easeBackOut).attr('opacity', 1).attr('transform', 'scale(1)');
+      await sleep(instant ? 0 : 29 * 45 + 400);
+      const fatal = D.fmea.filter(d => d.sev === 'fatal');
+      for (const f of fatal) { g.filter(d => d.id === f.id).select('.mk').transition().duration(instant ? 0 : 300).attr('fill', '#e66767').attr('stroke', '#e66767').attr('stroke-width', 4).attr('stroke-opacity', 0.35); const r = rules.append('div').attr('class', 'rule').html(`<b>${f.id} ${f.layer}</b><span>${f.rule}</span>`); await sleep(instant ? 0 : 60); r.classed('in', true); await sleep(instant ? 0 : 650); }
+      await sleep(instant ? 0 : 500);
+      g.select('.mk').transition().duration(instant ? 0 : 600).delay((d, i) => instant ? 0 : i * 15 * T).attr('fill', d => STATE[d.state][0] === 'none' ? '#071018' : STATE[d.state][0]).attr('stroke', d => STATE[d.state][0] === 'none' ? MUTED : STATE[d.state][0]).attr('stroke-width', d => STATE[d.state][0] === 'none' ? 1.5 : 0).attr('stroke-opacity', 1);
+      await sleep(instant ? 0 : 900);
+    }
+    register('s4', {
+      gap: 700,
+      reset() { d3.select('#rank-chart').html(''); d3.select('#fmea-chart').html(''); d3.select('#rules').html(''); if (smaaRAF) cancelAnimationFrame(smaaRAF); smaaBox.html(''); document.getElementById('smaa-pct').textContent = '0.0'; document.getElementById('smaa-fill').style.width = '0'; },
+      steps: [
+        async () => { const ms = drawRank(!slides.s4.instant); await sleep(ms); },
+        async () => { const ms = drawSmaa(!slides.s4.instant); await sleep(ms); },
+        async () => { await playFmea(slides.s4.instant); },
+      ],
     });
 
-    setViewMode('rotary');
+    // =====================================================================
+    // SLIDE 5: the bus, the prior art, the pilot, the scale
+    // =====================================================================
+    function drawBus() {
+      const box = d3.select('#bus').html(''); const W = 700, H = 372;
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+      const g = svg.append('g').attr('transform', 'translate(165,80)');
+      const body = g.append('path').attr('d', 'M0,30 q0,-30 30,-30 h370 q30,0 30,30 v120 q0,10 -10,10 h-410 q-10,0 -10,-10 z').attr('fill', 'rgba(255,255,255,0.03)').attr('stroke', TEXT).attr('stroke-width', 2).attr('stroke-linejoin', 'round');
+      const win = g.append('g').selectAll('rect').data(d3.range(6)).join('rect').attr('x', i => 32 + i * 58).attr('y', 22).attr('width', 46).attr('height', 52).attr('rx', 5).attr('fill', 'rgba(75,147,239,0.10)').attr('stroke', DIM).attr('stroke-width', 1).attr('opacity', 0);
+      g.append('rect').attr('x', 384).attr('y', 22).attr('width', 34).attr('height', 128).attr('rx', 4).attr('fill', 'none').attr('stroke', DIM).attr('stroke-width', 1).attr('class', 'door').attr('opacity', 0);
+      g.append('text').attr('x', 401).attr('y', 168).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '9px').text('door').attr('class', 'door').attr('opacity', 0);
+      const wheels = g.append('g').selectAll('circle').data([70, 350]).join('circle').attr('cx', d => d).attr('cy', 160).attr('r', 20).attr('fill', '#071018').attr('stroke', TEXT).attr('stroke-width', 2).attr('opacity', 0);
+      // engine bay at the front left
+      const bay = g.append('g').attr('opacity', 0); bay.append('rect').attr('x', 6).attr('y', 96).attr('width', 44).attr('height', 44).attr('rx', 4).attr('fill', 'none').attr('stroke', DIM).attr('stroke-dasharray', '3 2'); bay.append('text').attr('x', 28).attr('y', 118).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '8px').text('engine'); bay.append('text').attr('x', 28).attr('y', 128).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '8px').text('bay');
+      // sensors
+      const roofS = g.append('g').attr('transform', 'translate(215,-4)').attr('opacity', 0); roofS.append('rect').attr('x', -7).attr('y', -12).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); roofS.append('circle').attr('class', 'pulse').attr('r', 6).attr('cy', -6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); roofS.append('text').attr('y', -20).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('roof sensor  C_roof');
+      const cabS = g.append('g').attr('transform', 'translate(215,108)').attr('opacity', 0); cabS.append('rect').attr('x', -7).attr('y', -6).attr('width', 14).attr('height', 12).attr('rx', 2).attr('fill', BLK[3]); cabS.append('circle').attr('class', 'pulse').attr('r', 6).attr('fill', 'none').attr('stroke', BLK[3]).attr('stroke-width', 1.5).attr('opacity', 0); cabS.append('text').attr('y', 24).attr('text-anchor', 'middle').attr('fill', BLK[3]).style('font-size', '10px').style('font-weight', 700).text('cabin sensor  C_cabin');
+      // tailpipes: old (low, by the door) and new (up, off side)
+      const oldPipe = g.append('path').attr('d', 'M425,140 h22 q8,0 12,6').attr('fill', 'none').attr('stroke', BLK[2]).attr('stroke-width', 3).attr('stroke-linecap', 'round').attr('opacity', 0);
+      const oldPlume = g.append('g').attr('opacity', 0); [0, 1, 2].forEach(i => oldPlume.append('circle').attr('cx', 466 + i * 9).attr('cy', 148 - i * 7).attr('r', 3 + i * 2).attr('fill', BLK[2]).attr('opacity', 0.45 - i * 0.1));
+      const newPipe = g.append('path').attr('d', 'M6,150 h-18 v-176 l-14,-16').attr('fill', 'none').attr('stroke', BLK[2]).attr('stroke-width', 3).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+      const npLen = newPipe.node().getTotalLength(); newPipe.attr('stroke-dasharray', npLen).attr('stroke-dashoffset', npLen);
+      const newLab = g.append('text').attr('x', -157).attr('y', -66).attr('fill', BLK[2]).style('font-size', '9.5px').attr('opacity', 0).text('tailpipe up and off side,');
+      const newLab2 = g.append('text').attr('x', -157).attr('y', -54).attr('fill', BLK[2]).style('font-size', '9.5px').attr('opacity', 0).text('away from the door and the intake');
+      const kit = g.append('text').attr('x', -157).attr('y', 112).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('the source found:');
+      g.append('text').attr('class', 'kit2').attr('x', -157).attr('y', 124).attr('fill', MUTED).style('font-size', '9.5px').attr('opacity', 0).text('leak, crankcase, intake, tailpipe');
+      // ratio readout
+      const ro = svg.append('g').attr('transform', 'translate(165,296)').attr('opacity', 0);
+      ro.append('text').attr('fill', MUTED).style('font-size', '11px').text('R = C_cabin / C_roof and Δ = C_cabin − C_roof at idle, doors closed, HVAC recirculating: the screen');
+      const rv = ro.append('text').attr('y', 40).attr('class', 'serif').attr('fill', TEXT).style('font-size', '34px').style('font-family', 'Instrument Serif, Georgia, serif').text('R = 2.9');
+      const rs = ro.append('text').attr('y', 60).attr('fill', DIM).style('font-size', '9.5px').text('expected signal: cabin 20 against ambient 7 µg/m³ (Adar 2015). A screen, not a proof: the state of the bus is logged with it');
+      bindTip(ro, () => `<b>expected signal</b> in-cabin PM₂.₅ 20 ± 18 against ambient 7 ± 5 and roadway 13 ± 12 µg/m³ over 597 trips on 188 buses (Adar 2015). R = 20 / 7 = 2.9. On two Seattle buses with windows closed, 13.4 of 26 µg/m³ in the cabin was the bus's own, 12 of that from the crankcase (Ireson 2011). An indoor-to-outdoor ratio also moves with the HVAC mode, speed, filter and passengers, so the excess Δ, the absolute cabin level and the state log are read with it, and a reference black-carbon or particle-number instrument validates 2 to 4 buses.`);
+      // timer and grade badges
+      const timer = svg.append('g').attr('transform', 'translate(536,6)').attr('opacity', 0); timer.append('rect').attr('width', 158).attr('height', 46).attr('rx', 8).attr('fill', 'rgba(162,118,234,0.10)').attr('stroke', BLK[4]); timer.append('text').attr('x', 79).attr('y', 18).attr('text-anchor', 'middle').attr('fill', BLK[4]).style('font-size', '10px').style('font-weight', 700).text('state log per reading'); timer.append('text').attr('x', 79).attr('y', 32).attr('text-anchor', 'middle').attr('fill', MUTED).style('font-size', '8px').text('idle or moving, HVAC, doors, load, T, RH, CO₂');
+      bindTip(timer, () => `<b>the state log</b> is what makes a ratio readable: a sealed bus on a dusty day reads R below 1 with its own exhaust inside, a clean bus on a clean day reads R above 1 on a few micrograms. Flagging happens at idle, doors closed, HVAC recirculating, against the fleet's spread. No engine-off in the heat (rule from failure mode F1), and the idle timer is deferred until its benefit is measured.`);
+      const badge = svg.append('g').attr('class', 'badge').attr('transform', 'translate(80,300) scale(0)'); badge.append('rect').attr('x', -60).attr('y', -24).attr('width', 120).attr('height', 48).attr('rx', 10).attr('fill', '#fff'); badge.append('text').attr('y', -6).attr('text-anchor', 'middle').attr('fill', '#071018').style('font-size', '9px').style('letter-spacing', '0.14em').style('font-weight', 800).text('CABIN AIR GRADE'); badge.append('text').attr('y', 16).attr('text-anchor', 'middle').attr('fill', '#071018').attr('class', 'serif').style('font-size', '22px').style('font-family', 'Instrument Serif, Georgia, serif').text('verified');
+      bindTip(badge, () => `<b>report and grade per bus</b> the three numbers before and after, the source class, the repair and its cost, and a cabin-air grade set from the verified numbers. The grade is the incentive: the operator shows it to a school, the school writes it into the transport contract, a parent asks for it. In the pilot it goes to school and operator on paper. It goes onto the bus in public once the numbers have been seen to repeat across days, routes and HVAC settings. Likely buyer: the school or the operator, confirmed by interviews before a sensor is bought.`);
+      const bodyLen = body.node().getTotalLength(); body.attr('stroke-dasharray', bodyLen).attr('stroke-dashoffset', bodyLen);
+      return { body, bodyLen, win, wheels, bay, roofS, cabS, oldPipe, oldPlume, newPipe, npLen, newLab, newLab2, kit, ro, rv, rs, timer, badge, svg };
+    }
+    function pulse(sel) { if (!T) return; sel.attr('opacity', 1).attr('r', 6).transition().duration(1100).ease(d3.easeCubicOut).attr('r', 22).attr('opacity', 0).on('end', () => pulse(sel)); }
+    let BUS;
+    async function playBus(instant) {
+      BUS = drawBus(); const B = BUS; const d = instant ? 0 : 1;
+      B.body.transition().duration(1100 * d).ease(d3.easeCubicInOut).attr('stroke-dashoffset', 0);
+      B.win.transition().delay(700 * d).duration(400 * d).delay((x, i) => 700 * d + i * 70 * d).attr('opacity', 1);
+      B.wheels.transition().delay(900 * d).duration(300 * d).attr('opacity', 1); B.svg.selectAll('.door').transition().delay(1000 * d).duration(300 * d).attr('opacity', 1);
+      B.oldPipe.transition().delay(1100 * d).duration(300 * d).attr('opacity', 1); B.oldPlume.transition().delay(1300 * d).duration(400 * d).attr('opacity', 1);
+      await sleep(1700 * d);
+      B.roofS.transition().duration(400 * d).attr('opacity', 1); B.cabS.transition().duration(400 * d).delay(150 * d).attr('opacity', 1); pulse(B.roofS.select('.pulse')); pulse(B.cabS.select('.pulse'));
+      B.ro.transition().delay(400 * d).duration(500 * d).attr('opacity', 1);
+      if (d) { const t0 = performance.now(); await new Promise(res => (function tick(now) { const p = Math.min(1, (now - t0 - 500) / 1200); if (p >= 0) B.rv.text('R = ' + (0.5 + 2.4 * Math.max(0, p)).toFixed(1)); if (p < 1) requestAnimationFrame(tick); else res(); })(t0)); } else B.rv.text('R = 2.9');
+      await sleep(900 * d);
+      // the fix: seal, kit, reroute
+      B.bay.transition().duration(400 * d).attr('opacity', 1); B.kit.transition().duration(400 * d).attr('opacity', 1); B.svg.select('.kit2').transition().duration(400 * d).attr('opacity', 1);
+      B.oldPipe.transition().duration(500 * d).attr('opacity', 0); B.oldPlume.transition().duration(500 * d).attr('opacity', 0);
+      B.newPipe.transition().duration(900 * d).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); B.newLab.transition().delay(700 * d).duration(300 * d).attr('opacity', 1); B.newLab2.transition().delay(700 * d).duration(300 * d).attr('opacity', 1);
+      B.rs.text('after the repair: the excess Δ falls, paired and within-bus, into the range of the unflagged buses');
+      B.rv.transition().duration(400 * d).attr('opacity', 0).on('end', () => B.rv.text('verify: Δ, R, C_cabin re-read').attr('opacity', 1)); await sleep(900 * d);
+      B.rv.transition().duration(300 * d).attr('fill', BLK[3]);
+      await sleep(500 * d);
+      B.timer.transition().duration(500 * d).attr('opacity', 1); await sleep(700 * d);
+      B.badge.transition().duration(700 * d).ease(d3.easeElasticOut.amplitude(1).period(0.45)).attr('transform', 'translate(80,300) scale(1)');
+      await sleep(500 * d);
+    }
+    function drawArt(animate) {
+      const box = d3.select('#art').html(''); const W = 460, H = 150, m = { l: 6, r: 10, t: 4, b: 18 }, rowH = 25;
+      const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`); const x = d3.scaleLinear().domain([0, 100]).range([m.l + 150, W - m.r - 90]);
+      svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([0, 25, 50, 75, 100]).tickFormat(v => v + ' %').tickSize(-(H - m.b - m.t))).call(g => g.select('.domain').remove()).selectAll('text').attr('fill', DIM).style('font-size', '8.5px');
+      const row = svg.selectAll('g.r').data(D.prior_art).join('g').attr('class', 'r').attr('transform', (d, i) => `translate(0,${m.t + 10 + i * rowH})`);
+      row.append('text').attr('x', m.l).attr('y', 0).attr('dy', '0.35em').attr('fill', MUTED).style('font-size', '8.5px').text(d => d.cite);
+      const bar = row.filter(d => d.hi > 0).append('rect').attr('x', d => x(d.lo)).attr('y', -4).attr('height', 8).attr('rx', 3).attr('fill', BLK[3]).attr('width', 0);
+      row.filter(d => d.pt != null).append('circle').attr('cx', d => x(d.pt)).attr('r', 3).attr('fill', TEXT).attr('opacity', 0).transition().delay(900 * T).attr('opacity', 1);
+      row.filter(d => d.hi === 0).append('circle').attr('cx', x(0)).attr('r', 4).attr('fill', 'none').attr('stroke', MUTED).attr('stroke-width', 1.2);
+      const lab = row.append('text').attr('x', d => x(Math.max(d.hi, 2)) + 5).attr('dy', '0.35em').attr('fill', TEXT).style('font-size', '8.5px').style('font-weight', 600).text(d => d.note).attr('opacity', 0);
+      bindTip(row, d => `<b>${d.cite}</b> ${d.label}<div class="m">${d.note}. Each row is its own metric and sample, no pooled estimate is drawn.</div>`);
+      bar.transition().duration(animate ? 800 : 0).delay((d, i) => i * 120 * T).ease(d3.easeCubicOut).attr('width', d => x(d.hi) - x(d.lo)); lab.transition().duration(300).delay((d, i) => 600 * T + i * 120 * T).attr('opacity', 1);
+    }
+    function drawPilot(animate) {
+      const box = d3.select('#pilot').html(''); const W = 420, H = 64; const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`); const x = d3.scaleLinear().domain([0, 12]).range([32, W - 8]);
+      svg.append('text').attr('x', 2).attr('y', 44).attr('fill', DIM).style('font-size', '8.5px').text('week');
+      d3.range(1, 13).forEach(w => svg.append('text').attr('x', x(w - 0.5)).attr('y', 44).attr('text-anchor', 'middle').attr('fill', DIM).style('font-size', '8.5px').text(w));
+      const ph = svg.selectAll('g.p').data(D.pick.pilot).join('g').attr('class', 'p');
+      const r = ph.append('rect').attr('x', d => x(d.w0)).attr('y', 14).attr('height', 16).attr('rx', 3).attr('fill', d => BLK[d.block]).attr('width', 0);
+      ph.append('text').attr('x', d => x(d.w0) + 5).attr('y', 22).attr('dy', '0.35em').attr('fill', '#071018').style('font-size', '8.5px').style('font-weight', 700).text(d => d.label.split(':')[0]).attr('opacity', 0).transition().delay((d, i) => 400 * T + i * 300 * T).attr('opacity', 1);
+      bindTip(ph, d => `<b>weeks ${d.w0 + 1} to ${d.w1}</b> ${d.label}`);
+      r.transition().duration(animate ? 700 : 0).delay((d, i) => i * 300 * T).ease(d3.easeCubicOut).attr('width', d => x(d.w1) - x(d.w0));
+    }
+    register('s5', {
+      reset() { d3.select('#bus').html(''); d3.select('#art').html(''); d3.select('#pilot').html(''); document.querySelectorAll('#s5 [data-count]').forEach(e => { e.textContent = '0'; e.dataset.cur = 0; }); },
+      steps: [async () => { const inst = slides.s5.instant; document.querySelectorAll('#s5 [data-count]').forEach(e => countTo(e, +e.dataset.count, 1800)); const bus = playBus(inst); await sleep(1200); drawArt(!inst); await sleep(1200); drawPilot(!inst); await bus; }],
     });
+  })();
   </script>
 </body>
 </html>

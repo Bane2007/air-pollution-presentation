@@ -1,0 +1,4 @@
+id,layer,label,definition,unit,scope,citation
+E16,effect,Lung cancer mortality,Deaths from lung cancer attributable to long-term PM2.5 and TRAP,deaths/yr,global,"Chen 2020 10.1016/j.envint.2020.105974 and Boogaard 2022 10.1016/j.envint.2022.107262 both list lung cancer mortality as a high-certainty PM2.5 and TRAP outcome, no existing E node holds it"
+S24,state,Heat and dust co-occurrence,Days on which high temperature and elevated dust coincide,days/yr,gulf,"Alahmad 2024 10.1136/bmjdrc-2024-004320 shows hot-dusty days raise diabetes admission risk to 1.36 versus 1.11 for heat alone, an interaction no single S node captures"
+E17,effect,Adult asthma onset,New asthma cases in adults attributable to TRAP,cases/yr,global,"Boogaard 2022 10.1016/j.envint.2022.107262 rates asthma onset in adults as high or moderate-to-high confidence, E04 is child-only"

@@ -1,0 +1,5 @@
+id,layer,label,definition,unit,scope,citation
+A19,action,Real-driving emissions conformity,In-service and PEMS testing of real-world NOx rather than type-approval Euro label,measure,uae,"O'Driscoll 2018 (10.1016/j.scitotenv.2017.11.271) shows Euro 6 diesel urban NOx 11 times gasoline so Euro label alone is arbitrary, GSO 2025 sets UAE RDE from 2030 MY"
+A20,action,School bus fleet clean technology,Fuel and aftertreatment standard of the school bus fleet (ULSD DOC CCV electric) as distinct from bus provision,standard,abu_dhabi,"Adar 2015 (10.1164/rccm.201410-1924OC) 10 to 50% lower in-bus PM and 8% lower absenteeism, Bursey 2025 (10.1016/j.scitotenv.2025.179843)"
+D19,driver,Fleet non-compliance share,Fraction of vehicles on the road below the current emission standard,fraction,abu_dhabi,"Tong 2025 (10.1038/s44407-025-00030-9) 39% non-compliant before ULEZ1 drives the size of the LEZ effect"
+A21,action,Demand-side management programme,Emirate-level electricity and water demand reduction programme with measured savings,GWh saved,abu_dhabi,"Abu Dhabi DoE DSM Strategy 2030, 8,532 GWh (9.99%) saved to 2023 against a 22% target, 4.3 Mt CO2 avoided"
