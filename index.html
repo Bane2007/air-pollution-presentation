@@ -29,7 +29,7 @@
     .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gut); }
     .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
     h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.035em; }
-    h2 { font-size: clamp(30px, 3.9vw, 56px); line-height: 1.04; max-width: 17ch; padding-bottom: 4px; }
+    h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.08; max-width: 22ch; padding-bottom: 4px; }
     h1 i, h2 i { font-style: italic; font-weight: 300; color: var(--heat); padding-right: 0.06em; }
     p { margin: 0; }
     .lead { font-size: clamp(16px, 1.35vw, 19px); line-height: 1.5; color: var(--muted); max-width: 46ch; margin-top: 16px; }
@@ -86,8 +86,8 @@
     .step .txt { max-width: 460px; pointer-events: auto; }
     .step h3 { font-size: clamp(30px, 3.2vw, 46px); line-height: 1.04; }
     .step .body { margin-top: 14px; color: #b3bdc6; font-size: 16px; }
-    .step .k { font-family: var(--mono); font-size: 13px; color: var(--heat); margin-bottom: 14px; display: block; }
-    .hero h1 { font-size: clamp(38px, 4.4vw, 68px); line-height: 1.06; max-width: 15ch; padding-bottom: 4px; }
+    .step .k { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-bottom: 14px; display: block; }
+    .hero h1 { font-size: clamp(38px, 4.6vw, 70px); line-height: 1.04; max-width: 13ch; padding-bottom: 4px; }
     .hero .lead { color: #b3bdc6; max-width: 34ch; }
     .hero .txt { max-width: 700px; }
     .hero .ctas { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; }
@@ -176,12 +176,12 @@
     .risks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-top: 32px; }
     .risk { background-color: var(--bg); padding: 24px; min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; transition: background .3s; cursor: help; }
     .risk:hover { background-color: var(--surface); }
-    .risk.hi { background: linear-gradient(180deg, var(--heat-soft), rgba(232,119,74,0.02)); }
+    .risk.hi { background-color: var(--surface); }
     .risk h4 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; }
     .risk .t { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
-    .risk.hi .t { color: var(--heat); }
+    .risk.hi .t { color: var(--muted); }
     .mvp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: 40px; }
-    .mvp > div { border-top: 2px solid var(--heat); padding-top: 18px; }
+    .mvp > div { border-top: 1px solid var(--line-2); padding-top: 18px; }
     .mvp h4 { font-size: 26px; font-weight: 500; letter-spacing: -0.03em; }
     .mvp .body { margin-top: 10px; }
     .r3 { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
@@ -192,7 +192,7 @@
     /* limits */
 
     .close { display: flex; flex-direction: column; gap: 36px; }
-    .close h2 { font-size: clamp(40px, 6vw, 88px); max-width: 16ch; }
+    .close h2 { max-width: 22ch; }
     .close .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
     footer { margin-top: clamp(130px, 15vw, 190px); border-top: 1px solid var(--line); padding: 36px 0 52px; }
     footer .wrap { display: flex; justify-content: space-between; gap: 24px; align-items: center; flex-wrap: wrap; }
@@ -294,7 +294,7 @@
       </div>
       <div class="steps">
         <div class="step hero" data-step="0"><div class="wrap"><div class="txt">
-          <h1 class="split" id="h1">Waste heat from AI racks can <i>dry</i> Gulf electrical rooms.</h1>
+          <h1 class="split" id="h1">Drying electrical rooms with GPU waste heat</h1>
           <p class="lead">The design uses part of the 55 to 65 °C coolant to run a desiccant dryer.</p>
         </div></div></div>
         <div class="step" data-step="1"><div class="wrap"><div class="txt">
@@ -322,7 +322,7 @@
 
     <section id="problem" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Abu Dhabi air is too humid for electronics <i>most of the year.</i></h2>
+        <h2 class="rv split">Abu Dhabi is too humid for electronics most of the year</h2>
         <div class="prob">
           <div class="rv">
             <div class="huge" id="p-hours">0</div>
@@ -339,11 +339,11 @@
 
     <section id="evidence" class="sec">
       <div class="wrap">
-        <h2 class="rv split">The dryer does not need <i>120 °C.</i></h2>
+        <h2 class="rv split">The loop is warm enough to run the dryer</h2>
         <div class="rv" id="scale" style="margin-top:56px"></div>
         <div class="strip rv">
-          <div><div class="v">121<small>°C</small></div><p class="body">what electric dryers heat to today<sup class="r">35</sup></p></div>
-          <div><div class="v">55–65<small>°C</small></div><p class="body">what the AI loop gives for free<sup class="r">24,25</sup></p></div>
+          <div><div class="v">121<small>°C</small></div><p class="body">electric dryers today<sup class="r">35</sup></p></div>
+          <div><div class="v">55–65<small>°C</small></div><p class="body">AI-loop return temperature<sup class="r">24,25</sup></p></div>
           <div><div class="v">+40–48<small>%</small></div><p class="body">more drying from a MOF wheel at 50 °C<sup class="r">31</sup></p></div>
         </div>
       </div>
@@ -351,7 +351,7 @@
 
     <section id="prior" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Researchers have tried this since 2014. <i>Nobody has deployed it.</i></h2>
+        <h2 class="rv split">Earlier attempts, 2010 to 2026</h2>
         <div class="tlwrap rv"><div id="tl" class="wide"></div></div>
         <div class="gap rv"><p>We found no production system, no design that uses <b>AI-loop heat</b>, and no attempt in the <b>Gulf</b>.<sup class="r">40,41,46</sup></p></div>
       </div>
@@ -359,7 +359,7 @@
 
     <section id="market" class="sec">
       <div class="wrap">
-        <h2 class="rv split">The UAE is building <i>gigawatt</i> AI campuses.</h2>
+        <h2 class="rv split">UAE data-centre capacity</h2>
         <div class="mkt">
           <div class="figs">
             <div class="rv"><div class="v"><span class="cu" data-to="358">358</span><span class="ar">→</span><span class="cu" data-to="950">950</span><small>MW</small></div><p class="d">UAE capacity, 2025 to 2028<sup class="r">47</sup></p></div>
@@ -372,7 +372,7 @@
 
     <section id="model" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Savings, computed for <i>every hour</i> of a typical year.</h2>
+        <h2 class="rv split">What it saves in a year</h2>
         <div class="inst rv">
           <div class="ctl spot">
             <div><label>Site</label><div class="seg" id="m-site" role="group" aria-label="Site"><button class="on" data-site="abu-dhabi">Abu Dhabi</button><button data-site="dubai">Dubai</button></div></div>
@@ -400,7 +400,7 @@
 
     <section id="test" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Two things <i>could end the project.</i></h2>
+        <h2 class="rv split">The two biggest risks</h2>
         <div class="risks" id="risks"></div>
         <div class="mvp">
           <div class="rv"><h4>Ask</h4><p class="body">operator interviews<sup class="r">54</sup></p></div>
@@ -412,9 +412,9 @@
 
     <section id="close" class="sec">
       <div class="wrap close">
-        <h2 class="rv split">Backed by research. <i>Already bought</i> in the UAE.</h2>
+        <h2 class="rv split">Research-backed, and already bought in the UAE</h2>
         <div class="strip rv" style="margin-top:40px">
-          <div><div class="v">104</div><p class="body">cited sources behind every number here</p></div>
+          <div><div class="v">104</div><p class="body">cited sources in the report</p></div>
           <div><div class="v">DEWA<small>ADDC, SEC</small></div><p class="body">already buy desiccant dryers for switchgear rooms<sup class="r">12</sup></p></div>
           <div><div class="v">G1</div><p class="body">clean-air class Dell, IBM and HP require in server warranties<sup class="r">7</sup></p></div>
         </div>
