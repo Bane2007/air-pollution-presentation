@@ -122,7 +122,7 @@
     /* evidence */
     .ev { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 3.5vw, 56px); margin-top: 36px; }
     .fig .t { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
-    .strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); margin-top: 40px; }
+    .strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); margin-top: 40px; }
     .strip > div { padding: 24px 22px 24px 0; }
     .strip > div + div { padding-left: 22px; border-left: 1px solid var(--line); }
 
@@ -264,7 +264,7 @@
     <button type="button" id="prev" aria-label="Previous slide">&#8593;</button>
     <button type="button" id="next" aria-label="Next slide">&#8595;</button>
     <span><b id="cur">1</b> / <span id="tot">1</span></span>
-    <span class="keys">arrow keys or space, F for full screen</span>
+    
   </div>
 
   <header class="nav">
@@ -282,7 +282,7 @@
         <a href="#model" data-s="model">Cost model</a>
         <a href="#test" data-s="test">Demand test</a>
       </nav>
-      <a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Read the paper</a>
+      <a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a>
     </div>
   </header>
 
@@ -297,7 +297,7 @@
         <div class="step hero" data-step="0"><div class="wrap"><div class="txt">
           <h1 class="split" id="h1">Waste heat from AI racks can <i>dry</i> Gulf electrical rooms.</h1>
           <p class="lead">We use part of the 55 to 65 °C coolant to run a desiccant dryer.</p>
-          <div class="ctas"><a class="btn pri" href="#model">Try the cost model</a><a class="btn ghost" href="report.pdf" target="_blank" rel="noopener">Read the paper</a></div>
+          <div class="ctas"><a class="btn pri" href="#model">Try the cost model</a><a class="btn ghost" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a></div>
         </div></div></div>
         <div class="step" data-step="1"><div class="wrap"><div class="txt">
           <span class="k">120 to 142 kW per rack<sup class="r">22,23,24,25</sup></span>
@@ -341,16 +341,12 @@
 
     <section id="evidence" class="sec">
       <div class="wrap">
-        <h2 class="rv split">55 to 65 °C is hot enough to <i>dry a desiccant.</i></h2>
-        <div class="ev">
-          <div class="fig rv"><p class="t">Desiccant regeneration temperature</p><div id="regen"></div></div>
-          <div class="fig rv"><p class="t">Summer air: coil first, wheel finishes</p><div id="proc"></div></div>
-        </div>
+        <h2 class="rv split">The dryer does not need <i>120 °C.</i></h2>
+        <div class="rv" id="scale" style="margin-top:56px"></div>
         <div class="strip rv">
-          <div><div class="v">147<small>kg/h</small></div><p class="body">water 100 kW can remove, at most</p></div>
-          <div><div class="v">−19<small>%</small></div><p class="body">silica gel at 50 °C vs 70 °C<sup class="r">30</sup></p></div>
-          <div><div class="v">+40–48<small>%</small></div><p class="body">MOF over silica gel at 50 °C<sup class="r">31</sup></p></div>
-          <div><div class="v">0<small>%</small></div><p class="body">chloride desiccants, by design<sup class="r">32,33</sup></p></div>
+          <div><div class="v">121<small>°C</small></div><p class="body">what electric dryers heat to today<sup class="r">35</sup></p></div>
+          <div><div class="v">55–65<small>°C</small></div><p class="body">what the AI loop gives for free<sup class="r">24,25</sup></p></div>
+          <div><div class="v">+40–48<small>%</small></div><p class="body">more drying from a MOF wheel at 50 °C<sup class="r">31</sup></p></div>
         </div>
       </div>
     </section>
@@ -433,7 +429,7 @@
     <section id="close" class="sec">
       <div class="wrap close">
         <h2 class="rv split">Next, we ask five operators and <i>survey one room.</i></h2>
-        <div class="ctas rv"><a class="btn pri" href="report.pdf" target="_blank" rel="noopener">Read the paper</a><a class="btn ghost" href="#story">Back to the system</a></div>
+        <div class="ctas rv"><a class="btn pri" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a><a class="btn ghost" href="#story">Back to the system</a></div>
       </div>
     </section>
   </main>
@@ -441,7 +437,7 @@
   <footer>
     <div class="wrap">
       <p class="cap">Karthik Nambiar, Sumedh Nitin Jamsandekar, Paul Tiju. IIT Delhi Abu Dhabi, AGRL130, October 2026.</p>
-      <div class="lk"><a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Paper</a><a class="btn ghost sm" href="week3/">Week 3</a><a class="btn ghost sm" href="week2/">Week 2</a></div>
+      <div class="lk"><a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a><a class="btn ghost sm" href="week3/">Week 3</a><a class="btn ghost sm" href="week2/">Week 2</a></div>
     </div>
   </footer>
 
@@ -842,48 +838,23 @@
   document.querySelectorAll('#p-site button').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('#p-site button').forEach(x => x.classList.toggle('on', x === b)); site1 = b.dataset.site; buildD(); animDots(800); text1(); }));
 
   // ================================================================== EVIDENCE
-  function regenChart() {
-    const W = 640, H = 300, m = { l: 34, r: 10, t: 16, b: 28 };
-    const svg = d3.select('#regen').append('svg').attr('viewBox', `0 0 ${W} ${H}`);
-    const x = d3.scaleLinear().domain([40, 130]).range([m.l, W - m.r]), y = d3.scaleLinear().domain([28, 44]).range([H - m.b, m.t]);
-    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([40, 55, 65, 80, 100, 121]).tickSize(-(H - m.t - m.b)).tickFormat(d => d + ' °C')).call(a => a.select('.domain').remove());
-    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([30, 35, 40]).tickSize(0)).call(a => a.select('.domain').remove());
-    svg.append('text').attr('x', m.l + 4).attr('y', m.t + 2).attr('fill', DIM).style('font-size', '11px').text('water removed, g/h');
-    svg.append('rect').attr('x', x(55)).attr('y', m.t).attr('width', x(65) - x(55)).attr('height', H - m.t - m.b).attr('fill', 'rgba(232,119,74,0.13)');
-    svg.append('text').attr('x', x(60)).attr('y', H - m.b - 12).attr('text-anchor', 'middle').attr('fill', HEAT).style('font-size', '11px').style('font-weight', 600).text('AI loop');
-    svg.append('line').attr('x1', x(121)).attr('x2', x(121)).attr('y1', m.t).attr('y2', H - m.b).attr('stroke', STEEL);
-    svg.append('text').attr('x', x(121) - 8).attr('y', m.t + 26).attr('text-anchor', 'end').attr('fill', STEEL).style('font-size', '11px').text('electric dryers today');
-    const pts = [[50, 32.6], [60, 37.1], [70, 40.2]];
-    const ln = svg.append('path').attr('d', d3.line().x(d => x(d[0])).y(d => y(d[1])).curve(d3.curveMonotoneX)(pts)).attr('fill', 'none').attr('stroke', TEXT).attr('stroke-width', 2);
-    const L = ln.node().getTotalLength(); ln.attr('stroke-dasharray', L).attr('stroke-dashoffset', RM ? 0 : L);
-    const g = svg.selectAll('g.p').data(pts).join('g').attr('opacity', RM ? 1 : 0);
-    g.append('circle').attr('cx', d => x(d[0])).attr('cy', d => y(d[1])).attr('r', 4.5).attr('fill', BG).attr('stroke', TEXT).attr('stroke-width', 2);
-    g.append('text').attr('x', d => x(d[0]) - 9).attr('y', d => y(d[1]) - 6).attr('text-anchor', 'end').attr('fill', TEXT).style('font-size', '12px').style('font-family', 'Geist Mono').text(d => d[1]);
-    bindTip(g, d => `<b>${d[0]} °C</b><div class="m">silica-gel wheel, ${d[1]} g/h [30]</div>`);
-    svg.append('text').attr('x', x(71)).attr('y', y(40.2) + 16).attr('fill', MUTED).style('font-size', '11px').text('silica gel');
-    if (!RM) { ln.transition().duration(1100).ease(d3.easeCubicOut).attr('stroke-dashoffset', 0); g.transition().delay((d, i) => 250 * i).duration(400).attr('opacity', 1); }
+  function scaleChart() {
+    const W = 1240, H = 170, m = { l: 10, r: 10 };
+    const svg = d3.select('#scale').append('svg').attr('viewBox', `0 0 ${W} ${H}`);
+    const x = d3.scaleLinear().domain([20, 130]).range([m.l, W - m.r]), y0 = 92;
+    const grad = svg.append('defs').append('linearGradient').attr('id', 'tg');
+    grad.append('stop').attr('offset', '0%').attr('stop-color', '#2a333c'); grad.append('stop').attr('offset', '100%').attr('stop-color', HEAT);
+    svg.append('rect').attr('x', x(20)).attr('y', y0 - 4).attr('width', x(130) - x(20)).attr('height', 8).attr('rx', 4).attr('fill', 'url(#tg)').attr('opacity', 0.35);
+    [20, 40, 60, 80, 100, 120].forEach(t => svg.append('text').attr('x', x(t)).attr('y', y0 + 36).attr('text-anchor', 'middle').attr('fill', DIM).style('font-family', 'Geist Mono').style('font-size', '14px').text(t + ' °C'));
+    const loop = svg.append('rect').attr('x', x(55)).attr('y', y0 - 16).attr('width', RM ? x(65) - x(55) : 0).attr('height', 32).attr('rx', 4).attr('fill', HEAT);
+    svg.append('text').attr('x', x(60)).attr('y', y0 - 30).attr('text-anchor', 'middle').attr('fill', HEAT).style('font-size', '20px').style('font-weight', 600).text('AI loop');
+    svg.append('line').attr('x1', x(121)).attr('x2', x(121)).attr('y1', y0 - 22).attr('y2', y0 + 18).attr('stroke', TEXT).attr('stroke-width', 3);
+    svg.append('text').attr('x', x(121)).attr('y', y0 - 30).attr('text-anchor', 'end').attr('fill', TEXT).style('font-size', '20px').style('font-weight', 600).text('dryers today');
+    svg.append('line').attr('x1', x(50)).attr('x2', x(50)).attr('y1', y0 - 10).attr('y2', y0 + 10).attr('stroke', STEEL).attr('stroke-width', 2);
+    svg.append('text').attr('x', x(49)).attr('y', y0 - 30).attr('text-anchor', 'end').attr('fill', STEEL).style('font-size', '16px').text('desiccants work from 50 °C');
+    if (!RM) loop.transition().duration(1100).ease(d3.easeCubicOut).attr('width', x(65) - x(55)).attr('x', x(55));
   }
-  function procChart() {
-    const W = 460, H = 300, m = { l: 30, r: 10, t: 16, b: 28 };
-    const svg = d3.select('#proc').append('svg').attr('viewBox', `0 0 ${W} ${H}`);
-    const x = d3.scaleLinear().domain([10, 48]).range([m.l, W - m.r]), y = d3.scaleLinear().domain([0, 28]).range([H - m.b, m.t]);
-    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5).tickSize(-(H - m.t - m.b)).tickFormat(d => d + ' °C')).call(a => a.select('.domain').remove());
-    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([5, 10, 15, 20, 25]).tickSize(0)).call(a => a.select('.domain').remove());
-    svg.append('text').attr('x', m.l + 4).attr('y', m.t + 2).attr('fill', DIM).style('font-size', '11px').text('g/kg');
-    svg.append('path').attr('d', d3.line().x(d => x(d)).y(d => y(wRh(d, 1) * 1000))(d3.range(10, 28.6, 0.5))).attr('fill', 'none').attr('stroke', MUTED).attr('stroke-width', 1.1);
-    const wB = wRh(16, 1) * 1000, wC = wDp(10, 101325) * 1000, tC = 16 + 3.1 * (wB - wC);
-    const P = [{ k: 'A', t: 45, w: 24, l: 'Gulf summer, 45 °C, 24 g/kg' }, { k: 'B', t: 16, w: wB, l: `after the coil, 16 °C, ${wB.toFixed(1)} g/kg` }, { k: 'C', t: tC, w: wC, l: `after the wheel, 10 °C dew point, ${tC.toFixed(1)} °C. Our arithmetic [35]` }];
-    const seg = [[P[0], P[1], STEEL], [P[1], P[2], HEAT]].map(([a, b, col]) => svg.append('path').attr('d', `M${x(a.t)},${y(a.w)} L${x(b.t)},${y(b.w)}`).attr('stroke', col).attr('stroke-width', 2.2).attr('fill', 'none'));
-    seg.forEach(p => { const L = p.node().getTotalLength(); p.attr('stroke-dasharray', L).attr('stroke-dashoffset', RM ? 0 : L); });
-    const g = svg.selectAll('g.q').data(P).join('g').attr('opacity', RM ? 1 : 0);
-    g.append('circle').attr('cx', d => x(d.t)).attr('cy', d => y(d.w)).attr('r', 5).attr('fill', d => d.k === 'C' ? HEAT : TEXT).attr('stroke', BG).attr('stroke-width', 2);
-    g.append('text').attr('x', d => x(d.t) + (d.k === 'A' ? -10 : 10)).attr('y', d => y(d.w) + (d.k === 'B' ? -9 : 4)).attr('text-anchor', d => d.k === 'A' ? 'end' : 'start').attr('fill', TEXT).style('font-size', '12px').style('font-family', 'Geist Mono').text(d => d.k);
-    bindTip(g, d => `<b>${d.k}</b> <span class="m">${d.l}</span>`);
-    svg.append('text').attr('x', x(27)).attr('y', y(22)).attr('fill', STEEL).style('font-size', '11px').text('coil');
-    svg.append('text').attr('x', x(25.5)).attr('y', y(6.9)).attr('text-anchor', 'end').attr('fill', HEAT).style('font-size', '11px').text('wheel');
-    if (!RM) { g.filter(d => d.k === 'A').transition().duration(300).attr('opacity', 1); seg[0].transition().delay(300).duration(900).attr('stroke-dashoffset', 0); g.filter(d => d.k === 'B').transition().delay(1100).duration(300).attr('opacity', 1); seg[1].transition().delay(1400).duration(700).attr('stroke-dashoffset', 0); g.filter(d => d.k === 'C').transition().delay(2000).duration(300).attr('opacity', 1); }
-  }
-  onceIn($('regen'), regenChart); onceIn($('proc'), procChart);
+  onceIn($('scale'), scaleChart);
 
   // ================================================================== PRIOR ART
   const ART = [
