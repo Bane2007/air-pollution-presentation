@@ -308,6 +308,11 @@
       }
     }
   </style>
+  <style id="archive-quiet">
+    .subtitle, .card-meta { display: none !important; }
+    .back-arch { position: fixed; z-index: 99; left: 16px; bottom: 16px; font: 500 12px/1 Inter, system-ui, sans-serif; color: #a9b5bf; text-decoration: none; background: rgba(10,16,22,.8); border: 1px solid rgba(255,255,255,.12); border-radius: 4px; padding: 8px 10px; }
+    .back-arch:hover { color: #e8edf1; }
+  </style>
 </head>
 <body>
   <div id="3d-graph"></div>
@@ -340,6 +345,7 @@
 
   </aside>
 
+  <a class="back-arch" href="../archive/">Archive</a>
   <div class="top-nav">
     <button class="nav-btn" id="btn-river">River View</button>
     <button class="nav-btn active" id="btn-rotary">Rotary View</button>

@@ -169,6 +169,12 @@
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { transition: none; } }
   </style>
+  <style id="archive-quiet">
+    /* archived: titles, numbers and charts only */
+    .lede, .sources, .line, .credits, .brand .s { display: none !important; }
+    .panel > p:not(.subhead), #smaa > p, #pilot + p { display: none !important; }
+    .tile .k { font-size: 10.5px; }
+  </style>
 </head>
 <body>
   <div class="tip" id="tip"></div>
@@ -176,7 +182,7 @@
     <div class="brand"><span class="t">Clean Cabin</span><span class="s">AGRL130 week 3, Nambiar, Jamsandekar, Tiju</span></div>
     <nav class="nav" id="nav">
       <a href="#s1" data-s="s1">1<span class="l"> Need</span></a><a href="#s2" data-s="s2">2<span class="l"> Mind map</span></a><a href="#s3" data-s="s3">3<span class="l"> Filters</span></a><a href="#s4" data-s="s4">4<span class="l"> Applied</span></a><a href="#s5" data-s="s5">5<span class="l"> Clean Cabin</span></a>
-      <a class="ext" href="report.pdf" target="_blank" rel="noopener">Paper</a><a class="ext" href="../week2/">Week 2</a><a class="ext" href="../">Week 5</a>
+      <a class="ext" href="../archive/">Archive</a><a class="ext" href="../">Week 5</a>
     </nav>
   </div>
 
