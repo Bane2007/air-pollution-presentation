@@ -133,13 +133,13 @@
     .gap b { color: var(--heat); font-weight: 500; }
 
     /* market */
-    .mkt { display: grid; grid-template-columns: minmax(0, 6.5fr) minmax(0, 5.5fr); gap: clamp(32px, 5vw, 88px); margin-top: 40px; align-items: start; }
+    .mkt { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 88px); margin-top: 40px; align-items: start; }
     .figs > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 22px 0; border-top: 1px solid var(--line); }
     .figs > div:first-child { border-top-color: var(--line-2); }
-    .figs .v { font-family: var(--mono); font-size: clamp(42px, 5.2vw, 76px); letter-spacing: -0.05em; line-height: 0.95; font-weight: 500; }
+    .figs .v { font-family: var(--mono); font-size: clamp(48px, 6.4vw, 96px); letter-spacing: -0.05em; line-height: 0.95; font-weight: 500; }
     .figs .v small { font-size: 0.3em; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
     .figs .v .ar { color: var(--dim); font-weight: 300; margin: 0 0.1em; }
-    .figs .d { font-size: 13.5px; color: var(--muted); line-height: 1.45; max-width: 24ch; text-align: right; }
+    .figs .d { font-size: 16px; color: var(--muted); line-height: 1.45; max-width: 24ch; text-align: right; }
     .why { display: grid; gap: 30px; counter-reset: y; padding-top: 22px; }
     .why > div { display: grid; grid-template-columns: 34px 1fr; }
     .why > div::before { counter-increment: y; content: counter(y); font-family: var(--mono); font-size: 12px; color: var(--heat); padding-top: 5px; }
@@ -173,11 +173,11 @@
     .match.off { border-left-color: var(--line-2); color: var(--dim); }
 
     /* test */
-    .risks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-top: 32px; }
+    .risks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; margin-top: 32px; }
     .risk { background-color: var(--bg); padding: 24px; min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; transition: background .3s; cursor: help; }
     .risk:hover { background-color: var(--surface); }
     .risk.hi { background: linear-gradient(180deg, var(--heat-soft), rgba(232,119,74,0.02)); }
-    .risk h4 { font-size: 17px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; }
+    .risk h4 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; }
     .risk .t { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
     .risk.hi .t { color: var(--heat); }
     .mvp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: 40px; }
@@ -197,7 +197,8 @@
     footer { margin-top: clamp(130px, 15vw, 190px); border-top: 1px solid var(--line); padding: 36px 0 52px; }
     footer .wrap { display: flex; justify-content: space-between; gap: 24px; align-items: center; flex-wrap: wrap; }
     footer .cap { color: var(--muted); font-size: 13px; }
-    footer .lk { display: flex; gap: 8px; flex-wrap: wrap; }
+    footer .plain { color: var(--muted); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line-2); }
+    footer .plain:hover { color: var(--text); }
 
     .tip { position: fixed; z-index: 60; pointer-events: none; background: #151a20; border: 1px solid var(--line-2); border-radius: var(--r); padding: 9px 11px; font-size: 12px; line-height: 1.45; max-width: 330px; color: var(--text); opacity: 0; transition: opacity .12s; box-shadow: 0 16px 40px rgba(3, 5, 7, 0.55); }
     .tip b { color: var(--heat); font-weight: 600; }
@@ -224,8 +225,8 @@
     @keyframes grow { to { transform: scaleX(1); } }
     /* cursor spotlight on interactive cells */
     .spot { background-image: radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), rgba(232,119,74,0.10), transparent 45%); }
-    .hero .lead, .hero .ctas { opacity: 0; transform: translateY(14px); transition: opacity 1s var(--ease) .55s, transform 1s var(--ease) .55s; }
-    .hero.go .lead, .hero.go .ctas { opacity: 1; transform: none; }
+    .hero .lead { opacity: 0; transform: translateY(14px); transition: opacity 1s var(--ease) .55s, transform 1s var(--ease) .55s; }
+    .hero.go .lead { opacity: 1; transform: none; }
     .hero .ctas { transition-delay: .7s; }
     @media (max-width: 1100px) {
       .links a.opt { display: none; }
@@ -252,7 +253,7 @@
     @media (prefers-reduced-motion: reduce) {
       .rv { opacity: 1; transform: none; transition: none; }
       .split .w > span { transform: none; transition: none; }
-      .hero .lead, .hero .ctas { opacity: 1; transform: none; transition: none; }
+      .hero .lead { opacity: 1; transform: none; transition: none; }
       .lab, .btn { transition: none; }
     }
   </style>
@@ -261,8 +262,6 @@
   <div class="tip" id="tip" role="tooltip"></div>
   <div class="bar" aria-hidden="true"></div>
   <div class="deck" aria-label="Slides">
-    <button type="button" id="prev" aria-label="Previous slide">&#8593;</button>
-    <button type="button" id="next" aria-label="Next slide">&#8595;</button>
     <span><b id="cur">1</b> / <span id="tot">1</span></span>
     
   </div>
@@ -282,7 +281,6 @@
         <a href="#model" data-s="model">Cost model</a>
         <a href="#test" data-s="test">Demand test</a>
       </nav>
-      <a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a>
     </div>
   </header>
 
@@ -297,7 +295,6 @@
         <div class="step hero" data-step="0"><div class="wrap"><div class="txt">
           <h1 class="split" id="h1">Waste heat from AI racks can <i>dry</i> Gulf electrical rooms.</h1>
           <p class="lead">We use part of the 55 to 65 °C coolant to run a desiccant dryer.</p>
-          <div class="ctas"><a class="btn pri" href="#model">Try the cost model</a><a class="btn ghost" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a></div>
         </div></div></div>
         <div class="step" data-step="1"><div class="wrap"><div class="txt">
           <span class="k">120 to 142 kW per rack<sup class="r">22,23,24,25</sup></span>
@@ -368,12 +365,6 @@
             <div class="rv"><div class="v">1<small>GW</small></div><p class="d">Stargate UAE, on GB300<sup class="r">48</sup></p></div>
             <div class="rv"><div class="v"><span class="cu" data-to="700">700</span><small>MW</small></div><p class="d">Khazna, live and contracted<sup class="r">49</sup></p></div>
           </div>
-          <div class="why">
-            <div class="rv"><h4>Cooling energy has a price and a regulator.<sup class="r">17,18,19</sup></h4></div>
-            <div class="rv"><h4>Clean air is a server warranty condition.<sup class="r">7</sup></h4></div>
-            <div class="rv"><h4>Operators already pay to reject this heat.</h4></div>
-            <div class="rv"><h4>One operator decides for hundreds of MW.<sup class="r">49</sup></h4></div>
-          </div>
         </div>
       </div>
     </section>
@@ -384,10 +375,8 @@
         <div class="inst rv">
           <div class="ctl spot">
             <div><label>Site</label><div class="seg" id="m-site" role="group" aria-label="Site"><button class="on" data-site="abu-dhabi">Abu Dhabi</button><button data-site="dubai">Dubai</button></div></div>
-            <div><label for="m-dp">Target dew point <span class="val" id="m-dp-v"></span></label><input type="range" id="m-dp" min="8" max="16" step="0.5" value="15" /><p class="hint">15 °C ASHRAE<sup class="r">1</sup>, 10 °C data-centre units<sup class="r">65</sup></p></div>
+            <div><label for="m-dp">Target dew point <span class="val" id="m-dp-v"></span></label><input type="range" id="m-dp" min="8" max="16" step="0.5" value="15" /><p class="hint">15 °C is the ASHRAE limit<sup class="r">1</sup></p></div>
             <div><label for="m-flow">Makeup air <span class="val" id="m-flow-v"></span></label><input type="range" id="m-flow" min="0" max="100" step="1" value="0" /></div>
-            <div><label for="m-e">Heater electricity <span class="val" id="m-e-v"></span></label><input type="range" id="m-e" min="1.15" max="1.80" step="0.01" value="1.30" /><div class="vend" id="m-vend"></div><p class="hint">vendor datasheets<sup class="r">88,89,90,91,92,93</sup></p></div>
-            <div><label for="m-tar">Tariff <span class="val" id="m-tar-v"></span></label><input type="range" id="m-tar" min="0.25" max="0.55" step="0.002" value="0.366" /><p class="hint" id="m-tar-h"></p></div>
           </div>
           <div>
             <p class="panelt">Water to remove, by month</p>
@@ -401,10 +390,8 @@
             <p class="match" id="o-match"></p>
             <dl>
               <div><dt>water removed</dt><dd id="o-w"></dd></div>
-              <div><dt>pump, all year</dt><dd id="o-pump"></dd></div>
               <div><dt>3-year payback ceiling</dt><dd id="o-ceil"></dd></div>
             </dl>
-            <button class="btn ghost sm" id="m-reset" type="button" style="margin-top:18px">Reset to the paper</button>
           </div>
         </div>
       </div>
@@ -412,16 +399,12 @@
 
     <section id="test" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Six market assumptions. Two of them <i>could end the project.</i></h2>
+        <h2 class="rv split">Two things <i>could end the project.</i></h2>
         <div class="risks" id="risks"></div>
         <div class="mvp">
           <div class="rv"><h4>Ask</h4><p class="body">five UAE operators<sup class="r">54</sup></p></div>
           <div class="rv"><h4>Measure</h4><p class="body">one room, 30 days, free</p></div>
           <div class="rv"><h4>Quote</h4><p class="body">one wheel at 55 to 65 °C<sup class="r">53</sup></p></div>
-        </div>
-        <div class="r3 rv">
-          <p class="sentence" id="r3-line"></p>
-          <div><label for="r3" class="body">Operators asked<sup class="r">55</sup>: <span class="mono" id="r3-n" style="color:var(--text)">5</span></label><input type="range" id="r3" min="1" max="30" step="1" value="5" /></div>
         </div>
       </div>
     </section>
@@ -429,7 +412,6 @@
     <section id="close" class="sec">
       <div class="wrap close">
         <h2 class="rv split">Next, we ask five operators and <i>survey one room.</i></h2>
-        <div class="ctas rv"><a class="btn pri" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a><a class="btn ghost" href="#story">Back to the system</a></div>
       </div>
     </section>
   </main>
@@ -437,7 +419,7 @@
   <footer>
     <div class="wrap">
       <p class="cap">Karthik Nambiar, Sumedh Nitin Jamsandekar, Paul Tiju. IIT Delhi Abu Dhabi, AGRL130, October 2026.</p>
-      <div class="lk"><a class="btn ghost sm" href="report.pdf" target="_blank" rel="noopener">Report (PDF)</a><a class="btn ghost sm" href="week3/">Week 3</a><a class="btn ghost sm" href="week2/">Week 2</a></div>
+      <a class="plain" href="report.pdf" target="_blank" rel="noopener">Full report, PDF</a>
     </div>
   </footer>
 
@@ -534,8 +516,6 @@
   const slideObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { cur = SLIDES.indexOf(e.target); $('cur').textContent = cur + 1; } }), { rootMargin: '-50% 0px -50% 0px' });
   SLIDES.forEach(el => slideObs.observe(el));
   const go = k => { cur = Math.max(0, Math.min(SLIDES.length - 1, k)); SLIDES[cur].scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' }); };
-  $('prev').addEventListener('click', () => go(cur - 1));
-  $('next').addEventListener('click', () => go(cur + 1));
   addEventListener('keydown', e => {
     if (e.target.closest('input, textarea, select, a, button') && e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'PageDown' && e.key !== 'PageUp' || e.target.closest('input, textarea, select') || e.altKey || e.ctrlKey || e.metaKey) return;   // sliders keep their arrow keys
     const k = e.key;
@@ -895,9 +875,7 @@
   const M = { site: 'abu-dhabi' };
   const flowFrom = v => { const f = 1000 * Math.pow(50, v / 100); return f < 5000 ? Math.round(f / 100) * 100 : Math.round(f / 500) * 500; };
   const pct = v => (v - 1.15) / 0.65 * 100;
-  const vend = d3.select('#m-vend');
-  VEND.forEach(v => { if (v.lo) vend.append('span').style('left', pct(v.lo) + '%').style('width', (pct(v.hi) - pct(v.lo)) + '%'); (v.lo ? [v.lo, v.hi] : [v.v]).forEach(p => { const b = vend.append('button').attr('type', 'button').attr('aria-label', `${v.n}, ${p} kWh/kg`).style('left', pct(p) + '%').on('click', () => { $('m-e').value = p; run(); }); bindTip(b, () => `<b>${v.n}</b> ${v.lo ? v.lo + ' to ' + v.hi : v.v} kWh/kg`); }); });
-  function read() { M.dp = +$('m-dp').value; M.flow = flowFrom(+$('m-flow').value); M.e = +$('m-e').value; M.tar = +$('m-tar').value; M.dt = 10; M.head = 100; M.eff = 50; }   // the paper's pump case
+  function read() { M.dp = +$('m-dp').value; M.flow = flowFrom(+$('m-flow').value); M.e = 1.30; M.tar = TARIFF[M.site]; M.dt = 10; M.head = 100; M.eff = 50; }   // the paper's pump case
   function compute() {
     const h = hourly(M.site, M.dp, M.flow); let water = 0, peak = 0, peakI = 0; const months = new Array(12).fill(0);
     for (let i = 0; i < h.length; i++) { water += h[i]; if (h[i] > peak) { peak = h[i]; peakI = i; } months[monthOfDay(SITE[M.site].day[i])] += h[i]; }
@@ -928,38 +906,32 @@
   strip.addEventListener('mouseleave', hideTip);
   function run(animate = false) {
     read(); const R = compute(); lastR = R;
-    $('m-dp-v').textContent = M.dp.toFixed(1) + ' °C'; $('m-flow-v').textContent = fmt(M.flow) + ' m³/h'; $('m-e-v').textContent = M.e.toFixed(2) + ' kWh/kg'; $('m-tar-v').textContent = M.tar.toFixed(3) + ' AED/kWh';
-    $('m-tar-h').innerHTML = TARIFF_NOTE[M.site] + '<sup class="r">' + (M.site === 'dubai' ? '[94]' : '[95]') + '</sup>';
-    d3.selectAll('#m-vend button').classed('on', function () { return Math.abs(parseFloat(this.style.left) - pct(M.e)) < 0.01; });
+    $('m-dp-v').textContent = M.dp.toFixed(1) + ' °C'; $('m-flow-v').textContent = fmt(M.flow) + ' m³/h';
     countTo($('o-aed'), R.aed, animate ? 900 : 0);
     $('o-rng').textContent = `${fmt(Math.round(R.lo))} to ${fmt(Math.round(R.hi))}`;
     $('o-w').textContent = `${fmt(Math.round(R.water))} kg`;
-    $('o-pump').innerHTML = `${fmt(Math.round(R.pumpW))} W<small>AED ${fmt(Math.round(R.pumpAED))}, saving is ${Math.round(R.ratio)}× this</small>`;
     $('o-ceil').textContent = `AED ${fmt(Math.round(R.ceil))}`;
     const t2 = TABLE2[M.site][M.dp], ok = M.flow === 1000 && t2 && Math.abs(R.water - t2) / t2 < 0.001;
     $('o-match').classList.toggle('off', !ok);
     $('o-match').textContent = ok ? `Matches the paper: ${fmt(t2)} kg` : 'Off the paper’s Table 2 cases';
     months(R, animate); stripDraw(R);
   }
-  function reset() { M.site = 'abu-dhabi'; document.querySelectorAll('#m-site button').forEach(b => b.classList.toggle('on', b.dataset.site === M.site)); $('m-dp').value = 15; $('m-flow').value = 0; $('m-e').value = 1.30; $('m-tar').value = TARIFF[M.site]; }
-  ['m-dp', 'm-flow', 'm-e', 'm-tar'].forEach(id => $(id).addEventListener('input', () => run()));
-  document.querySelectorAll('#m-site button').forEach(b => b.addEventListener('click', () => { M.site = b.dataset.site; document.querySelectorAll('#m-site button').forEach(x => x.classList.toggle('on', x === b)); $('m-tar').value = TARIFF[M.site]; run(); }));
-  $('m-reset').addEventListener('click', () => { reset(); run(true); });
+  function reset() { M.site = 'abu-dhabi'; document.querySelectorAll('#m-site button').forEach(b => b.classList.toggle('on', b.dataset.site === M.site)); $('m-dp').value = 15; $('m-flow').value = 0; }
+  ['m-dp', 'm-flow'].forEach(id => $(id).addEventListener('input', () => run()));
+  document.querySelectorAll('#m-site button').forEach(b => b.addEventListener('click', () => { M.site = b.dataset.site; document.querySelectorAll('#m-site button').forEach(x => x.classList.toggle('on', x === b)); run(); }));
   reset(); run(false);
   onceIn($('months'), () => run(true));
 
   // ================================================================== DEMAND TEST
   const RISKS = [
-    { n: 'Operators see the cost', f: 'ASHRAE limits, G1 warranties, filtration already sold', x: 'no Gulf incident or spend figure', t: 'interviews, coupons', hi: 1 },
+    { n: 'Operators may not see humidity as a cost', f: 'ASHRAE limits, G1 warranties, filtration already sold', x: 'no Gulf incident or spend figure', t: 'interviews, coupons', hi: 1 },
     { n: 'They allow loop access', f: 'LRZ ran heat-driven chillers nine years', x: 'operator risk aversion', t: 'interviews' },
     { n: 'It pays back per MW', f: 'tariffs, the PUE gap', x: 'no Gulf measurement', t: 'coupons, vendor quote' },
-    { n: 'Enough air load is left', f: 'air-cooled supplies and networking per rack', x: 'unmeasured, sets market size', t: 'interviews', hi: 1 },
+    { n: 'Liquid-cooled campuses may have too little air left to dry', f: 'air-cooled supplies and networking per rack', x: 'unmeasured, sets market size', t: 'interviews', hi: 1 },
     { n: 'Buyers are reachable', f: 'a few operators decide', x: 'student access untested', t: 'response rate' },
     { n: 'Regulation rewards it', f: 'rating system in drafting', x: 'rules unpublished', t: 'desk follow-up' },
   ];
-  RISKS.forEach(r => { const d = document.createElement('div'); d.className = 'risk rv spot' + (r.hi ? ' hi' : ''); d.addEventListener('pointermove', e => { const q = d.getBoundingClientRect(); d.style.setProperty('--mx', (e.clientX - q.left) + 'px'); d.style.setProperty('--my', (e.clientY - q.top) + 'px'); }); d.innerHTML = `<h4>${r.n}</h4><span class="t">${r.hi ? 'riskiest, ' : ''}tested by ${r.t}</span>`; tipOn(d, `<b>for</b> <span class="m">${r.f}</span><br><b>against</b> <span class="m">${r.x}</span>`); $('risks').appendChild(d); reveal(d); });
-  function r3() { const n = +$('r3').value; $('r3-n').textContent = n; $('r3-line').innerHTML = `${n} noes still allow a <b>${Math.round(Math.min(1, 3 / n) * 100)} %</b> yes rate.`; }
-  $('r3').addEventListener('input', r3); r3();
+  RISKS.filter(r => r.hi).forEach(r => { const d = document.createElement('div'); d.className = 'risk rv spot' + (r.hi ? ' hi' : ''); d.addEventListener('pointermove', e => { const q = d.getBoundingClientRect(); d.style.setProperty('--mx', (e.clientX - q.left) + 'px'); d.style.setProperty('--my', (e.clientY - q.top) + 'px'); }); d.innerHTML = `<h4>${r.n}</h4><span class="t">tested by ${r.t}</span>`; tipOn(d, `<b>for</b> <span class="m">${r.f}</span><br><b>against</b> <span class="m">${r.x}</span>`); $('risks').appendChild(d); reveal(d); });
 
   </script>
 </body>
