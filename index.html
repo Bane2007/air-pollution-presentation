@@ -99,6 +99,7 @@
     .progress button.on::after { width: 36px; }
     .progress button:hover span, .progress button.on span { opacity: 1; transform: none; }
     .progress button:focus-visible { outline: 2px solid var(--heat); }
+    .schem { position: absolute; z-index: 4; left: var(--gut); bottom: 18px; margin: 0; font-family: var(--mono); font-size: 11px; color: var(--dim); }
     .nogl { position: absolute; inset: 0; display: grid; place-items: center; color: var(--dim); font-size: 13px; }
 
     /* problem */
@@ -133,10 +134,10 @@
     .gap b { color: var(--heat); font-weight: 500; }
 
     /* market */
-    .mkt { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 88px); margin-top: 40px; align-items: start; }
+    .mkt { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 88px); margin-top: 40px; align-items: start; }
     .figs > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 22px 0; border-top: 1px solid var(--line); }
     .figs > div:first-child { border-top-color: var(--line-2); }
-    .figs .v { font-family: var(--mono); font-size: clamp(48px, 6.4vw, 96px); letter-spacing: -0.05em; line-height: 0.95; font-weight: 500; }
+    .figs .v { font-family: var(--mono); font-size: clamp(42px, 5vw, 76px); letter-spacing: -0.05em; line-height: 0.95; font-weight: 500; }
     .figs .v small { font-size: 0.3em; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
     .figs .v .ar { color: var(--dim); font-weight: 300; margin: 0 0.1em; }
     .figs .d { font-size: 16px; color: var(--muted); line-height: 1.45; max-width: 24ch; text-align: right; }
@@ -145,6 +146,11 @@
     .why > div::before { counter-increment: y; content: counter(y); font-family: var(--mono); font-size: 12px; color: var(--heat); padding-top: 5px; }
     .why h4 { font-size: 20px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
 
+    .bought { display: grid; align-content: start; }
+    .bought > div { padding: 22px 0; border-top: 1px solid var(--line); }
+    .bought > div:first-child { border-top-color: var(--line-2); }
+    .bought .v { font-family: var(--mono); font-size: clamp(24px, 2.4vw, 34px); letter-spacing: -0.03em; }
+    .bought .d { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.45; }
     /* model */
     .inst { margin-top: 32px; display: grid; grid-template-columns: 290px minmax(0, 1fr) 290px; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
     .inst > div { background-color: var(--surface); padding: 24px; min-width: 0; }
@@ -291,6 +297,7 @@
         <canvas id="scene" aria-hidden="true"></canvas>
         <div class="labels" id="labels"></div>
         <div class="progress" id="progress"></div>
+        <p class="schem">Schematic of the report's Figure 1. Not to scale.</p>
       </div>
       <div class="steps">
         <div class="step hero" data-step="0"><div class="wrap"><div class="txt">
@@ -299,23 +306,11 @@
         </div></div></div>
         <div class="step" data-step="1"><div class="wrap"><div class="txt">
           <span class="k">120 to 142 kW per rack<sup class="r">22,23,24,25</sup></span>
-          <h3>The racks return coolant at 55 to 65 °C.</h3>
+          <h3>The racks return coolant at 55 to 65 °C. A bypassable exchanger takes part of it.</h3>
         </div></div></div>
         <div class="step" data-step="2"><div class="wrap"><div class="txt">
-          <span class="k">isolated and bypassable</span>
-          <h3>A plate heat exchanger takes part of that heat.</h3>
-        </div></div></div>
-        <div class="step" data-step="3"><div class="wrap"><div class="txt">
-          <span class="k">particle filters and a cooling coil</span>
-          <h3>The coil removes most of the water from outside air.</h3>
-        </div></div></div>
-        <div class="step" data-step="4"><div class="wrap"><div class="txt">
-          <span class="k">regenerates at 55 to 65 °C<sup class="r">31,35</sup></span>
-          <h3>Loop heat dries the desiccant wheel in place of a 120 °C electric heater.</h3>
-        </div></div></div>
-        <div class="step" data-step="5"><div class="wrap"><div class="txt">
-          <span class="k">below 60 % RH, ISA class G1<sup class="r">2,34</sup></span>
-          <h3>A gas filter removes sulfur, and corrosion coupons record the result.</h3>
+          <span class="k">filters, coil, desiccant wheel<sup class="r">2,31,34</sup></span>
+          <h3>That heat dries the desiccant, and the dried air goes to the electrical room.</h3>
         </div></div></div>
       </div>
     </section>
@@ -359,12 +354,17 @@
 
     <section id="market" class="sec">
       <div class="wrap">
-        <h2 class="rv split">UAE data-centre capacity</h2>
+        <h2 class="rv split">UAE data-centre capacity, and who already buys this kit</h2>
         <div class="mkt">
           <div class="figs">
             <div class="rv"><div class="v"><span class="cu" data-to="358">358</span><span class="ar">→</span><span class="cu" data-to="950">950</span><small>MW</small></div><p class="d">UAE capacity, 2025 to 2028<sup class="r">47</sup></p></div>
             <div class="rv"><div class="v">1<small>GW</small></div><p class="d">Stargate UAE, on GB300<sup class="r">48</sup></p></div>
             <div class="rv"><div class="v"><span class="cu" data-to="700">700</span><small>MW</small></div><p class="d">Khazna, live and contracted<sup class="r">49</sup></p></div>
+          </div>
+          <div class="bought">
+            <div class="rv"><div class="v">DEWA, ADDC, SEC</div><p class="d">already buy desiccant dryers for switchgear rooms<sup class="r">12</sup></p></div>
+            <div class="rv"><div class="v">ISA G1</div><p class="d">clean-air class Dell, IBM and HP require in server warranties<sup class="r">7</sup></p></div>
+            <div class="rv"><div class="v">104</div><p class="d">cited sources in the report</p></div>
           </div>
         </div>
       </div>
@@ -410,16 +410,6 @@
       </div>
     </section>
 
-    <section id="close" class="sec">
-      <div class="wrap close">
-        <h2 class="rv split">Research-backed, and already bought in the UAE</h2>
-        <div class="strip rv" style="margin-top:40px">
-          <div><div class="v">104</div><p class="body">cited sources in the report</p></div>
-          <div><div class="v">DEWA<small>ADDC, SEC</small></div><p class="body">already buy desiccant dryers for switchgear rooms<sup class="r">12</sup></p></div>
-          <div><div class="v">G1</div><p class="body">clean-air class Dell, IBM and HP require in server warranties<sup class="r">7</sup></p></div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -547,7 +537,7 @@
   function hourly(site, target, flow) { const S = SITE[site], out = new Float64Array(S.n); for (let i = 0; i < S.n; i++) { const wt = wDp(target, S.p[i]); if (S.w[i] > wt) out[i] = flow * S.md[i] * (S.w[i] - wt); } return out; }
 
   // ================================================================== THE 3D SYSTEM, camera driven by the step in view
-  const STEP_LABELS = ['Overview', 'Racks', 'Exchanger', 'Filter and coil', 'Wheel', 'Electrical room'];
+  const STEP_LABELS = ['Overview', 'Heat side', 'Air side'];
   let step = 0;
   const prog = $('progress');
   STEP_LABELS.forEach((l, i) => { const b = document.createElement('button'); b.innerHTML = `<span>${l}</span>`; b.setAttribute('aria-label', l); b.addEventListener('click', () => document.querySelector(`.step[data-step="${i}"]`).scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'center' })); prog.appendChild(b); });
@@ -718,25 +708,21 @@
     // labels pinned to 3D anchors
     const LAB = [
       { p: V(-5.4, 2.55, -2.4), t: 'AI racks, 55 to 65 °C', s: [0, 1], hot: 1 },
-      { p: V(-1.6, 1.55, -1.3), t: 'heat exchanger', s: [1, 2], hot: 1 },
-      { p: V(-5.2, 2.15, AZ), t: 'outside air', s: [0, 3] },
-      { p: V(-3.2, 2.15, AZ), t: 'filters', s: [3] },
-      { p: V(-1.4, 2.15, AZ), t: 'cooling coil', s: [3] },
-      { p: V(0.8, 3.15, AZ), t: 'desiccant wheel', s: [0, 4], hot: 1 },
-      { p: V(2.6, 2.15, AZ), t: 'gas-phase filter', s: [4, 5] },
-      { p: V(5.9, 2.95, 1.7), t: 'electrical room', s: [0, 5] },
-      { p: V(7.5, 1.95, 2.3), t: 'corrosion coupons', s: [5] },
+      { p: V(-1.6, 1.55, -1.3), t: 'heat exchanger', s: [1], hot: 1 },
+      { p: V(-5.2, 2.15, AZ), t: 'outside air', s: [0, 2] },
+      { p: V(-3.2, 2.15, AZ), t: 'filters', s: [2] },
+      { p: V(-1.4, 2.15, AZ), t: 'cooling coil', s: [2] },
+      { p: V(0.8, 3.15, AZ), t: 'desiccant wheel', s: [0, 2], hot: 1 },
+      { p: V(2.6, 2.15, AZ), t: 'gas-phase filter', s: [2] },
+      { p: V(5.9, 2.95, 1.7), t: 'electrical room', s: [0, 2] },
     ];
     const labBox = $('labels');
     LAB.forEach(l => { l.el = document.createElement('div'); l.el.className = 'lab' + (l.hot ? ' hot' : ''); l.el.textContent = l.t; labBox.appendChild(l.el); });
 
     const CAM = [
       { p: V(8.4, 7.0, 14.6), t: V(-0.4, 1.0, 0.3) },
-      { p: V(-2.4, 3.6, 0.5), t: V(-5.3, 1.2, -2.3) },
-      { p: V(-3.6, 2.7, 0.55), t: V(-2.5, 1.0, -1.1) },
-      { p: V(-1.0, 2.5, 6.6), t: V(-2.6, 1.3, 1.6) },
-      { p: V(3.6, 2.9, 5.6), t: V(0.8, 1.6, 1.6) },
-      { p: V(3.2, 3.4, 8.2), t: V(5.8, 1.2, 1.4) },
+      { p: V(0.4, 5.4, 4.6), t: V(-3.0, 0.9, -1.6) },
+      { p: V(7.0, 5.4, 12.8), t: V(2.6, 1.2, 1.2) },
     ];
     let mobile = false;
     const aim = k => { const w = CAM[k]; return { p: mobile ? w.t.clone().add(w.p.clone().sub(w.t).multiplyScalar(1.45)) : w.p, t: w.t }; };
