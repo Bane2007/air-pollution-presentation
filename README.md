@@ -11,3 +11,5 @@ AGRL130 Innovation, Entrepreneurship and Sustainability, IIT Delhi Abu Dhabi. Ka
 - `build-data.py`: writes `data/site.json` for week 3 from `analysis/`.
 
 Rebuild week 5: `python analysis/week5/build_weather.py`. Rebuild week 3: `python analysis/report/figures.py`, `tectonic analysis/report/main.tex`, `python build-data.py`.
+
+Deploys: every push to `master` deploys to https://air-pollution-presentation.vercel.app through the Vercel GitHub integration.
