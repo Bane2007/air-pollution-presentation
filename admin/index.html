@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Dry Rooms control</title>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root { --bg: #0b0e11; --surface: #11161b; --line: rgba(230,236,242,0.12); --text: #e6e9ec; --muted: #96a1ab; --dim: #66717c; --heat: #e8774a; }
@@ -48,19 +49,29 @@
   <p class="hint">Show <b>air-pollution-presentation.vercel.app</b> on the presenting laptop. Then press <b>R</b> once on that laptop to let it take commands. Other copies of the site ignore this page. Arrow keys work here too.</p>
   <script>
     const $ = id => document.getElementById(id);
-    const relay = 'https://ntfy.sh/dryrooms-30d4f34e5b9c';
+    const PEER_ID = 'dryrooms-30d4f34e5b9c';
     let key = ''; try { key = localStorage.getItem('dr-key') || ''; } catch {}
     $('key').value = key;
     const local = new BroadcastChannel('dry-rooms-deck');
-    new EventSource(relay + '/sse').onmessage = e => { try { got(JSON.parse(JSON.parse(e.data).message)); } catch {} };
-    const send = m => { m.from = 'admin'; m.k = key; local.postMessage(m); fetch(relay, { method: 'POST', body: JSON.stringify(m) }).catch(() => {}); };
+    let peer, conn = null;
+    const status = (t, on) => { $('st').textContent = t; $('st').classList.toggle('on', !!on); };
+    function connect() {
+      if (!peer || peer.destroyed) { peer = new Peer(); peer.on('open', connect); peer.on('error', e => { if (e.type === 'peer-unavailable') { status('display not found, press R on it'); setTimeout(connect, 3000); } else if (e.type !== 'unavailable-id') { status('reconnecting'); setTimeout(connect, 3000); } }); peer.on('disconnected', () => { try { peer.reconnect(); } catch {} }); return; }
+      if (!peer.open || conn?.open) return;
+      status('connecting');
+      conn = peer.connect(PEER_ID, { reliable: true });
+      conn.on('open', () => { status('linked, check passphrase'); send({ type: 'hello' }); });
+      conn.on('data', got);
+      conn.on('close', () => { conn = null; titles = []; status('lost display, retrying'); setTimeout(connect, 2000); });
+    }
+    const send = m => { m.from = 'admin'; m.k = key; local.postMessage(m); if (conn?.open) conn.send(m); };
     let titles = [], cur = 0;
     function render() {
       $('now').innerHTML = `Slide ${cur + 1} of ${titles.length}<b>${titles[cur] || ''}</b>`;
       $('list').innerHTML = titles.map((t, i) => `<button data-i="${i}" class="${i === cur ? 'cur' : ''}"><span>${i + 1}</span>${t}</button>`).join('');
     }
     local.onmessage = e => got(e.data);
-    function got(m) { if (!m || m.from !== 'deck' || m.type !== 'at') return; titles = m.titles; cur = m.i; $('st').textContent = 'connected'; $('st').classList.add('on'); render(); }
+    function got(m) { if (!m || m.from !== 'deck' || m.type !== 'at') return; titles = m.titles; cur = m.i; status('connected', true); render(); }
     $('prev').onclick = () => send({ type: 'step', d: -1 });
     $('next').onclick = () => send({ type: 'step', d: 1 });
     $('list').onclick = e => { const b = e.target.closest('button'); if (b) send({ type: 'go', i: +b.dataset.i }); };
@@ -70,9 +81,9 @@
       if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: 1 }); }
       if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: -1 }); }
     });
-    $('save').onclick = () => { key = $('key').value.trim(); try { localStorage.setItem('dr-key', key); } catch {} titles = []; $('st').textContent = 'no deck'; $('st').classList.remove('on'); send({ type: 'hello' }); };
+    $('save').onclick = () => { key = $('key').value.trim(); try { localStorage.setItem('dr-key', key); } catch {} send({ type: 'hello' }); };
+    connect();
     setTimeout(() => send({ type: 'hello' }), 600);
-    let tries = 0; const iv = setInterval(() => { if (titles.length || ++tries > 8) return clearInterval(iv); send({ type: 'hello' }); }, 15000);
   </script>
 </body>
 </html>
