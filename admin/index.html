@@ -45,7 +45,7 @@
   <div class="row"><button data-site="abu-dhabi">Abu Dhabi</button><button data-site="dubai">Dubai</button></div>
   <h2>Passphrase</h2>
   <div class="link"><input id="key" type="password" autocomplete="off" placeholder="admin passphrase" /><button id="save">Save</button></div>
-  <p class="hint">Show <b>air-pollution-presentation.vercel.app</b> on the presenting laptop. This page controls it from any device. Arrow keys work here too.</p>
+  <p class="hint">Show <b>air-pollution-presentation.vercel.app</b> on the presenting laptop. Then press <b>R</b> once on that laptop to let it take commands. Other copies of the site ignore this page. Arrow keys work here too.</p>
   <script>
     const $ = id => document.getElementById(id);
     const relay = 'https://ntfy.sh/dryrooms-30d4f34e5b9c';
@@ -72,7 +72,7 @@
     });
     $('save').onclick = () => { key = $('key').value.trim(); try { localStorage.setItem('dr-key', key); } catch {} titles = []; $('st').textContent = 'no deck'; $('st').classList.remove('on'); send({ type: 'hello' }); };
     setTimeout(() => send({ type: 'hello' }), 600);
-    setInterval(() => { if (!titles.length) send({ type: 'hello' }); }, 4000);
+    let tries = 0; const iv = setInterval(() => { if (titles.length || ++tries > 8) return clearInterval(iv); send({ type: 'hello' }); }, 15000);
   </script>
 </body>
 </html>

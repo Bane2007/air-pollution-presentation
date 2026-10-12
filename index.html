@@ -468,18 +468,6 @@
     </section>
 
 
-    <section id="discovery" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Backup: discovery and learning</h2>
-        <ol class="flow rv"><li class="on"><small>Who?</small>Personas</li><li class="on"><small>What?</small>Problem scenarios</li><li class="on"><small>What if?</small>Value propositions</li><li class=""><small>Tell me…</small>Customer discovery</li><li class=""><small>How?</small>User stories</li><li class=""><small>Scale?</small>Product</li></ol>
-        <div class="val-t disc">
-          <div class="row rv"><div class="who">Persona</div><p class="g">Salil, facility manager, AI data centre</p></div>
-          <div class="row rv"><div class="who">Problem scenario</div><p class="g">Room too humid, 5,171 h a year<sup class="r">14</sup></p></div>
-          <div class="row rv"><div class="who">Alternatives</div><p class="g">Electric dryers at 121 °C<sup class="r">35</sup></p></div>
-          <div class="row rv"><div class="who">Value proposition</div><p class="g">Same drying on GPU waste heat</p></div>
-        </div>
-      </div>
-    </section>
 
   </main>
 
@@ -610,9 +598,17 @@
     else if (m.type === 'site') document.querySelectorAll(`#p-site button[data-site="${m.site}"], #m-site button[data-site="${m.site}"]`).forEach(b => b.click());
     else if (m.type === 'hello') report(true);
   };
-  if (local) local.onmessage = e => handle(e.data);
-  if ('EventSource' in window) new EventSource(relay + '/sse').onmessage = e => { try { handle(JSON.parse(JSON.parse(e.data).message)); } catch {} };
-  const ro = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && setTimeout(() => report())), { rootMargin: '-50% 0px -50% 0px' });
+  // remote stays off until someone presses R on this machine, so other open copies of the site never follow the admin
+  let armed = false;
+  addEventListener('keydown', e => {
+    if (armed || (e.key !== 'r' && e.key !== 'R') || e.ctrlKey || e.metaKey || e.altKey || e.target.closest('input, textarea')) return;
+    armed = true;
+    if (local) local.onmessage = ev => handle(ev.data);
+    if ('EventSource' in window) new EventSource(relay + '/sse').onmessage = ev => { try { handle(JSON.parse(JSON.parse(ev.data).message)); } catch {} };
+    const t = document.createElement('div'); t.textContent = 'remote on'; t.style.cssText = 'position:fixed;z-index:70;left:50%;bottom:18px;transform:translateX(-50%);font:12px var(--mono);color:var(--dim);transition:opacity .6s';
+    document.body.appendChild(t); setTimeout(() => t.style.opacity = 0, 1200); setTimeout(() => t.remove(), 2000);
+  });
+  let rt; const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { clearTimeout(rt); rt = setTimeout(() => report(), 700); } }), { rootMargin: '-50% 0px -50% 0px' });
   SLIDES.forEach(el => ro.observe(el));
 
   // ------------------------------------------------------------------ weather and psychrometrics, as analysis/week5/build_weather.py
