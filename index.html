@@ -163,6 +163,12 @@
     .val-t .net { font-family: var(--mono); font-size: 22px; text-align: right; color: var(--dim); }
     .val-t .net.up { color: var(--heat); }
     .val-t .net.dn { color: var(--steel); }
+    .val-t.ps .row { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); padding: 22px 0; }
+    .val-t.ps .who { font-family: var(--mono); font-size: 13px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 400; }
+    .val-t.ps .g, .val-t.ps .l { font-size: clamp(24px, 2.4vw, 34px); color: var(--muted); }
+    .val-t.ps .row:last-child .g b { color: var(--heat); }
+    .val-t.fab .row { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 22px 0; }
+    .val-t.fab .row > p:last-child b { color: var(--heat); }
     /* model */
     .inst { margin-top: 32px; display: grid; grid-template-columns: 290px minmax(0, 1fr) 290px; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
     .inst > div { background-color: var(--surface); padding: 24px; min-width: 0; }
@@ -263,6 +269,7 @@
       .val-t .row > .g, .val-t .row > .l { grid-column: 1; }
       .val-t .net { grid-row: 1; grid-column: 2; }
       .val-t .hd { display: none; }
+      .val-t.ps .row, .val-t.fab .row { grid-template-columns: minmax(0, 1fr); }
       .strip { grid-template-columns: 1fr 1fr; }
       .strip > div:nth-child(3) { border-left: 0; padding-left: 0; }
       .strip > div:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -300,7 +307,8 @@
         <a href="#evidence" data-s="evidence" class="opt">Evidence</a>
         <a href="#prior" data-s="prior" class="opt">Prior art</a>
         <a href="#market" data-s="market">Market</a>
-        <a href="#value" data-s="value" class="opt">Who gains</a>
+        <a href="#value" data-s="value" class="opt">Scenario</a>
+        <a href="#fab" data-s="fab" class="opt">Value</a>
         <a href="#model" data-s="model">Cost model</a>
         <a href="#test" data-s="test">Demand test</a>
         <a href="archive/">Archive</a>
@@ -386,14 +394,24 @@
 
     <section id="value" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Four of five come out ahead</h2>
-        <div class="val-t">
-          <div class="row hd"><span>Who</span><span>Gains</span><span>Loses</span><span style="text-align:right">Net</span></div>
-          <div class="row rv"><div class="who">Operators<small>Khazna, G42</small></div><p class="g"><b>Free heat</b><sup class="r">35</sup></p><p class="l"><b>Loop access</b></p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Equipment owners<small>server and switchgear OEMs</small></div><p class="g"><b>Dry air</b><sup class="r">2</sup></p><p class="l"><b>&mdash;</b></p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Tenants<small>AI and cloud</small></div><p class="g"><b>Uptime</b><sup class="r">102</sup></p><p class="l"><b>&mdash;</b></p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Grid<small>DEWA, ADDC</small></div><p class="g"><b>Lower PUE</b><sup class="r">16</sup></p><p class="l"><b>kWh sales</b></p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Dryer vendors<small>Munters, Bry-Air</small></div><p class="g"><b>Partner deal</b></p><p class="l"><b>Heater sales</b><sup class="r">35</sup></p><div class="net ">&plusmn;</div></div>
+        <h2 class="rv split">Problem scenario</h2>
+        <div class="val-t ps">
+          <div class="row rv"><div class="who">Persona</div><p class="g"><b>Facility manager</b>, UAE AI data centre</p></div>
+          <div class="row rv"><div class="who">Problem</div><p class="g"><b>5,171 humid hours</b> a year<sup class="r">14</sup></p></div>
+          <div class="row rv"><div class="who">Alternative</div><p class="l"><b>Electric dryers</b> at 121 °C<sup class="r">35</sup></p></div>
+          <div class="row rv"><div class="who">Value proposition</div><p class="g"><b>Same drying</b>, on GPU waste heat</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fab" class="sec">
+      <div class="wrap">
+        <h2 class="rv split">Features, advantages, benefits</h2>
+        <div class="val-t fab">
+          <div class="row hd"><span>Feature</span><span>Advantage</span><span>Benefit</span></div>
+          <div class="row rv"><p class="g"><b>Runs on the GPU loop</b>, 55–65 °C<sup class="r">24</sup></p><p class="g"><b>No electric heater</b></p><p class="g"><b>AED 15,362</b> a year<sup class="r">17</sup></p></div>
+          <div class="row rv"><p class="g"><b>MOF wheel</b></p><p class="g"><b>+40–48 %</b> at 50 °C<sup class="r">31</sup></p><p class="g"><b>Works at loop heat</b></p></div>
+          <div class="row rv"><p class="g"><b>Below 60 % RH</b><sup class="r">2</sup></p><p class="g"><b>ISA G1 kept</b><sup class="r">7</sup></p><p class="g"><b>Fewer outages</b><sup class="r">102</sup></p></div>
         </div>
       </div>
     </section>
