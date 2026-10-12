@@ -30,6 +30,8 @@
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .link { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
     .link code { font-family: "Geist Mono", monospace; font-size: 13px; color: var(--heat); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; overflow-wrap: anywhere; }
+    input { font: 14px "Geist Mono", monospace; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; width: 100%; }
+    .hint b { color: var(--text); font-weight: 500; }
     .small { margin-top: 8px; padding: 8px 12px; font-size: 12px; color: var(--muted); }
     .hint { font-size: 12px; color: var(--dim); margin-top: 26px; line-height: 1.5; }
   </style>
@@ -41,25 +43,17 @@
   <div class="list" id="list"></div>
   <h2>Site</h2>
   <div class="row"><button data-site="abu-dhabi">Abu Dhabi</button><button data-site="dubai">Dubai</button></div>
-  <h2>Sir's laptop</h2>
-  <div class="link"><code id="link"></code><button id="copy">Copy</button></div>
-  <button id="newroom" class="small">New room code</button>
-  <p class="hint">Open that link on the presenting laptop. Same-laptop windows also work without it. Arrow keys work here too.</p>
+  <h2>Passphrase</h2>
+  <div class="link"><input id="key" type="password" autocomplete="off" placeholder="admin passphrase" /><button id="save">Save</button></div>
+  <p class="hint">Show <b>air-pollution-presentation.vercel.app</b> on the presenting laptop. This page controls it from any device. Arrow keys work here too.</p>
   <script>
     const $ = id => document.getElementById(id);
-    const newCode = () => Array.from(crypto.getRandomValues(new Uint8Array(10)), x => 'abcdefghjkmnpqrstuvwxyz23456789'[x % 31]).join('');
-    let room; try { room = localStorage.getItem('dr-room'); } catch {}
-    if (!room) { room = newCode(); try { localStorage.setItem('dr-room', room); } catch {} }
-    const deckUrl = () => `${location.origin}/?r=${room}`;
+    const relay = 'https://ntfy.sh/dryrooms-30d4f34e5b9c';
+    let key = ''; try { key = localStorage.getItem('dr-key') || ''; } catch {}
+    $('key').value = key;
     const local = new BroadcastChannel('dry-rooms-deck');
-    let es;
-    function connect() {
-      es?.close();
-      es = new EventSource(`https://ntfy.sh/dryrooms-${room}/sse`);
-      es.onmessage = e => { try { got(JSON.parse(JSON.parse(e.data).message)); } catch {} };
-      $('link').textContent = deckUrl();
-    }
-    const send = m => { m.from = 'admin'; local.postMessage(m); fetch(`https://ntfy.sh/dryrooms-${room}`, { method: 'POST', body: JSON.stringify(m) }).catch(() => {}); };
+    new EventSource(relay + '/sse').onmessage = e => { try { got(JSON.parse(JSON.parse(e.data).message)); } catch {} };
+    const send = m => { m.from = 'admin'; m.k = key; local.postMessage(m); fetch(relay, { method: 'POST', body: JSON.stringify(m) }).catch(() => {}); };
     let titles = [], cur = 0;
     function render() {
       $('now').innerHTML = `Slide ${cur + 1} of ${titles.length}<b>${titles[cur] || ''}</b>`;
@@ -72,12 +66,11 @@
     $('list').onclick = e => { const b = e.target.closest('button'); if (b) send({ type: 'go', i: +b.dataset.i }); };
     document.querySelectorAll('[data-site]').forEach(b => b.onclick = () => send({ type: 'site', site: b.dataset.site }));
     addEventListener('keydown', e => {
+      if (e.target.closest('input')) { if (e.key === 'Enter') $('save').click(); return; }
       if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: 1 }); }
       if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: -1 }); }
     });
-    $('copy').onclick = () => navigator.clipboard?.writeText(deckUrl()).then(() => { $('copy').textContent = 'Copied'; setTimeout(() => $('copy').textContent = 'Copy', 1200); });
-    $('newroom').onclick = () => { room = newCode(); try { localStorage.setItem('dr-room', room); } catch {} titles = []; $('st').textContent = 'no deck'; $('st').classList.remove('on'); connect(); };
-    connect();
+    $('save').onclick = () => { key = $('key').value.trim(); try { localStorage.setItem('dr-key', key); } catch {} titles = []; $('st').textContent = 'no deck'; $('st').classList.remove('on'); send({ type: 'hello' }); };
     setTimeout(() => send({ type: 'hello' }), 600);
     setInterval(() => { if (!titles.length) send({ type: 'hello' }); }, 4000);
   </script>
