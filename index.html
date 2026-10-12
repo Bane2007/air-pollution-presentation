@@ -304,13 +304,10 @@
       <nav class="links" id="links" aria-label="Sections">
         <a href="#story" data-s="story">System</a>
         <a href="#problem" data-s="problem">Problem</a>
-        <a href="#evidence" data-s="evidence" class="opt">Evidence</a>
-        <a href="#prior" data-s="prior" class="opt">Prior art</a>
+        <a href="#value" data-s="value">Scenario</a>
+        <a href="#fab" data-s="fab">Value</a>
         <a href="#market" data-s="market">Market</a>
-        <a href="#value" data-s="value" class="opt">Scenario</a>
-        <a href="#fab" data-s="fab" class="opt">Value</a>
         <a href="#model" data-s="model">Cost model</a>
-        <a href="#test" data-s="test">Demand test</a>
         <a href="archive/">Archive</a>
       </nav>
     </div>
@@ -356,42 +353,6 @@
       </div>
     </section>
 
-    <section id="evidence" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Warm enough to dry</h2>
-        <div class="rv" id="scale" style="margin-top:56px"></div>
-        <div class="strip rv">
-          <div><div class="v">121<small>°C</small></div><p class="body">dryers today<sup class="r">35</sup></p></div>
-          <div><div class="v">55–65<small>°C</small></div><p class="body">AI loop<sup class="r">24,25</sup></p></div>
-          <div><div class="v">+40–48<small>%</small></div><p class="body">MOF wheel at 50 °C<sup class="r">31</sup></p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="prior" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Tried before, never proven for drying</h2>
-        <div class="tlwrap rv"><div id="tl" class="wide"></div></div>
-      </div>
-    </section>
-
-    <section id="market" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Capacity nearly triples by 2028</h2>
-        <div class="mkt">
-          <div class="figs">
-            <div class="rv"><div class="v"><span class="cu" data-to="358">358</span><span class="ar">→</span><span class="cu" data-to="950">950</span><small>MW</small></div><p class="d">2025 to 2028<sup class="r">47</sup></p></div>
-            <div class="rv"><div class="v">1<small>GW</small></div><p class="d">Stargate UAE<sup class="r">48</sup></p></div>
-            <div class="rv"><div class="v"><span class="cu" data-to="700">700</span><small>MW</small></div><p class="d">Khazna<sup class="r">49</sup></p></div>
-          </div>
-          <div class="bought">
-            <div class="rv"><div class="v">DEWA, ADDC, SEC</div><p class="d">buy switchgear dryers<sup class="r">12</sup></p></div>
-            <div class="rv"><div class="v">ISA G1</div><p class="d">required by server warranties<sup class="r">7</sup></p></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="value" class="sec">
       <div class="wrap">
         <h2 class="rv split">Problem scenario</h2>
@@ -412,6 +373,23 @@
           <div class="row rv"><p class="g"><b>Runs on the GPU loop</b>, 55–65 °C<sup class="r">24</sup></p><p class="g"><b>No electric heater</b></p><p class="g"><b>AED 15,362</b> a year<sup class="r">17</sup></p></div>
           <div class="row rv"><p class="g"><b>MOF wheel</b></p><p class="g"><b>+40–48 %</b> at 50 °C<sup class="r">31</sup></p><p class="g"><b>Works at loop heat</b></p></div>
           <div class="row rv"><p class="g"><b>Below 60 % RH</b><sup class="r">2</sup></p><p class="g"><b>ISA G1 kept</b><sup class="r">7</sup></p><p class="g"><b>Fewer outages</b><sup class="r">102</sup></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="market" class="sec">
+      <div class="wrap">
+        <h2 class="rv split">Capacity nearly triples by 2028</h2>
+        <div class="mkt">
+          <div class="figs">
+            <div class="rv"><div class="v"><span class="cu" data-to="358">358</span><span class="ar">→</span><span class="cu" data-to="950">950</span><small>MW</small></div><p class="d">2025 to 2028<sup class="r">47</sup></p></div>
+            <div class="rv"><div class="v">1<small>GW</small></div><p class="d">Stargate UAE<sup class="r">48</sup></p></div>
+            <div class="rv"><div class="v"><span class="cu" data-to="700">700</span><small>MW</small></div><p class="d">Khazna<sup class="r">49</sup></p></div>
+          </div>
+          <div class="bought">
+            <div class="rv"><div class="v">DEWA, ADDC, SEC</div><p class="d">buy switchgear dryers<sup class="r">12</sup></p></div>
+            <div class="rv"><div class="v">ISA G1</div><p class="d">required by server warranties<sup class="r">7</sup></p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -441,13 +419,6 @@
             </dl>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="test" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Two unknowns</h2>
-        <div class="risks" id="risks"></div>
       </div>
     </section>
 
@@ -540,7 +511,7 @@
   document.querySelectorAll('.split').forEach(split);
   requestAnimationFrame(() => requestAnimationFrame(() => { $('h1').classList.add('in'); document.querySelector('.hero').classList.add('go'); }));
   document.querySelectorAll('.spot').forEach(el => el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); }));
-  const onceIn = (el, fn, threshold = 0.25) => { const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { fn(e.target); o.unobserve(e.target); } }), { threshold }); o.observe(el); };
+  const onceIn = (el, fn, threshold = 0.25) => { if (!el) return; const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { fn(e.target); o.unobserve(e.target); } }), { threshold }); o.observe(el); };
   const reveal = el => onceIn(el, t => t.classList.add('in'), 0.12);
   document.querySelectorAll('.rv').forEach(reveal);
   document.querySelectorAll('.cu').forEach(el => { el.textContent = '0'; onceIn(el, () => countTo(el, +el.dataset.to, 1400)); });
@@ -965,7 +936,7 @@
     { n: 'Buyers are reachable', f: 'a few operators decide', x: 'student access untested', t: 'response rate' },
     { n: 'Regulation rewards it', f: 'rating system in drafting', x: 'rules unpublished', t: 'desk follow-up' },
   ];
-  RISKS.filter(r => r.hi).forEach(r => { const d = document.createElement('div'); d.className = 'risk rv spot' + (r.hi ? ' hi' : ''); d.addEventListener('pointermove', e => { const q = d.getBoundingClientRect(); d.style.setProperty('--mx', (e.clientX - q.left) + 'px'); d.style.setProperty('--my', (e.clientY - q.top) + 'px'); }); d.innerHTML = `<h4>${r.n}</h4>`; tipOn(d, `<b>for</b> <span class="m">${r.f}</span><br><b>against</b> <span class="m">${r.x}</span>`); $('risks').appendChild(d); reveal(d); });
+  if ($('risks')) RISKS.filter(r => r.hi).forEach(r => { const d = document.createElement('div'); d.className = 'risk rv spot' + (r.hi ? ' hi' : ''); d.addEventListener('pointermove', e => { const q = d.getBoundingClientRect(); d.style.setProperty('--mx', (e.clientX - q.left) + 'px'); d.style.setProperty('--my', (e.clientY - q.top) + 'px'); }); d.innerHTML = `<h4>${r.n}</h4>`; tipOn(d, `<b>for</b> <span class="m">${r.f}</span><br><b>against</b> <span class="m">${r.x}</span>`); $('risks').appendChild(d); reveal(d); });
 
   </script>
 </body>
