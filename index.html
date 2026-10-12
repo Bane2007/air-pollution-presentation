@@ -153,11 +153,11 @@
     .bought .d { margin-top: 8px; font-size: 14px; color: var(--muted); line-height: 1.45; }
     /* value */
     .val-t { margin-top: 28px; border-top: 1px solid var(--line-2); }
-    .val-t .row { display: grid; grid-template-columns: minmax(0, 3.2fr) minmax(0, 4fr) minmax(0, 4fr) 64px; gap: clamp(16px, 2.4vw, 36px); align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--line); }
+    .val-t .row { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 3fr) 64px; gap: clamp(16px, 2.4vw, 36px); align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--line); }
     .val-t .hd { padding: 12px 0; font-family: var(--mono); font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
     .val-t .who { font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
     .val-t .who small { display: block; font-size: 12px; color: var(--dim); font-family: var(--mono); letter-spacing: 0; margin-top: 4px; font-weight: 400; }
-    .val-t .g, .val-t .l { font-size: 15px; line-height: 1.45; color: var(--muted); }
+    .val-t .g, .val-t .l { font-size: clamp(19px, 1.6vw, 24px); letter-spacing: -0.02em; line-height: 1.45; color: var(--muted); }
     .val-t .g b { color: var(--text); font-weight: 500; }
     .val-t .l b { color: var(--steel); font-weight: 500; }
     .val-t .net { font-family: var(--mono); font-size: 22px; text-align: right; color: var(--dim); }
@@ -369,7 +369,7 @@
 
     <section id="market" class="sec">
       <div class="wrap">
-        <h2 class="rv split">UAE data-centre capacity nearly triples by 2028</h2>
+        <h2 class="rv split">Capacity nearly triples by 2028</h2>
         <div class="mkt">
           <div class="figs">
             <div class="rv"><div class="v"><span class="cu" data-to="358">358</span><span class="ar">→</span><span class="cu" data-to="950">950</span><small>MW</small></div><p class="d">2025 to 2028<sup class="r">47</sup></p></div>
@@ -387,14 +387,14 @@
 
     <section id="value" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Everyone gains except dryer vendors</h2>
+        <h2 class="rv split">Four of five come out ahead</h2>
         <div class="val-t">
-          <div class="row hd"><span>Stakeholder</span><span>Gains</span><span>Loses</span><span style="text-align:right">Net</span></div>
-          <div class="row rv"><div class="who">Data-centre operators<small>Khazna, G42</small></div><p class="g"><b>Free drying heat</b>, no 121 °C heater<sup class="r">35</sup></p><p class="l"><b>Loop access</b> to a second system</p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Equipment owners<small>server and switchgear OEMs</small></div><p class="g"><b>Below 60 % RH</b>, ISA G1 kept<sup class="r">2,7</sup></p><p class="l">Nothing</p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Tenants<small>AI and cloud customers</small></div><p class="g"><b>Fewer outages</b>, USD 740k each<sup class="r">102</sup></p><p class="l">Nothing</p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Grid and regulators<small>DEWA, ADDC</small></div><p class="g"><b>Lower PUE</b>, 1.7 toward 1.5<sup class="r">16</sup></p><p class="l"><b>Smaller kWh sales</b>, 0.38 AED each<sup class="r">17</sup></p><div class="net up">+</div></div>
-          <div class="row rv"><div class="who">Dryer vendors<small>Munters, Bry-Air, CtrlTech</small></div><p class="g"><b>New product line</b> if they partner</p><p class="l"><b>Heater sales</b> on every unit<sup class="r">12,65</sup></p><div class="net">&plusmn;</div></div>
+          <div class="row hd"><span>Who</span><span>Gains</span><span>Loses</span><span style="text-align:right">Net</span></div>
+          <div class="row rv"><div class="who">Operators<small>Khazna, G42</small></div><p class="g"><b>Free heat</b><sup class="r">35</sup></p><p class="l"><b>Loop access</b></p><div class="net up">+</div></div>
+          <div class="row rv"><div class="who">Equipment owners<small>server and switchgear OEMs</small></div><p class="g"><b>Dry air</b><sup class="r">2</sup></p><p class="l"><b>&mdash;</b></p><div class="net up">+</div></div>
+          <div class="row rv"><div class="who">Tenants<small>AI and cloud</small></div><p class="g"><b>Uptime</b><sup class="r">102</sup></p><p class="l"><b>&mdash;</b></p><div class="net up">+</div></div>
+          <div class="row rv"><div class="who">Grid<small>DEWA, ADDC</small></div><p class="g"><b>Lower PUE</b><sup class="r">16</sup></p><p class="l"><b>kWh sales</b></p><div class="net up">+</div></div>
+          <div class="row rv"><div class="who">Dryer vendors<small>Munters, Bry-Air</small></div><p class="g"><b>Partner deal</b></p><p class="l"><b>Heater sales</b><sup class="r">35</sup></p><div class="net ">&plusmn;</div></div>
         </div>
       </div>
     </section>
@@ -429,7 +429,7 @@
 
     <section id="test" class="sec">
       <div class="wrap">
-        <h2 class="rv split">Two things could kill it</h2>
+        <h2 class="rv split">Two unknowns</h2>
         <div class="risks" id="risks"></div>
       </div>
     </section>
@@ -941,10 +941,10 @@
 
   // ================================================================== DEMAND TEST
   const RISKS = [
-    { n: 'Do operators see the cost?', f: 'ASHRAE limits, G1 warranties, filtration already sold', x: 'no Gulf incident or spend figure', t: 'interviews, coupons', hi: 1 },
+    { n: 'Operator demand', f: 'ASHRAE limits, G1 warranties, filtration already sold', x: 'no Gulf incident or spend figure', t: 'interviews, coupons', hi: 1 },
     { n: 'They allow loop access', f: 'LRZ ran heat-driven chillers nine years', x: 'operator risk aversion', t: 'interviews' },
     { n: 'It pays back per MW', f: 'tariffs, the PUE gap', x: 'no Gulf measurement', t: 'coupons, vendor quote' },
-    { n: 'Is enough air left to dry?', f: 'air-cooled supplies and networking per rack', x: 'unmeasured, sets market size', t: 'interviews', hi: 1 },
+    { n: 'Spare air per rack', f: 'air-cooled supplies and networking per rack', x: 'unmeasured, sets market size', t: 'interviews', hi: 1 },
     { n: 'Buyers are reachable', f: 'a few operators decide', x: 'student access untested', t: 'response rate' },
     { n: 'Regulation rewards it', f: 'rating system in drafting', x: 'rules unpublished', t: 'desk follow-up' },
   ];
