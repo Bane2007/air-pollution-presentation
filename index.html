@@ -185,24 +185,15 @@
     .pcard dl > div:last-child { border-bottom: 0; padding-bottom: 0; }
     .pcard dt { font-family: var(--mono); font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; }
     .pcard dd { margin: 0; font-size: 17px; color: var(--text); }
-    .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }
-    .pc { border: 1px solid var(--line-2); border-radius: var(--r); background: var(--surface); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
-    .pc .ph b { display: block; font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: var(--heat); }
-    .pc .ph span { font-size: 13px; color: var(--muted); }
-    .pc .story { font-size: 17px; line-height: 1.45; color: var(--text); }
-    .pc ul { list-style: none; margin: auto 0 0; padding: 0; border-top: 1px solid var(--line); }
-    .pc li { font-family: var(--mono); font-size: 13px; color: var(--steel); padding: 9px 0; border-bottom: 1px solid var(--line); }
-    .pc li:last-child { border-bottom: 0; padding-bottom: 0; }
     .flow { list-style: none; margin: 26px 0 8px; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
     .flow li { border: 1px solid var(--line); border-radius: var(--r); padding: 10px 12px; font-size: 13px; color: var(--dim); position: relative; }
     .flow li small { display: block; font-family: var(--mono); font-size: 11px; margin-bottom: 3px; }
     .flow li.on { border-color: var(--heat); color: var(--text); background: var(--heat-soft); }
     .flow li.on small { color: var(--heat); }
-    .val-t.disc .row { grid-template-columns: minmax(0, 2.2fr) repeat(3, minmax(0, 3fr)); padding: 14px 0; }
+    .val-t.disc .row { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); padding: 16px 0; }
     .val-t.disc .who { font-family: var(--mono); font-size: 11px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 400; }
-    .val-t.disc .g { font-size: clamp(15px, 1.25vw, 18px); color: var(--text); letter-spacing: -0.01em; }
+    .val-t.disc .g { font-size: clamp(18px, 1.7vw, 24px); color: var(--text); letter-spacing: -0.01em; }
     .val-t.disc .row:last-child .g { color: var(--heat); }
-    .val-t.disc .hd span { color: var(--heat); }
     /* model */
     .inst { margin-top: 32px; display: grid; grid-template-columns: 290px minmax(0, 1fr) 290px; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
     .inst > div { background-color: var(--surface); padding: 24px; min-width: 0; }
@@ -303,7 +294,7 @@
       .val-t .row > .g, .val-t .row > .l { grid-column: 1; }
       .val-t .net { grid-row: 1; grid-column: 2; }
       .val-t .hd { display: none; }
-      .val-t.ps .row, .val-t.fab .row, .ps-grid, .pcs, .val-t.disc .row { grid-template-columns: minmax(0, 1fr); }
+      .val-t.ps .row, .val-t.fab .row, .ps-grid, .val-t.disc .row { grid-template-columns: minmax(0, 1fr); }
       .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .strip { grid-template-columns: 1fr 1fr; }
       .strip > div:nth-child(3) { border-left: 0; padding-left: 0; }
@@ -474,24 +465,15 @@
     </section>
 
 
-    <section id="personas" class="sec">
-      <div class="wrap">
-        <h2 class="rv split">Backup: three customers</h2>
-        <div class="pcs">
-          <article class="pc rv"><div class="ph"><b>Omar</b><span>Facility manager, AI data centre</span></div><p class="story">Runs the electrical rooms. Every humid summer night he watches the switchgear and hopes the dryers keep up.</p><ul><li>5,171 humid hours<sup class="r">14</sup></li><li>corrosion, void warranty<sup class="r">7</sup></li><li>dryers at 121 °C<sup class="r">35</sup></li></ul></article>
-          <article class="pc rv"><div class="ph"><b>Layla</b><span>Energy manager, data-centre owner</span></div><p class="story">Answers for the power bill. Every kWh spent on drying lands on her desk.</p><ul><li>PUE above 1.7<sup class="r">16</sup></li><li>0.38 AED a kWh<sup class="r">17</sup></li><li>AI tariff coming<sup class="r">18</sup></li></ul></article>
-          <article class="pc rv"><div class="ph"><b>Rahul</b><span>Infrastructure lead, AI cloud tenant</span></div><p class="story">Rents racks of GPUs. If the room fails, his customers go down.</p><ul><li>USD 740k an outage<sup class="r">102</sup></li><li>142 kW racks<sup class="r">23</sup></li><li>ISA G1 in warranty<sup class="r">7</sup></li></ul></article>
-        </div>
-      </div>
-    </section>
-
     <section id="discovery" class="sec">
       <div class="wrap">
         <h2 class="rv split">Backup: discovery and learning</h2>
         <ol class="flow rv"><li class="on"><small>Who?</small>Personas</li><li class="on"><small>What?</small>Problem scenarios</li><li class="on"><small>What if?</small>Value propositions</li><li class=""><small>Tell me…</small>Customer discovery</li><li class=""><small>How?</small>User stories</li><li class=""><small>Scale?</small>Product</li></ol>
         <div class="val-t disc">
-          <div class="row hd"><span></span><span>Omar</span><span>Layla</span><span>Rahul</span></div>
-          <div class="row rv"><div class="who">Problem scenario</div><p class="g">Room too humid, 5,171 h a year</p><p class="g">Drying shows up on the bill</p><p class="g">Corroded gear causes outages</p></div><div class="row rv"><div class="who">Alternatives</div><p class="g">Electric dryers at 121 °C</p><p class="g">More efficient chillers</p><p class="g">Gas-phase filtration</p></div><div class="row rv"><div class="who">Value proposition</div><p class="g">Same drying on GPU waste heat</p><p class="g">About AED 15,000 a room, saved</p><p class="g">Rooms held below 60 % RH</p></div>
+          <div class="row rv"><div class="who">Persona</div><p class="g">Omar, facility manager, AI data centre</p></div>
+          <div class="row rv"><div class="who">Problem scenario</div><p class="g">Room too humid, 5,171 h a year<sup class="r">14</sup></p></div>
+          <div class="row rv"><div class="who">Alternatives</div><p class="g">Electric dryers at 121 °C<sup class="r">35</sup></p></div>
+          <div class="row rv"><div class="who">Value proposition</div><p class="g">Same drying on GPU waste heat</p></div>
         </div>
       </div>
     </section>
