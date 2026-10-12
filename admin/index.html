@@ -28,6 +28,9 @@
     .list button.cur span { color: var(--heat); }
     h2 { font-size: 12px; font-family: "Geist Mono", monospace; color: var(--dim); font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; margin: 26px 0 8px; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .link { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+    .link code { font-family: "Geist Mono", monospace; font-size: 13px; color: var(--heat); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; overflow-wrap: anywhere; }
+    .small { margin-top: 8px; padding: 8px 12px; font-size: 12px; color: var(--muted); }
     .hint { font-size: 12px; color: var(--dim); margin-top: 26px; line-height: 1.5; }
   </style>
 </head>
@@ -38,17 +41,32 @@
   <div class="list" id="list"></div>
   <h2>Site</h2>
   <div class="row"><button data-site="abu-dhabi">Abu Dhabi</button><button data-site="dubai">Dubai</button></div>
-  <p class="hint">Works in the same browser on this laptop: deck in one window, this page in another. Arrow keys also work here.</p>
+  <h2>Sir's laptop</h2>
+  <div class="link"><code id="link"></code><button id="copy">Copy</button></div>
+  <button id="newroom" class="small">New room code</button>
+  <p class="hint">Open that link on the presenting laptop. Same-laptop windows also work without it. Arrow keys work here too.</p>
   <script>
-    const ch = new BroadcastChannel('dry-rooms-deck');
     const $ = id => document.getElementById(id);
+    const newCode = () => Array.from(crypto.getRandomValues(new Uint8Array(10)), x => 'abcdefghjkmnpqrstuvwxyz23456789'[x % 31]).join('');
+    let room; try { room = localStorage.getItem('dr-room'); } catch {}
+    if (!room) { room = newCode(); try { localStorage.setItem('dr-room', room); } catch {} }
+    const deckUrl = () => `${location.origin}/?r=${room}`;
+    const local = new BroadcastChannel('dry-rooms-deck');
+    let es;
+    function connect() {
+      es?.close();
+      es = new EventSource(`https://ntfy.sh/dryrooms-${room}/sse`);
+      es.onmessage = e => { try { got(JSON.parse(JSON.parse(e.data).message)); } catch {} };
+      $('link').textContent = deckUrl();
+    }
+    const send = m => { m.from = 'admin'; local.postMessage(m); fetch(`https://ntfy.sh/dryrooms-${room}`, { method: 'POST', body: JSON.stringify(m) }).catch(() => {}); };
     let titles = [], cur = 0;
-    const send = m => ch.postMessage(m);
     function render() {
       $('now').innerHTML = `Slide ${cur + 1} of ${titles.length}<b>${titles[cur] || ''}</b>`;
       $('list').innerHTML = titles.map((t, i) => `<button data-i="${i}" class="${i === cur ? 'cur' : ''}"><span>${i + 1}</span>${t}</button>`).join('');
     }
-    ch.onmessage = ({ data: m }) => { if (m.type !== 'at') return; titles = m.titles; cur = m.i; $('st').textContent = 'connected'; $('st').classList.add('on'); render(); };
+    local.onmessage = e => got(e.data);
+    function got(m) { if (!m || m.from !== 'deck' || m.type !== 'at') return; titles = m.titles; cur = m.i; $('st').textContent = 'connected'; $('st').classList.add('on'); render(); }
     $('prev').onclick = () => send({ type: 'step', d: -1 });
     $('next').onclick = () => send({ type: 'step', d: 1 });
     $('list').onclick = e => { const b = e.target.closest('button'); if (b) send({ type: 'go', i: +b.dataset.i }); };
@@ -57,8 +75,11 @@
       if (['ArrowRight', 'ArrowDown', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: 1 }); }
       if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); send({ type: 'step', d: -1 }); }
     });
-    send({ type: 'hello' });
-    setInterval(() => { if (!titles.length) send({ type: 'hello' }); }, 1500);
+    $('copy').onclick = () => navigator.clipboard?.writeText(deckUrl()).then(() => { $('copy').textContent = 'Copied'; setTimeout(() => $('copy').textContent = 'Copy', 1200); });
+    $('newroom').onclick = () => { room = newCode(); try { localStorage.setItem('dr-room', room); } catch {} titles = []; $('st').textContent = 'no deck'; $('st').classList.remove('on'); connect(); };
+    connect();
+    setTimeout(() => send({ type: 'hello' }), 600);
+    setInterval(() => { if (!titles.length) send({ type: 'hello' }); }, 4000);
   </script>
 </body>
 </html>
